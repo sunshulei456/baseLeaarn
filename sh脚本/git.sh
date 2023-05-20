@@ -12,3 +12,7 @@ git config --local user.email "sunshulei163mail@163.com"
 # input 提交时转换为LF，检出时不转换
 # warn 提交包含混合换行符的文件时给出警
 git config --local core.autocrlf true
+
+# git是不会提交空文件夹的，所以你想提交空文件夹就需要在空文件内部创建一个占位文件
+# 比如 nginx/a.gitignore, 过滤掉 .gitignore 然后就有一个空的文件夹了
+
