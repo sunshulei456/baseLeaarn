@@ -13,7 +13,7 @@
     站在 c 的立场： B 就是代指客户端  // 反向代理： 通常服务端有多个
 ```
 
-
+![2021-12-27-16-17-14](2021-12-27-16-17-14.png)
 
 ## 负载均衡
 
@@ -655,9 +655,9 @@ nginx允许你可以访问客户端请求头，以$http_为前缀的格式访问
 
 # 其他
 
-# 配置案例
+# == 配置案例
 
-## 反向代理
+# 反向代理
 
 * 案例一
 
@@ -689,5 +689,103 @@ nginx允许你可以访问客户端请求头，以$http_为前缀的格式访问
   
   ```
 
-  
+
+# 负载均衡
+
+```java
+   upstream tomcat-portal {
+	server 192.168.25.141:8080;
+    server 192.168.25.141:8180;  // 设置权重
+	server 192.168.25.141:8280;
+    }
+    server {
+        listen       80;
+        server_name  www.pinyougou.com;
+ 
+        location / {
+            proxy_pass   http://tomcat-portal;
+            index  index.html;
+        }       
+       
+    }
+测试
+    地址栏输入http://www.pinyougou.com/  刷新观察每个网页的标题，看是否不同。
+    经过测试，三台服务器出现的概率各为33.3333333%，交替显示。
+    如果其中一台服务器性能比较好，想让其承担更多的压力，可以设置权重。
+
+    // 设置权重
+       server 192.168.25.141:8180 weight=2;  // 设置权重
+       经过测试，每刷新四次，有两次是8180
+
+```
+
+
+
+# 动静分离
+
+```java
+（1）上传静态网站：
+将前端静态页cart.html 以及图片样式等资源 上传至  /usr/local/nginx/cart 下
+将前端静态页search.html 以及图片样式等资源 上传至  /usr/local/nginx/search 下
+
+（2）修改Nginx 的配置文件：/usr/local/nginx/conf/nginx.conf
+    server {
+        listen       81;
+        server_name  localhost;
+        location / {
+            root   cart;
+            index  cart.html;
+        }      
+    }
+    server {
+        listen       82;
+        server_name  localhost;
+        location / {
+            root   search;
+            index  search.html;
+        }        
+    }
+
+（3）访问测试：
+    地址栏输入http://192.168.25.141:81 可以看到购物车页面
+    地址栏输入http://192.168.25.141:82 可以看到搜索页面
+
+
+
+优化域名绑定=========================
+1. 域名与IP绑定, 做好域名指向
+    一个域名对应一个 ip 地址，一个 ip 地址可以被多个域名绑定。
+    本地测试可以修改 hosts 文件（C:\Windows\System32\drivers\etc）
+    可以配置域名和 ip 的映射关系，如果 hosts 文件中配置了域名和 ip 的对应关系，不需要走dns 服务器。
+    我们可以通过一个叫SwitchHosts的软件来修改域名指向
+
+    # 
+    192.168.25.141 cart.pinyougou.com
+    192.168.25.141 search.pinyougou.com
+    192.168.25.141 www.pinyougou.com
+
+2. 修改nginx配置文件
+    server {
+        listen       80;
+        server_name  cart.pinyougou.com;
+        location / {
+            root   cart;
+            index  cart.html;
+        }
+    }
+    server {
+        listen       81;
+        server_name  search.pinyougou.com;
+        location / {
+            root   search;
+            index  search.html;
+        }
+    }
+
+3. 测试
+    地址栏输入http://cart.pinyougou.com/    
+    地址栏输入http://search.pinyougou.com/ 
+```
+
+
 
