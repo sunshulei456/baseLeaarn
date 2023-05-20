@@ -643,11 +643,11 @@ nginx允许你可以访问客户端请求头，以$http_为前缀的格式访问
 
 # index 模块
 
-## log 模块
+# log 模块
 
 # headers 模块
 
-## referer 模块
+# referer 模块
 
 # secure link 模块
 

@@ -1,11 +1,62 @@
-# mysq 日志分类
+
+
+# 待整理
+
+* http://c.biancheng.net/view/7764.html
+* https://blog.csdn.net/nmb_jiang/article/details/105436501
+* https://blog.csdn.net/weixin_49472648/article/details/125824697?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-125824697-blog-105436501.235^v36^pc_relevant_anti_vip_base&spm=1001.2101.3001.4242.2&utm_relevant_index=4
+* 
+
+# mysq 日志
+
+## 分类
 
 * 错误日志
-* 查询日志
-* 慢查询日志
+* 查询日志  **select 查询语句**
+* 慢查询日志    **查看执行时间长的sql，可开启慢日志查询**
 * 事务日志(Redo log)
 * 二进制日志
 * 中继日志
+
+## 语法
+
+```mysql
+# 查询全局日志存储的方式，注意是所有日志的存储方式
+show variables like 'log_output'
+
+# 设置
+set global log_output='xxx';
+	FILE：表示日志将输出到文件中。
+    TABLE：表示日志将输出到 MySQL 的系统表中，如 mysql.general_log 表和 mysql.slow_log 表。
+    NONE：表示禁用日志输出。
+    
+log_output='file'
+	-- 日志输出至table模式，查看日志记录
+    SELECT * from mysql.general_log ORDER BY event_time DESC; 
+ 
+ 
+ -- table 模式日志清楚： 不允许使用delete删除mysql.general_log ，只能用truncate
+truncate table mysql.general_log;
+```
+
+
+
+# 正在执行的语句查看
+
+```mysql
+-- 切换数据库
+use information_schema;
+-- 查看正在执行的SQL语句
+show processlist;
+
+-- 或者直接使用SQL语句查询
+select * from information_schema.`PROCESSLIST` where info is not null;
+————————————————
+版权声明：本文为CSDN博主「csd_nuser」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/csd_nuser/article/details/121236625
+```
+
+
 
 # 错误日志
 
@@ -13,6 +64,21 @@
 
 * 作用：记录启动\关闭\日常运行过程中,状态信息,警告,错误
 * 位置： 默认开启， 位于 datadir/hostname.err
+
+## 语法配置
+
+```mysql
+-- 通过 SHOW 命令可以查看错误日志文件所在的目录及文件名信息。
+SHOW VARIABLES LIKE 'log_error';
+
+-- 可以使用 mysqladmin 命令来开启新的错误日志，以保证 MySQL 服务器上的硬盘空间
+-- MySQL 服务器首先会自动创建一个新的错误日志，然后将旧的错误日志更名为 filename.err-old。
+mysqladmin -uroot -p flush-logs
+```
+
+
+
+
 
 ### 手动配置
 
@@ -31,6 +97,33 @@ show variables like 'log_error';
 
 
 
+# 查询日志-general
+
+## 语法
+
+```mysql
+# 查询是否开启普通日志功能
+show variables like 'general_log';
+
+# 开启
+set global general_log=on;
+
+# 关闭
+set global general_log=off;
+
+-- 查看日志输出文件的保存路径
+show variables like 'general_log_file';
+
+-- 修改日志输出文件的保存路径
+set global general_log_file='tmp/general.log'; 
+
+#===========================================
+
+#===========================================
+```
+
+
+
 # 二进制日志(binarylog)
 
 ### 介绍
@@ -38,33 +131,49 @@ show variables like 'log_error';
 ```
 (1)备份恢复必须依赖二进制日志
 (2)主从环境必须依赖二进制日志
+
+二进制日志（Binary Log）也可叫作变更日志（Update Log），是 MySQL 中非常重要的日志
+主要用于记录数据库的变化情况，即 SQL 语句的 DDL 和 DML 语句，【不包含】数据记录查询操作。
+
+
+binlog是SQL层的功能。记录的是变更SQL语句，不记录查询语句。
+    DDL ：原封不动的记录当前DDL(statement语句方式)。
+    DCL ：原封不动的记录当前DCL(statement语句方式)。
+    DML ：只记录已经提交的事务DM
 ```
 
 ### my.cnf 配置
 
 * mysqld -- 二进制日志
 
-
-
-### 记录内容
+## 语法配置
 
 ```mysql
-binlog是SQL层的功能。记录的是变更SQL语句，不记录查询语句。
-    DDL ：原封不动的记录当前DDL(statement语句方式)。
-    DCL ：原封不动的记录当前DCL(statement语句方式)。
-    DML ：只记录已经提交的事务DML
+
+
+-- 默认情况下，二进制日志功能是关闭的。
+show variables like '%log_bin%'
+
+# 查看一共多少个binlog
+show binary logs;  
+ 
+# 查看正在使用的二进制日志， 
+# file：当前MySQL正在使用的文件名， Position：最后一个事件的结束位置号
+show master status
+
+# 查看二进制事件日志
+show binlog events in 'mysql-bin.000004'
+```
+
+
+
+## 记录内容
+
+```mysql
+L
     
 位置
-	show variables like '%log_bin%'
-	# 查看一共多少个binlog
-	show binary logs; 
-	
-	show binary logs
-	# 查看正在使用的二进制日志， 
-	# file：当前MySQL正在使用的文件名， Position：最后一个事件的结束位置号
-	show master status
-	# 查看二进制事件日志
-	show binlog events in 'mysql-bin.000004'
+
 ```
 
 ### 记录单元 -event
@@ -335,9 +444,9 @@ PURGE BINARY LOGS TO 'mysql-bin.000010';
 
 
 
-# 慢日志
+# 慢查询日志
 
-### 介绍
+## 介绍
 
 ```mysql
 介绍
@@ -349,15 +458,30 @@ PURGE BINARY LOGS TO 'mysql-bin.000010';
 设置
     默认关闭。
     不是调优， 不要开启，有性能问题
-    
-开启
-    // 查看
-    SHOW VARIABLES LIKE '%slow_ query_ log%';
-	// 开启了慢查询日志只对前数据库生效，sql 重启失效
-	set global slow_query_log=1
-	// 永久开启
-     修改配置文件 my.cnf
+ 
+
 ```
+
+## 语法
+
+```mysql
+-- 查看
+SHOW VARIABLES LIKE '%slow_ query_ log%';
+-- 开启了慢查询日志只对前数据库生效，sql 重启失效
+set global slow_query_log=1
+
+
+
+-- 永久开启, 配置后，重启mysql。
+修改配置文件 my.cnf
+	log_output=file
+	slow_query_log=on
+	slow_query_log_file = tmp/mysql-slow.log
+	log_queries_not_using_indexes=on
+	long_query_time = 1	
+```
+
+
 
 ### 查看
 
