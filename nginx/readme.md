@@ -194,6 +194,23 @@ include       mime.types;
 default_type  application/octet-stream;
 sendfile        on;
 keepalive_timeout  65;
+
+
+=====
+keepalive相关指令：keepalive_requests、keepalive_timeout、send_timeout。
+
+缓冲区相关指令：client_body_buffer_size、client_header_buffer_size、large_client_header_buffers等。
+
+其他客户端指令：client_body_timeout、client_header_timeout、client_max_body_size、lingering_time、ligering_timeout、ignore_invalid_header等
+
+log_not_found:
+	开启或禁用404没有找到的HTTP错误，如果日志中由于找不到favicon.ico或robots.txt而充满404错误日志，则可以通过这个选项关闭掉。
+    作用域：http,server,location。
+    默认值：on
+log_subrequest:
+	启用或禁用记录子请求（被内部请求指令（如rewrite）或SSI请求触发的请求）。
+    作用域：http,server,location。
+    默认值：off
 ```
 
 
@@ -216,47 +233,145 @@ keepalive_timeout  65;
 <url> 是要重定向到的 URL 地址，可以是相对路径或绝对路径。  
     
 案例
-error_page 404 html/404/html;
-error_page 500 502 503 504 html/5x.html;
+ 
 #跳转到命名的location区段。
 error_page 404 @notfound; 
-#在出现404错误时 ，内部重定向到index.html,并且返回200 OK响应码。
-error_page 404 =200/index/html;
+
 
 返回自定义的错误页面：
-
-bash
-Copy code
+// 当发生 404 错误时，将返回 /errors/not-found.html 页面
 error_page 404 /errors/not-found.html;
-当发生 404 错误时，将返回 /errors/not-found.html 页面。
+// 重定向到外部 URL：当发生 503 错误时，将重定向到 http://example.com/maintenance.html。
+error_page 503 http://example.com/maintenance.html;
+
 
 使用内置的 Nginx 响应码：
-
-javascript
-Copy code
+// 当发生 500 错误时，将返回 /errors/server-error.html 页面，并确保只匹配精确的 500 错误。
 error_page 500 = /errors/server-error.html;
-当发生 500 错误时，将返回 /errors/server-error.html 页面，并确保只匹配精确的 500 错误。
-
-重定向到外部 URL：
-
-arduino
-Copy code
-error_page 503 http://example.com/maintenance.html;
-当发生 503 错误时，将重定向到 http://example.com/maintenance.html。
-
-处理多个错误码：
-
-bash
-Copy code
+// 在出现404错误时 ，内部重定向到index.html,并且返回200 OK响应码。
+error_page 404 =200/index/html;
+ 
+处理多个错误码： 
+// 当发生 404 或 500 错误时，将返回 /errors/error.html 页面。    
 error_page 404, 500 /errors/error.html;
-当发生 404 或 500 错误时，将返回 /errors/error.html 页面。
-
+ 
 使用通配符匹配错误码：
-
-javascript
-Copy code
+// 当发生以 50 开头的任何错误码时，都将返回 /errors/server-error.html 页面。
 error_page 50* /errors/server-error.html;
-当发生以 50 开头的任何错误码时，都将返回 /errors/server-error.html 页面。
+
+
+注意：
+1. 使用相对路径时，路径是相对于服务器配置文件或 root 指令所指定的根目录。
+2. 在某些情况下，需要确保错误页面或重定向的 URL 是有效的，并且具有正确的权限设置。    
+3. 生效路径：就近原则    
+```
+
+### index
+
+```java
+作用域: http、server 或 location
+含义：用于定义默认的索引文件.如果请求中没有指定文件名，nginx则使用默认页面提供服务。默认值index.html。
+语法： index file1 [file2...] 
+	<file1>, <file2>, ... 是按照优先级顺序列出的索引文件名称。
+	Nginx 将按照从左到右的顺序查找这些文件，直到找到存在的文件为止。
+案例：
+// 当用户请求一个目录时，Nginx 将首先查找 index.html 文件，如果不存在，则查找 index.htm 文件，并将找到的第一个索引文件返回给客户端
+// 如果目录下没有匹配的索引文件，则 Nginx 将返回目录的文件列表（如果目录浏览功能启用）或返回 403 Forbidden 错误（如果目录浏览功能禁用）。    
+location / {
+	index index.html index.htm;
+}
+
+```
+
+
+
+### types
+
+```java
+作用域:  
+含义：指定了服务器在返回文件时使用的 MIME 类型，以便客户端能够正确解析和处理这些文件
+语法：  
+
+案例
+/*
+text/html MIME 类型关联了 .html 和 .htm 扩展名。
+application/json MIME 类型关联了 .json 扩展名。
+image/jpeg MIME 类型关联了 .jpg 和 .jpeg 扩展名。
+	Nginx 使用这些映射关系来确定返回文件时的正确 MIME 类型。当服务器返回一个文件时，它会根据请求的文件扩展名查找相应的 MIME 类型，并将其包含在响应头中的 Content-Type 字段中。
+	可以确保服务器返回正确的 MIME 类型，以便客户端能够正确地解析和处理文件。这对于确保 Web 应用程序的正常运行和安全性非常重要，因为不正确的 MIME 类型可能导致浏览器或其他客户端错误地处理文件内容。
+*/
+types {
+    text/html html htm;
+    application/json json;
+    image/jpeg jpg jpeg;
+}
+
+```
+
+### default_type
+
+```
+
+用于设置默认的 MIME 类型。当服务器返回一个文件时，如果无法通过文件扩展名或其他方式确定其 MIME 类型，则将使用默认类型。
+http {
+    default_type application/octet-stream;
+    ...
+}
+
+```
+
+### proxy_pass
+
+```java
+含义： 指定转发给后端服务器的协议和地址。
+语法：proxy_pass 协议://地址[/URI]; 
+	协议可以是http或https。地址可以是TCP套接字（域名或者ip地址+port）、UNIX域套接字，还可以指向upstream区段。URI是可选部分，如果指定了URI，location 后面指定的路径将被替换。
+
+/*
+proxy_pass 将请求代理到不同的后端服务器或上游服务器：
+/api/ 请求会被代理到名为 backend-server 的后端服务器。
+/app/ 请求会被代理到名为 backend-server、端口号为 8080 的后端服务器
+*/
+location /api/ {
+    proxy_pass http://backend-server;
+}
+
+location /app/ {
+    proxy_pass http://backend-server:8080/;
+}
+
+proxy_pass http://localhost:8080;
+proxy_pass http://127.0.0.1:8080;
+proxy_pass http://unix:/tmp/backend.sock;
+proxy_pass https://192.168.0.1;
+proxy_pass http://localhost:8080/uri/;
+proxy_pass http://unix:/tmp/backend.sock:/uri/:
+# URL中还可以使用变量
+proxy_pass http://$server_name:8080;
+
+#指向upstream区段
+#格式：proxy_pass http://myblock;
+upstream backend {
+    server 127.0.0.1:8080;
+    server 127.0.0.1:8081;
+}
+location ~ \.php($|/) {
+    fastcgi_pass http://backend;
+}
+
+
+注意：如果proxy_pass指定了URI，那么location匹配不能使用正则表达式。如果代理的URI需要使用正则表达式，则可以使用rewrite和proxy_pass结合的方式来定义转发路径。此时proxy_pass 后面定义的URL不再生效。
+
+location /static_js/ {
+    rewrite /static_js/(._)$ /$1 break;
+    proxy_pass http://js.test.com;
+}
+
+```
+
+### proxy_next_upstream
+
+```
 ```
 
 
@@ -377,24 +492,168 @@ location /path/ {
 
 
 
-## locaion
 
-```
-location [ = | ~ | ~* | ^~] uri {
 
+### try_files:
+
+```java
+范围： 
+含义： 
+	用于在请求的文件或路径不存在时按照指定的顺序尝试匹配其他文件或路径
+	可以用于处理静态文件的请求，优先尝试返回存在的文件或目录，而如果都不存在，则转发到某个后端处理程序（例如 PHP 脚本）进行动态处理。
+语法： try_files <file1> [<file2> ...] <fallback>;
+	<file1>, <file2>, ... 
+		是按照优先级顺序列出的要尝试匹配的文件或路径。这
+		些文件或路径可以是相对于 root 指令或 $document_root 的相对路径，或者是绝对路径。
+	<fallback> 
+		是作为最后一项的备用文件或路径，用于在所有其他尝试都失败时返回给客户端。
+		
+案例
+/*
+首先，尝试匹配请求的文件 $uri，如果存在则返回。
+如果文件不存在，尝试匹配请求的目录 $uri/，如果存在目录则返回。
+如果文件和目录都不存在，将请求转发到 /index.php
+*/
+location / {
+    try_files $uri $uri/ /index.php;
 }
 
-注意：如果 uri 包含正则表达式，则必须要有 ~ 或者 ~* 标识
-（1）= ：uri必须与/abcd精确匹配（优先级最高），
-		如果匹配成功，就停止继续向下搜索并立即处理该请求。
-（2）~：用于表示 uri 包含正则表达式，并且区分大小写。
-（3）~*：用于表示 uri 包含正则表达式，并且不区分大小写。
-（4）^~：用于不含正则表达式的 uri 前，要求 Nginx 服务器找到标识 uri 和请求
-		字符串匹配度最高的 location 后，立即使用此 location 处理请求，
-		而不再使用 location块中的正则 uri 和请求字符串做匹配。
+```
+
+### internal
+
+```java
+介绍
+    internal 是 Nginx 配置中的一个指令，用于限制只允许通过内部重定向访问指定的位置（location）。
+    当一个请求匹配到带有 internal 指令的 location 块时，该 location 块中的内容只能通过内部重定向（通过 rewrite 指令或其他方式）进行访问，对外部请求是不可见的
 
     
+案例
+/*
+location /internal 的内容只能通过内部重定向进行访问。
+如果直接尝试通过外部请求访问该路径，Nginx 将返回 404 错误。
+*/    
+location /internal {
+    internal;
+    # 配置项...
+}
+注意
+    1. internal 指令只能限制外部请求对 location 块的访问，它不能阻止通过直接访问所在文件路径的方式绕过限制。因此，为了确保安全性，还需要根据具体情况进行其他的安全措施，如使用身份验证、访问控制列表等。
 ```
+
+### 模式匹配
+
+```
+介绍
+	用于定义请求的 URL 匹配规则，并在匹配成功时执行相应的配置。它可以用于实现各种功能，如处理静态文件、代理请求、重定向等
+
+语法
+location [modifier] pattern {
+    # 配置项...
+}
+modifier:
+	省略： 精确匹配 
+     = :   精确匹配， 请求 api 的 uri 必须和 location的 uri 完全一样
+     ~     正则匹配。 [~: 区分大小写， ~*：不区分大小写]
+     ^~：   前缀匹配
+	@ 定义命名location区段。这些区段只能由内部产生的请求访问，如try_files或error_page
+pattern 
+	是用于匹配请求 URI 的字符串或正则表达式。可以是精确字符串匹配、前缀匹配或正则表达式匹配
+
+
+修饰符优先级
+
+    = 
+    无
+    ^~
+    ~或～*
+    (无)
+案例
+location / {
+    # 处理根路径的请求
+    # 配置项...
+}
+
+location /static/ {
+    # 处理以 /static/ 开头的请求
+    # 配置项...
+}
+
+location ~ \.php$ {
+    # 处理以 .php 结尾的请求（正则匹配）
+    # 配置项...
+}
+
+location ^~ /images/ {
+    # 处理以 /images/ 开头的请求，并优先匹配此规则
+    # 配置项...
+}
+
+location = /favicon.ico {
+    # 处理请求 URI 为 /favicon.ico 的请求
+    # 配置项...
+}
+
+```
+
+## http变量
+
+### 模块变量
+
+HTTP核心模块引入了大量的变量，可以使用这些变量应用到配置文件中。nginx的变量分为请求头变量、响应头变量和Nginx产生的各种变量。
+
+### 客户端请求头变量
+
+nginx允许你可以访问客户端请求头，以$http_为前缀的格式访问，如下表。
+
+- $http_host：HTTP头中的Host值。
+- $http_referer:HTTP头中的referer值。
+- $http_x_forward_for：HTTP头中的X-Forward-For的值。 除此之外还有$http_user_agent、$http_via、$http_cookie等。
+
+### 响应头变量
+
+这类变量发生在响应发送后，nginx允许你访问客户端响应头。以$send_http...为前缀，如下表。
+
+- $send_http_content_type：HTTP头中的Content-Type的值。
+- $send_http_content_length：HTTP头中的Content-Length的值。 除此之外还有$send_http_location、$send_http_connection等。
+
+### nginx产生的变量
+
+- $arg_XXX：访问查询字符串中的参数。
+- $args 所有结合在一起的查询字符串，同$query_string。
+- $body_bytes_sent：在响应头中发送的字节数。
+- $content_length:相当于HTTP头中的Content-Length。
+- $content_type:相当于HTTP头中的Content-Type。
+- $cookie_XXX:允许访问cookie数据，这里XXX替换为具体参数。
+- $document_root:返回root指令的值。
+- $document_uri:返回当前请求的uri，如果内部重定向被执行，将返回重定向后的uri。它与变量$uri相同。
+- $request_uri:原始请求的uri，在整个处理过程中保持不变（不像$document_uri/$uri）。
+- $host：相当于HTTP请求头中的Host,如果请求头没有Host，nginx会给这个变量赋一个值。
+- $hostname：返回服务器的系统名称。
+- $is_args：如果$args变量为空，那么$is_args也为空。
+- $request_filename:返回当前请求文件的绝对路径。  除此之外还有$nginx_version、$hostname、$remote_addr、$request_body、$request_method、$server_name、$scheme等。
+
+
+
+# Rewrite模块
+
+* rewrite模块使用Perl兼容正则表达式库，在安装nginx时需要预先安装perl和perl-dev
+
+
+
+# index 模块
+
+## log 模块
+
+# headers 模块
+
+## referer 模块
+
+# secure link 模块
+
+# fastcgi 模块
+
+# 其他
 
 # 配置案例
 
