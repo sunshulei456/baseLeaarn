@@ -70,7 +70,7 @@ n：查找在 n 天前（指定那一天）更改过属性的文件或目录
 
 ## grep --用于在文本文件中查找指定的字符串
 
-```
+```java
 grep [options] pattern [files]
     options 表示命令选项，用于控制 grep 命令的行为；
     pattern 表示要查找的字符串或正则表达式；
@@ -89,6 +89,13 @@ grep [options] pattern [files]
 	// 实时地从 log_file 文件的末尾读取数据，并将其输出到终端上。-f 选项表示实时追踪文件，即当文件更新时，tail 命令会自动将新添加的内容输出到终端上。
 	// | 符号是管道符号，用于将 tail 命令的输出作为 grep 命令的输入。grep 命令会查找包含指定字符串 search_term 的行，并将这些行输出到终端上。
 	tail -f log_file | grep search_term
+	
+	
+	
+	
+[一些好用的命令]
+tail -f log_file | grep -i "success\|error"  一直监控出现 success 或者 error 的行
+	
 ```
 
 ## head
@@ -307,13 +314,32 @@ nl -n rz fileName ：行号在最左边展示，加0 。如下图
 
 ```
 
+## jps
+
+```java
+jps 命令用于查看当前系统中正在运行的 Java 进程信息，包括进程 ID 和进程名称。使用 jps 命令可以方便地查看 Hadoop 集群中的各个组件进程，如 NameNode 进程、DataNode 进程、ResourceManager 进程、NodeManager 进程、HiveServer2 进程等。
+
+jps 命令的常用选项包括：
+
+jps -m：显示正在运行的 Java 进程信息，包括进程 ID、进程名称和当前运行的主类。
+jps -l：显示正在运行的 Java 进程信息，包括进程 ID、进程名称和完整的 Java 应用程序包名。
+jps -v：显示正在运行的 Java 进程信息，包括进程 ID、进程名称和 Java 虚拟机的启动参数。
+jps -q：仅显示进程 ID，不显示进程名称和其他详细信息。
+jps -help：显示 jps 命令的帮助信息。
+
+
+
+例如，要查看 NameNode 进程的进程 ID 和进程名称，可以在命令行中输入以下命令：
+jps -m -l // 这将列出当前系统中正在运行的 Java 进程信息，找到 NameNode 进程，可以看到其进程 ID 和进程名称
+```
+
 
 
 ## ===
 
 ## 循环查询日志
 
-## tail+l
+## tail+f
 
 ```java
 tail -f location_of_log_file

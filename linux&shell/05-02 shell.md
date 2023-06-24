@@ -1,3 +1,35 @@
+# 关键字
+
+## expr 计算
+
+```
+介绍
+	一个用于进行基本算术运算和字符串操作的命令行工具，通常用于 shell 脚本中对数值或字符串的处理。
+	expr 命令只能进行基本的算术运算和字符串操作，对于更加复杂的操作需要使用其他工具或编程语言实现。
+语法
+	expr `expression`
+	expr 命令会对 expression 进行解析和计算，并将结果输出到标准输出中
+	注意： 需要使用反斜引号进行包括起来，shell 才能进行计算
+例子：
+	a=`expr 1 + 2`
+```
+
+## typeset
+
+```
+Shell 内置命令，都用来设置变量的属性。不过 typeset 已经被弃用了
+```
+
+
+
+## declare
+
+```
+
+```
+
+
+
 # 变量
 
 ## 语法规则
@@ -44,7 +76,7 @@ n=$name
 
 ```
 
-#### 环境变量
+#### 环境变量 - delare
 
 ```shell
 环境变量:当前进程有效,并且能够被子进程调用。
@@ -371,22 +403,6 @@ echo $c  // 没有任何输出
 
 
 
-# 关键字
-
-## expr 计算
-
-```
-介绍
-	一个用于进行基本算术运算和字符串操作的命令行工具，通常用于 shell 脚本中对数值或字符串的处理。
-	expr 命令只能进行基本的算术运算和字符串操作，对于更加复杂的操作需要使用其他工具或编程语言实现。
-语法
-	expr `expression`
-	expr 命令会对 expression 进行解析和计算，并将结果输出到标准输出中
-	注意： 需要使用反斜引号进行包括起来，shell 才能进行计算
-例子：
-	a=`expr 1 + 2`
-```
-
 
 
 # 数据类型
@@ -532,6 +548,61 @@ length=${#array_name[@]} 获取数组长度
 length=${#array_name[*]} 获取数组长度
 lengthn=${#array_name[n]} 获取数组指定索引位置的元素
 ```
+
+## map 
+
+### 声明定义
+
+```bash
+在使用map时，需要先声明，否则结果可能与预期不同，array可以不声明
+
+方式1：
+declare -A myMap
+myMap["my03"]="03"
+
+方式2：
+declare -A myMap=(
+	["my01"]="01"
+    ["my02"]="02"
+)
+
+
+# 初始化
+myMap["my03"]="03"
+myMap["my04"]="04"
+```
+
+### 操作
+
+```bash
+# 1）输出所有的key
+#若未使用declare声明map，则此处将输出0，与预期输出不符，此处输出语句格式比arry多了一个！
+echo ${!myMap[@]}
+#2）输出所有value
+#与array输出格式相同
+echo ${myMap[@]}
+#3）输出map长度
+#与array输出格式相同
+echo ${#myMap[@]}
+
+
+#1)遍历，根据key找到对应的value
+for key in ${!myMap[*]};do
+ echo $key
+ echo ${myMap[$key]}
+done
+#2)遍历所有的key
+for key in ${!myMap[@]};do
+ echo $key
+ echo ${myMap[$key]}
+done
+#3)遍历所有的value
+for val in ${myMap[@]};do
+ echo $val
+done
+```
+
+
 
 
 
@@ -1043,7 +1114,7 @@ function sum() {
 
 
 # 函数调用
-
+s
 
 
 ```
@@ -1192,6 +1263,9 @@ printf "%s and %d \n"
 ％c 输出一个字符，
 ％f 输出实数，以小数形式输出
   %-4.2f 指格式化为小数，其中 .2 指保留2位小数。
+    
+    
+    netstat -anp | grep 6200
 ```
 
 
