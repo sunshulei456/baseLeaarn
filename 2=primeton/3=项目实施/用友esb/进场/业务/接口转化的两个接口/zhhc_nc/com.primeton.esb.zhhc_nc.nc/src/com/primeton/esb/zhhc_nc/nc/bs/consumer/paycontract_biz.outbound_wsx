@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<httpWsBusinessService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.primeton.com/schema/tip/outboundws" xsi:schemaLocation="http://www.primeton.com/schema/tip/outboundws ../xsd/outbound-http-ws.xsd" desc="" displayName="paycontract_biz" endpoint="com.primeton.esb.zhhc_nc.nc_common.endpoint.endpoint_http" errorChannel="" id="com.primeton.esb.zhhc_nc.nc.bs.consumer.paycontract_biz" sensitive="true" uri="/uapws/service/RecvPayContractWS">
+  <httpWsOutbound displayName="recvPayContract" httpWsOutboundReplyTaskExecutorFileRef="paycontract_biz/paycontract_biz_recvPayContract_reply.outbound_ws_tpx" httpWsOutboundRequestTaskExecutorFileRef="paycontract_biz/paycontract_biz_recvPayContract_request.outbound_ws_tpx" id="com.primeton.esb.zhhc_nc.nc.bs.consumer.paycontract_biz.recvPayContract" soapAction="recvPayContract">
+    <formatConversion conversionClass="com.primeton.esb.model.DefaultMessagePacker" conversionType="default"/>
+  </httpWsOutbound>
+</httpWsBusinessService>

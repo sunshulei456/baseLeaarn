@@ -1,0 +1,5531 @@
+DROP TABLE IF EXISTS AFC_DICT_ENTRY;
+CREATE TABLE AFC_DICT_ENTRY
+(
+    ID           NVARCHAR(64) NOT NULL,
+    CODE         NVARCHAR(128),
+    NAME         NVARCHAR(255),
+    PARENT_ID    NVARCHAR(64),
+    SORT_BY      DECIMAL(2, 0),
+    IS_LEAF      NCHAR(1) DEFAULT '1',
+    LEVELS       DECIMAL(1, 0),
+    IS_FIXED     NCHAR(1) DEFAULT '0',
+    STATUS       NCHAR(1) DEFAULT '1',
+    EXTEND       NVARCHAR(max),
+    DESCRIPTION  NVARCHAR(max),
+    CREATE_USER  NVARCHAR(64),
+    UPDATE_USER  NVARCHAR(64),
+    CREATE_TIME  DATETIME2,
+    UPDATE_TIME  DATETIME2,
+    TENANT_ID    NVARCHAR(64),
+    DICT_TYPE_ID NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_DICT_ENTRY_TEMPLATE;
+CREATE TABLE AFC_DICT_ENTRY_TEMPLATE
+(
+    ID           NVARCHAR(64) NOT NULL,
+    CODE         NVARCHAR(128),
+    NAME         NVARCHAR(255),
+    PARENT_ID    NVARCHAR(64),
+    SORT_BY      DECIMAL(2, 0),
+    IS_LEAF      NCHAR(1)      DEFAULT '1',
+    LEVELS       DECIMAL(1, 0) DEFAULT 0,
+    IS_FIXED     NCHAR(1)      DEFAULT '0',
+    STATUS       NCHAR(1)      DEFAULT '1',
+    EXTEND       NVARCHAR(max),
+    DESCRIPTION  NVARCHAR(max),
+    DICT_TYPE_ID NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+
+DROP TABLE IF EXISTS AFC_DICT_TYPE;
+CREATE TABLE AFC_DICT_TYPE
+(
+    ID          NVARCHAR(64),
+    CODE        NVARCHAR(128),
+    NAME        NVARCHAR(255),
+    PARENT_ID   NVARCHAR(64),
+    SORT_BY     DECIMAL(2, 0),
+    IS_LEAF     NCHAR(1)      DEFAULT '1',
+    LEVELS      DECIMAL(1, 0) DEFAULT 0,
+    IS_FIXED    NCHAR(1)      DEFAULT '0',
+    STATUS      NCHAR(1)      DEFAULT '1',
+    DESCRIPTION NVARCHAR(max),
+    CREATE_USER NVARCHAR(64),
+    UPDATE_USER NVARCHAR(64),
+    CREATE_TIME DATETIME2,
+    UPDATE_TIME DATETIME2,
+    TENANT_ID   NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_DICT_TYPE_TEMPLATE;
+CREATE TABLE AFC_DICT_TYPE_TEMPLATE
+(
+    ID          NVARCHAR(64) NOT NULL,
+    CODE        NVARCHAR(128),
+    NAME        NVARCHAR(255),
+    PARENT_ID   NVARCHAR(64),
+    SORT_BY     DECIMAL(2, 0),
+    IS_LEAF     NCHAR(1)      DEFAULT '1',
+    LEVELS      DECIMAL(1, 0) DEFAULT 0,
+    IS_FIXED    NCHAR(1)      DEFAULT '0',
+    STATUS      NCHAR(1)      DEFAULT '1',
+    DESCRIPTION NVARCHAR(max),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_DIMENSION;
+CREATE TABLE AFC_DIMENSION
+(
+    ID          NVARCHAR(64) NOT NULL,
+    CODE        NVARCHAR(64),
+    NAME        NVARCHAR(64),
+    TYPES       NVARCHAR(64),
+    DESCRIPTION NVARCHAR(max),
+    STATUS      NCHAR(1) DEFAULT '1',
+    SORT_BY     DECIMAL(2, 0),
+    EXTRA       NVARCHAR(max),
+    CREATE_USER NVARCHAR(64),
+    UPDATE_USER NVARCHAR(64),
+    CREATE_TIME DATETIME2,
+    UPDATE_TIME DATETIME2,
+    TENANT_ID   NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_EMPLOYEE;
+CREATE TABLE AFC_EMPLOYEE
+(
+    ID           NVARCHAR(64) NOT NULL,
+    NAME         NVARCHAR(64),
+    CODE         NVARCHAR(64),
+    GENDER       NVARCHAR(32),
+    P_EMAIL      NVARCHAR(64),
+    BIRTHDAY     DATETIME2,
+    STATUS       NCHAR(1) DEFAULT '1',
+    CARD_TYPE    NVARCHAR(32),
+    CARD_NUMBER  NVARCHAR(64),
+    IN_DATE      DATETIME2,
+    OUT_DATE     DATETIME2,
+    FAN_NUBMER   NVARCHAR(256),
+    PHONE_NUMBER NVARCHAR(64),
+    O_TEL        NVARCHAR(64),
+    O_EMAIL      NVARCHAR(64),
+    O_ADDRESS    NVARCHAR(512),
+    H_ADDRESS    NVARCHAR(512),
+    H_TEL        NVARCHAR(64),
+    H_ZIPCODE    NVARCHAR(64),
+    QQ           NVARCHAR(256),
+    WEIBO        NVARCHAR(256),
+    WECHAT       NVARCHAR(256),
+    SORT_BY      DECIMAL(8, 0),
+    DESCRIPTION  NVARCHAR(max),
+    REMARK       NVARCHAR(1000),
+    EXTRA        NVARCHAR(max),
+    CREATE_TIME  DATETIME2,
+    UPDATE_TIME  DATETIME2,
+    CREATE_USER  NVARCHAR(64),
+    UPDATE_USER  NVARCHAR(64),
+    TENANT_ID    NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_INSIDE_MSG;
+CREATE TABLE AFC_INSIDE_MSG
+(
+    ID            NVARCHAR(64) NOT NULL,
+    RECEIVER_CODE NVARCHAR(64),
+    EMPLOYEE_CODE NVARCHAR(64),
+    TYPES         NCHAR(1),
+    SEND_TIME     DATETIME2,
+    RECEIVE_TIME  DATETIME2,
+    STATUS        NCHAR(1) DEFAULT '0',
+    MESSAGE       NVARCHAR(max),
+    TENANT_ID     NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_LOGIN_LOG;
+CREATE TABLE AFC_LOGIN_LOG
+(
+    ID            NVARCHAR(64) NOT NULL,
+    OPERATOR_CODE NVARCHAR(64),
+    OPERATOR_NAME NVARCHAR(64),
+    STATUS        NCHAR(1),
+    TYPES         NCHAR(1),
+    CHANNELS      NCHAR(1),
+    VISITOR_IP    NVARCHAR(64),
+    OPERATE_DATE  DATETIME2,
+    TENANT_ID     NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_OPERATE_COUNT;
+CREATE TABLE AFC_OPERATE_COUNT
+(
+    ID         NVARCHAR(64) NOT NULL,
+    TYPES      NCHAR(1),
+    TIMES      DECIMAL(8, 0),
+    COUNT_TIME DATETIME2,
+    TENANT_ID  NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_OPERATION_LOG;
+CREATE TABLE AFC_OPERATION_LOG
+(
+    ID                NVARCHAR(64) NOT NULL,
+    OPERATOR_CODE     NVARCHAR(256),
+    OPERATOR_NAME     NVARCHAR(256),
+    OPERATE_TYPE      NCHAR(1),
+    OPERATE_DATE      DATETIME2,
+    TARGET_TYPE       NVARCHAR(256),
+    TARGET_MODEL_ID   NVARCHAR(256),
+    TARGET_MODEL_NAME NVARCHAR(256),
+    MESSAGE           NVARCHAR(max),
+    TENANT_ID         NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_OPERATION_LOG_DETAIL;
+CREATE TABLE AFC_OPERATION_LOG_DETAIL
+(
+    ID            NVARCHAR(64) NOT NULL,
+    OLD_DATA_JSON NVARCHAR(max),
+    NEW_DATA_JSON NVARCHAR(max),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_ORG;
+CREATE TABLE AFC_ORG
+(
+    ID                      NVARCHAR(64) NOT NULL,
+    CODE                    NVARCHAR(64),
+    NAME                    NVARCHAR(64),
+    TYPES                   NVARCHAR(32),
+    ORG_LEVEL               NVARCHAR(32),
+    PARENT_ID               NVARCHAR(64),
+    FULL_CODE_PATH          NVARCHAR(3000),
+    MANAGER_ID              NVARCHAR(64),
+    CHARGER_ID              NVARCHAR(64),
+    MAIN_DIMENSION_ORG_ID   NVARCHAR(64),
+    MAIN_DIMENSION_ORG_NAME NVARCHAR(64),
+    DIMENSION_ID            NVARCHAR(64),
+    ADDRESS                 NVARCHAR(64),
+    LINKMAN                 NVARCHAR(32),
+    PHONE                   NVARCHAR(32),
+    SORT_BY                 DECIMAL(2, 0),
+    STATUS                  NCHAR(1) DEFAULT '1',
+    DESCRIPTION             NVARCHAR(max),
+    EXTRA                   NVARCHAR(max),
+    CREATE_USER             NVARCHAR(64),
+    UPDATE_USER             NVARCHAR(64),
+    CREATE_TIME             DATETIME2,
+    UPDATE_TIME             DATETIME2,
+    TENANT_ID               NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_POSITION;
+CREATE TABLE AFC_POSITION
+(
+    ID          NVARCHAR(64) NOT NULL,
+    CODE        NVARCHAR(64),
+    NAME        NVARCHAR(64),
+    TYPES       NVARCHAR(64),
+    OBLIGATION  NVARCHAR(1000),
+    DESCRIPTION NVARCHAR(max),
+    EXTRA       NVARCHAR(max),
+    STATUS      NCHAR(1) DEFAULT '1',
+    SORT_BY     DECIMAL(2, 0),
+    CREATE_USER NVARCHAR(64),
+    UPDATE_USER NVARCHAR(64),
+    CREATE_TIME DATETIME2,
+    UPDATE_TIME DATETIME2,
+    TENANT_ID   NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_R_ORG_POSITION;
+CREATE TABLE AFC_R_ORG_POSITION
+(
+    ID             NVARCHAR(64) NOT NULL,
+    ORG_ID         NVARCHAR(64),
+    POSITION_ID    NVARCHAR(64),
+    EMPLOYEE_ID    NVARCHAR(64),
+    DEPENDENT_TYPE NCHAR(1)
+);
+
+DROP TABLE IF EXISTS AFC_R_WORK_GROUP_EMPLOYEE;
+CREATE TABLE AFC_R_WORK_GROUP_EMPLOYEE
+(
+    EMPLOYEE_ID   NVARCHAR(64),
+    WORK_GROUP_ID NVARCHAR(64)
+);
+
+
+DROP TABLE IF EXISTS AFC_SAFETY_SITE;
+CREATE TABLE AFC_SAFETY_SITE
+(
+    ID                NVARCHAR(64) NOT NULL,
+    PASSWORD_LENGTH   DECIMAL(2, 0),
+    PASSWORD_TYPES    NVARCHAR(64),
+    IS_WATERMARK      NCHAR(1),
+    WATERMARK_TYPES   NCHAR(1),
+    REMINDER_CHANGE   DECIMAL(3, 0),
+    IS_UPDATE         NCHAR(1),
+    FIRST_UPDATE      NCHAR(1),
+    ALLOW_FAIL        DECIMAL(2, 0),
+    LOCK_TIME         DECIMAL(3, 0),
+    FREE_TIME         DECIMAL(3, 0),
+    DESCRIPTION       NVARCHAR(max),
+    EXTRA             NVARCHAR(max),
+    CREATE_USER       NVARCHAR(64),
+    UPDATE_USER       NVARCHAR(64),
+    CREATE_TIME       DATETIME2,
+    UPDATE_TIME       DATETIME2,
+    TENANT_ID         NVARCHAR(64),
+    IS_SCANNING       NCHAR(1),
+    SCANNING_TYPES    NCHAR(1),
+    ALLOW_MUL_LOGIN   NCHAR(1),
+    ONLY_DIF_TERMINAL NCHAR(1),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_SAFETY_SITE_TEMPLATE;
+CREATE TABLE AFC_SAFETY_SITE_TEMPLATE
+(
+    ID                NVARCHAR(64) NOT NULL,
+    PASSWORD_LENGTH   DECIMAL(2, 0),
+    PASSWORD_TYPES    NVARCHAR(64),
+    IS_WATERMARK      NCHAR(1),
+    WATERMARK_TYPES   NCHAR(1),
+    REMINDER_CHANGE   DECIMAL(3, 0),
+    IS_UPDATE         NCHAR(1),
+    FIRST_UPDATE      NCHAR(1),
+    ALLOW_FAIL        DECIMAL(2, 0),
+    LOCK_TIME         DECIMAL(3, 0),
+    FREE_TIME         DECIMAL(3, 0),
+    DESCRIPTION       NVARCHAR(max),
+    EXTRA             NVARCHAR(max),
+    IS_SCANNING       NCHAR(1),
+    SCANNING_TYPES    NCHAR(1),
+    ALLOW_MUL_LOGIN   NCHAR(1),
+    ONLY_DIF_TERMINAL NCHAR(1),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_SAFETY_WHITELIST;
+CREATE TABLE AFC_SAFETY_WHITELIST
+(
+    ID          NVARCHAR(64) NOT NULL,
+    EMPLOYEE_ID NVARCHAR(64),
+    CREATE_USER NVARCHAR(64),
+    UPDATE_USER NVARCHAR(64),
+    CREATE_TIME DATETIME2,
+    UPDATE_TIME DATETIME2,
+    TENANT_ID   NVARCHAR(64),
+    TYPES       NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_TENANT;
+CREATE TABLE AFC_TENANT
+(
+    ID          NVARCHAR(64) NOT NULL,
+    CODE        NVARCHAR(64),
+    NAME        NVARCHAR(64),
+    TYPES       NVARCHAR(64),
+    SORT_BY     DECIMAL(2, 0),
+    STATUS      NCHAR(1) DEFAULT '1',
+    DESCRIPTION NVARCHAR(max),
+    CREATE_USER NVARCHAR(64),
+    UPDATE_USER NVARCHAR(64),
+    CREATE_TIME DATETIME2,
+    UPDATE_TIME DATETIME2,
+    ORG_NAME    NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_THIRD_AUTH;
+CREATE TABLE AFC_THIRD_AUTH
+(
+    ID            NVARCHAR(64) NOT NULL,
+    CORP_ID       NVARCHAR(255),
+    AGENT_ID      NVARCHAR(255),
+    APP_KEY       NVARCHAR(255),
+    APP_SECRET    NVARCHAR(255),
+    THIRD_CHANNEL NVARCHAR(32),
+    STATUS        NCHAR(1) DEFAULT '1',
+    APP_ID        NVARCHAR(64),
+    CREATE_USER   NVARCHAR(64),
+    UPDATE_USER   NVARCHAR(64),
+    CREATE_TIME   DATETIME2,
+    UPDATE_TIME   DATETIME2,
+    TENANT_ID     NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_USER;
+CREATE TABLE AFC_USER
+(
+    ID                   NVARCHAR(64) NOT NULL,
+    CODE                 NVARCHAR(64),
+    PASSWORD             NVARCHAR(255),
+    IS_ADMIN             NCHAR(1)      DEFAULT '0',
+    STATUS               NCHAR(1)      DEFAULT '1',
+    PASSWORD_INIT        NCHAR(1),
+    PASSWORD_UPDATE_TIME DATETIME2,
+    LOCK_TIME            DATETIME2,
+    IS_LOCK              NCHAR(1)      DEFAULT '0',
+    WRONG_NUMBER         DECIMAL(2, 0) DEFAULT 0,
+    LAST_LOGIN_TIME      DATETIME2,
+    DESCRIPTION          NVARCHAR(max),
+    EXTRA                NVARCHAR(max),
+    CREATE_TIME          DATETIME2,
+    UPDATE_TIME          DATETIME2,
+    CREATE_USER          NVARCHAR(64),
+    UPDATE_USER          NVARCHAR(64),
+    TENANT_ID            NVARCHAR(64),
+    EMPLOYEE_ID          NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_WORK_GROUP;
+CREATE TABLE AFC_WORK_GROUP
+(
+    ID             NVARCHAR(64) NOT NULL,
+    CODE           NVARCHAR(64),
+    NAME           NVARCHAR(64),
+    TYPES          NVARCHAR(64),
+    MANAGER_EMP_ID NVARCHAR(64),
+    DESCRIPTION    NVARCHAR(max),
+    EXTRA          NVARCHAR(max),
+    STATUS         NCHAR(1) DEFAULT '1',
+    SORT_BY        DECIMAL(2, 0),
+    CREATE_USER    NVARCHAR(64),
+    UPDATE_USER    NVARCHAR(64),
+    CREATE_TIME    DATETIME2,
+    UPDATE_TIME    DATETIME2,
+    TENANT_ID      NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_APPLICATION;
+CREATE TABLE AFC_APPLICATION
+(
+    ID                 NVARCHAR(64) NOT NULL,
+    NAME               NVARCHAR(64),
+    CODE               NVARCHAR(64),
+    TYPES              NVARCHAR(64),
+    SECRET             NVARCHAR(128),
+    URL                NVARCHAR(1024),
+    DESCRIPTION        NVARCHAR(max),
+    TENANT_ID          NVARCHAR(64),
+    CREATE_TIME        DATETIME2,
+    UPDATE_TIME        DATETIME2,
+    CREATE_USER        NVARCHAR(64),
+    UPDATE_USER        NVARCHAR(64),
+    IS_FIXED           NCHAR(1),
+    EXTRA              NVARCHAR(max),
+    IS_SHARE           NCHAR(1),
+    ACCESS_TOKEN       INT,
+    REFRESH_TOKEN      INT,
+    OPEN_TYPE          NVARCHAR(64),
+    MICRO_URL          NVARCHAR(3000),
+    MICRO_MARK         NVARCHAR(256),
+    IS_LOWCODE         NCHAR(1),
+    BPS_TENANT_ID      NVARCHAR(64),
+    DIMENSION_CODE     NVARCHAR(64),
+    BI_FOLDER          NVARCHAR(64),
+    OWNER_ID           NVARCHAR(64),
+    RUNTIME_ENV_TYPE   NVARCHAR(128),
+    TARGET_RESOURCE_ID NVARCHAR(64),
+    DB_RESOURCE_ID     NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_BUSINESS_OBJECT;
+CREATE TABLE AFC_BUSINESS_OBJECT
+(
+    ID          NVARCHAR(64) NOT NULL,
+    NAME        NVARCHAR(64),
+    CODE        NVARCHAR(64),
+    APP_ID      NVARCHAR(64),
+    TYPES       NVARCHAR(64),
+    DESCRIPTION NVARCHAR(max),
+    TENANT_ID   NVARCHAR(64),
+    CREATE_TIME DATETIME2,
+    UPDATE_TIME DATETIME2,
+    CREATE_USER NVARCHAR(64),
+    UPDATE_USER NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_MENU;
+CREATE TABLE AFC_MENU
+(
+    ID                 NVARCHAR(64) NOT NULL,
+    NAME               NVARCHAR(64),
+    CODE               NVARCHAR(64),
+    RES_ID             NVARCHAR(64),
+    DESCRIPTION        NVARCHAR(max),
+    SORT_NO            DECIMAL(2, 0),
+    IS_LEAF            NCHAR(1),
+    TREE_LEVEL         INT,
+    SEQ                NVARCHAR(256),
+    PARENT_ID          NVARCHAR(64),
+    TENANT_ID          NVARCHAR(64),
+    CREATE_TIME        DATETIME2,
+    UPDATE_TIME        DATETIME2,
+    CREATE_USER        NVARCHAR(64),
+    UPDATE_USER        NVARCHAR(64),
+    IS_FIXED           NCHAR(1),
+    OPEN_TYPE          NCHAR(1),
+    MENU_TYPE          NVARCHAR(64),
+    BUSINESS_OBJ_ID    NVARCHAR(64),
+    MENU_ICON          NVARCHAR(256),
+    IS_NEW_WINDOW_OPEN NCHAR(20),
+    APP_ID             NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_RESOURCE;
+CREATE TABLE AFC_RESOURCE
+(
+    ID              NVARCHAR(64) NOT NULL,
+    NAME            NVARCHAR(64),
+    CODE            NVARCHAR(128),
+    TYPES           NVARCHAR(64),
+    APP_ID          NVARCHAR(64),
+    RES_GROUP_ID    NVARCHAR(64),
+    SUB_TYPE        NVARCHAR(64),
+    DESCRIPTION     NVARCHAR(max),
+    BUSINESS_OBJ_ID NVARCHAR(64),
+    CONTENT         NVARCHAR(max),
+    TENANT_ID       NVARCHAR(64),
+    CREATE_TIME     DATETIME2,
+    UPDATE_TIME     DATETIME2,
+    CREATE_USER     NVARCHAR(64),
+    UPDATE_USER     NVARCHAR(64),
+    IS_FIXED        NCHAR(1),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_RES_GROUP;
+CREATE TABLE AFC_RES_GROUP
+(
+    ID              NVARCHAR(64) NOT NULL,
+    NAME            NVARCHAR(64),
+    CODE            NVARCHAR(64),
+    TYPES           NVARCHAR(64),
+    RES_TYPE        NVARCHAR(64),
+    DESCRIPTION     NVARCHAR(max),
+    APP_ID          NVARCHAR(64),
+    BUSINESS_OBJ_ID NVARCHAR(64),
+    TENANT_ID       NVARCHAR(64),
+    CREATE_TIME     DATETIME2,
+    UPDATE_TIME     DATETIME2,
+    CREATE_USER     NVARCHAR(64),
+    UPDATE_USER     NVARCHAR(64),
+    SORT_NO         DECIMAL(2, 0),
+    IS_FIXED        NCHAR(1),
+    PRIMARY KEY (ID)
+);
+
+
+DROP TABLE IF EXISTS AFC_ROLE;
+CREATE TABLE AFC_ROLE
+(
+    ID              NVARCHAR(64) NOT NULL,
+    NAME            NVARCHAR(64),
+    CODE            NVARCHAR(64),
+    DESCRIPTION     NVARCHAR(max),
+    ROLE_TPL_ID     NVARCHAR(64),
+    TYPES           NVARCHAR(256),
+    BUSINESS_OBJ_ID NVARCHAR(64),
+    TENANT_ID       NVARCHAR(64),
+    CREATE_TIME     DATETIME2,
+    UPDATE_TIME     DATETIME2,
+    CREATE_USER     NVARCHAR(64),
+    UPDATE_USER     NVARCHAR(64),
+    IS_FIXED        NCHAR(1),
+    PRIMARY KEY (ID)
+);
+
+
+
+DROP TABLE IF EXISTS AFC_R_PARTY_ROLE;
+CREATE TABLE AFC_R_PARTY_ROLE
+(
+    ID                   NVARCHAR(64) NOT NULL,
+    PARTY_TYPE           NVARCHAR(64),
+    PARTY_ID             NVARCHAR(64),
+    ROLE_TYPE            NVARCHAR(64),
+    ROLE_ID              NVARCHAR(64),
+    BUSINESS_OBJ_ID      NVARCHAR(64),
+    BUSINESS_OBJ_INST_ID NVARCHAR(64),
+    IS_FIXED             NCHAR(1),
+    PRIMARY KEY (ID)
+);
+
+
+DROP TABLE IF EXISTS AFC_R_RES_ROLE;
+CREATE TABLE AFC_R_RES_ROLE
+(
+    ID                   NVARCHAR(64) NOT NULL,
+    RES_ID               NVARCHAR(64),
+    RES_TYPE             NVARCHAR(64),
+    ROLE_ID              NVARCHAR(64),
+    ROLE_TYPE            NVARCHAR(64),
+    BUSINESS_OBJ_ID      NVARCHAR(64),
+    BUSINESS_OBJ_INST_ID NVARCHAR(64),
+    TENANT_ID            NVARCHAR(64),
+    IS_FIXED             NCHAR(1),
+    PRIMARY KEY (ID)
+);
+
+
+DROP TABLE IF EXISTS AFC_APPLICATION_TEMPLATE;
+CREATE TABLE AFC_APPLICATION_TEMPLATE
+(
+    ID             NVARCHAR(64) NOT NULL,
+    NAME           NVARCHAR(64),
+    CODE           NVARCHAR(64),
+    TYPES          NVARCHAR(64),
+    SECRET         NVARCHAR(128),
+    URL            NVARCHAR(1024),
+    DESCRIPTION    NVARCHAR(max),
+    OPEN_TYPE      NVARCHAR(64),
+    ACCESS_TOKEN   INT,
+    REFRESH_TOKEN  INT,
+    IS_SHARE       NCHAR(1),
+    EXTRA          NVARCHAR(max),
+    IS_FIXED       NCHAR(1),
+    MICRO_URL      NVARCHAR(3000),
+    MICRO_MARK     NVARCHAR(256),
+    DIMENSION_CODE NVARCHAR(64),
+    IS_LOWCODE     NCHAR(1),
+    BPS_TENANT_ID  NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+
+DROP TABLE IF EXISTS AFC_MENU_TEMPLATE;
+CREATE TABLE AFC_MENU_TEMPLATE
+(
+    ID                 NVARCHAR(64) NOT NULL,
+    NAME               NVARCHAR(64),
+    CODE               NVARCHAR(64),
+    RES_TPL_ID         NVARCHAR(64),
+    DESCRIPTION        NVARCHAR(max),
+    SORT_NO            DECIMAL(2, 0),
+    IS_LEAF            NCHAR(1),
+    TREE_LEVEL         INT,
+    SEQ                NVARCHAR(256),
+    PARENT_ID          NVARCHAR(64),
+    IS_FIXED           NCHAR(1),
+    ROLE_TPL_CODE      NVARCHAR(1024),
+    MENU_ICON          NVARCHAR(256),
+    OPEN_TYPE          NCHAR(1),
+    IS_PLATFORM        NCHAR(1),
+    MENU_TYPE          NVARCHAR(64),
+    BUSINESS_OBJ_ID    NVARCHAR(64),
+    IS_NEW_WINDOW_OPEN NCHAR(20),
+    APP_ID             NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+
+DROP TABLE IF EXISTS AFC_RESOURCE_TEMPLATE;
+CREATE TABLE AFC_RESOURCE_TEMPLATE
+(
+    ID               NVARCHAR(64) NOT NULL,
+    NAME             NVARCHAR(64),
+    CODE             NVARCHAR(128),
+    TYPES            NVARCHAR(64),
+    APP_TPL_ID       NVARCHAR(64),
+    RES_GROUP_TPL_ID NVARCHAR(64),
+    DESCRIPTION      NVARCHAR(max),
+    BUSINESS_OBJ_ID  NVARCHAR(64),
+    CONTENT          NVARCHAR(max),
+    IS_FIXED         NCHAR(1),
+    ROLE_TPL_CODE    NVARCHAR(1024),
+    SUB_TYPE         NVARCHAR(64),
+    IS_PLATFORM      NCHAR(1),
+    REUSE_TYPES      VARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+
+DROP TABLE IF EXISTS AFC_RES_GROUP_TEMPLATE;
+CREATE TABLE AFC_RES_GROUP_TEMPLATE
+(
+    ID              NVARCHAR(64) NOT NULL,
+    NAME            NVARCHAR(64),
+    CODE            NVARCHAR(64),
+    TYPES           NVARCHAR(64),
+    RES_TPL_TYPE    NVARCHAR(64),
+    DESCRIPTION     NVARCHAR(max),
+    APP_TPL_ID      NVARCHAR(64),
+    BUSINESS_OBJ_ID NVARCHAR(64),
+    SORT_NO         DECIMAL(2, 0),
+    IS_FIXED        NCHAR(1),
+    IS_PLATFORM     NCHAR(1),
+    REUSE_TYPES     VARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+
+DROP TABLE IF EXISTS AFC_ROLE_TEMPLATE;
+CREATE TABLE AFC_ROLE_TEMPLATE
+(
+    ID              NVARCHAR(64) NOT NULL,
+    NAME            NVARCHAR(64),
+    CODE            NVARCHAR(64),
+    DESCRIPTION     NVARCHAR(max),
+    TYPES           NVARCHAR(256),
+    BUSINESS_OBJ_ID NVARCHAR(64),
+    IS_FIXED        NCHAR(1),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_R_RES_ROLE_TEMPLATE;
+CREATE TABLE AFC_R_RES_ROLE_TEMPLATE
+(
+    ID                   NVARCHAR(64) NOT NULL,
+    RES_TPL_ID           NVARCHAR(64),
+    RES_TPL_TYPE         NVARCHAR(64),
+    ROLE_TPL_ID          NVARCHAR(64),
+    ROLE_TPL_TYPE        NVARCHAR(64),
+    BUSINESS_OBJ_ID      NVARCHAR(64),
+    BUSINESS_OBJ_INST_ID NVARCHAR(64),
+    IS_FIXED             NCHAR(1),
+    PRIMARY KEY (ID)
+);
+
+-- 2022/3/11 添加审计日志历史表
+DROP TABLE IF EXISTS AFC_OPERATION_LOG_HISTORY;
+CREATE TABLE AFC_OPERATION_LOG_HISTORY
+(
+    ID                NVARCHAR(64) NOT NULL,
+    OPERATOR_CODE     NVARCHAR(256),
+    OPERATOR_NAME     NVARCHAR(256),
+    OPERATE_TYPE      NCHAR(1),
+    OPERATE_DATE      DATETIME2,
+    TARGET_TYPE       NVARCHAR(256),
+    TARGET_MODEL_ID   NVARCHAR(256),
+    TARGET_MODEL_NAME NVARCHAR(256),
+    MESSAGE           NVARCHAR(max),
+    TENANT_ID         NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+-- 2022/3/14 添加审计日志细节历史表
+DROP TABLE IF EXISTS AFC_OPERATION_LOG_DETAIL_H;
+CREATE TABLE AFC_OPERATION_LOG_DETAIL_H
+(
+    ID            NVARCHAR(64) NOT NULL,
+    OLD_DATA_JSON NVARCHAR(max),
+    NEW_DATA_JSON NVARCHAR(max),
+    PRIMARY KEY (ID)
+);
+
+-- 2022/3/14 添加文件存储表
+/*==============================================================*/
+/* Table: AFC_FILE_STORE                                        */
+/*==============================================================*/
+DROP TABLE IF EXISTS AFC_FILE_STORE;
+CREATE TABLE AFC_FILE_STORE
+(
+    FILE_ID     NVARCHAR(64) NOT NULL,
+    REF_TYPE    NVARCHAR(64),
+    REF_ID      NVARCHAR(128),
+    STORE_TYPE  NVARCHAR(64),
+    APP_NAME    NVARCHAR(64),
+    FILE_GROUP  NVARCHAR(64),
+    FILE_NAME   NVARCHAR(128),
+    FILE_URL    NVARCHAR(512),
+    FILE_TYPE   NVARCHAR(64),
+    FILE_SIZE   INT,
+    MD5         NVARCHAR(512),
+    STATUS      NVARCHAR(64),
+    EXTEND      NVARCHAR(max),
+    DEL_FLAG    NCHAR,
+    CREATE_USER NVARCHAR(64),
+    CREATE_TIME DATETIME2,
+    UPDATE_USER NVARCHAR(64),
+    UPDATE_TIME DATETIME2,
+    PRIMARY KEY (FILE_ID)
+);
+
+/*==============================================================*/
+/* Table: AFC_FILE_STORE_CONTENT                                */
+/*==============================================================*/
+DROP TABLE IF EXISTS AFC_FILE_STORE_CONTENT;
+CREATE TABLE AFC_FILE_STORE_CONTENT
+(
+    FILE_ID  NVARCHAR(64) NOT NULL,
+    REF_TYPE NVARCHAR(64),
+    CONTENT  VARBINARY(max),
+    PRIMARY KEY (FILE_ID)
+);
+
+DROP TABLE IF EXISTS AFC_WATER_MARK;
+CREATE TABLE AFC_WATER_MARK
+(
+    ID                NVARCHAR(64) NOT NULL,
+    CONTENT           NVARCHAR(2000),
+    IS_ENABLE         NVARCHAR(64),
+    OPATICY           NVARCHAR(64),
+    ROTATION_ANGLE    NVARCHAR(64),
+    EXTRA             NVARCHAR(max),
+    CREATE_USER       NVARCHAR(64),
+    UPDATE_USER       NVARCHAR(64),
+    CREATE_TIME       DATETIME2,
+    UPDATE_TIME       DATETIME2,
+    TENANT_ID         NVARCHAR(64),
+    WATER_MARK_HEIGHT NVARCHAR(64),
+    WATER_MARK_WIDTH  NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+
+DROP TABLE IF EXISTS AFC_ONLINE_USER;
+CREATE TABLE AFC_ONLINE_USER
+(
+    ID               NVARCHAR(64) NOT NULL,
+    ONLINE_CODE      NVARCHAR(64),
+    ONLINE_NAME      NVARCHAR(64),
+    LOGIN_DATE       DATETIME2,
+    USE_TIME         DECIMAL(3, 0),
+    LOGIN_IP         NVARCHAR(64),
+    UNIQUE_ID        NVARCHAR(64),
+    TERMINAL_VERSION NVARCHAR(512),
+    TENANT_ID        NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_DIMENSION_TEMPLATE;
+CREATE TABLE AFC_DIMENSION_TEMPLATE
+(
+    ID          NVARCHAR(64) NOT NULL,
+    CODE        NVARCHAR(64),
+    NAME        NVARCHAR(64),
+    TYPES       NVARCHAR(64),
+    DESCRIPTION NVARCHAR(max),
+    STATUS      NCHAR(1) DEFAULT '1',
+    SORT_BY     DECIMAL(2, 0),
+    EXTRA       NVARCHAR(max),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_ORG_TEMPLATE;
+CREATE TABLE AFC_ORG_TEMPLATE
+(
+    ID                    NVARCHAR(64) NOT NULL,
+    CODE                  NVARCHAR(64),
+    NAME                  NVARCHAR(64),
+    TYPES                 NVARCHAR(32),
+    ORG_LEVEL             NVARCHAR(32),
+    PARENT_ID             NVARCHAR(64),
+    FULL_CODE_PATH        NVARCHAR(3000),
+    MANAGER_ID            NVARCHAR(64),
+    CHARGER_ID            NVARCHAR(64),
+    MAIN_DIMENSION_ORG_ID NVARCHAR(64),
+    DIMENSION_TPL_ID      NVARCHAR(64),
+    SORT_BY               DECIMAL(2, 0),
+    STATUS                NCHAR(1) DEFAULT '1',
+    DESCRIPTION           NVARCHAR(max),
+    EXTRA                 NVARCHAR(max),
+    ADDRESS               NVARCHAR(64),
+    LINKMAN               NVARCHAR(32),
+    PHONE                 NVARCHAR(32),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_POSITION_TEMPLATE;
+CREATE TABLE AFC_POSITION_TEMPLATE
+(
+    ID          NVARCHAR(64) NOT NULL,
+    CODE        NVARCHAR(64),
+    NAME        NVARCHAR(64),
+    TYPES       NVARCHAR(64),
+    OBLIGATION  NVARCHAR(1000),
+    DESCRIPTION NVARCHAR(max),
+    EXTRA       NVARCHAR(max),
+    STATUS      NCHAR(1) DEFAULT '1',
+    SORT_BY     DECIMAL(2, 0),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_BUSINESS_OBJECT_TEMPLATE;
+CREATE TABLE AFC_BUSINESS_OBJECT_TEMPLATE
+(
+    ID          NVARCHAR(64) NOT NULL,
+    NAME        NVARCHAR(64),
+    CODE        NVARCHAR(64),
+    APP_TPL_ID  NVARCHAR(64),
+    TYPES       NVARCHAR(64),
+    DESCRIPTION NVARCHAR(max),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_SYSTEM_VARIABLE;
+CREATE TABLE AFC_SYSTEM_VARIABLE
+(
+    ID           NVARCHAR(64) NOT NULL,
+    CODE         NVARCHAR(64),
+    NAME         NVARCHAR(64),
+    VALUE        NVARCHAR(1024),
+    RES_GROUP_ID NVARCHAR(64),
+    IS_ENCRYPT   NVARCHAR(10),
+    DESCRIPTION  NVARCHAR(64),
+    SOURCE       NVARCHAR(64),
+    CREATE_USER  NVARCHAR(64),
+    UPDATE_USER  NVARCHAR(64),
+    TENANT_ID    NVARCHAR(64),
+    CREATE_TIME  DATETIME2,
+    UPDATE_TIME  DATETIME2,
+    TYPES        NVARCHAR(64),
+    APP_ID       NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_IMPORT_HISTORY;
+CREATE TABLE AFC_IMPORT_HISTORY
+(
+    ID             NVARCHAR(64) NOT NULL,
+    CLIENT_ADDRESS NVARCHAR(64),
+    IMPORT_RESULT  NVARCHAR(2000),
+    IMPORT_TYPES   NVARCHAR(64),
+    OPERATOR       NVARCHAR(64),
+    CREATE_USER    NVARCHAR(64),
+    UPDATE_USER    NVARCHAR(64),
+    TENANT_ID      NVARCHAR(64),
+    CREATE_TIME    DATETIME2,
+    UPDATE_TIME    DATETIME2,
+    FILE_ID        NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+-- 索引
+CREATE INDEX AFC_MENU_INDEX ON AFC_MENU (RES_ID, BUSINESS_OBJ_ID);
+CREATE INDEX AFC_RESOURCE_INDEX ON AFC_RESOURCE (BUSINESS_OBJ_ID);
+CREATE INDEX AFC_FILE_STORE_INDEX ON AFC_FILE_STORE (REF_TYPE, REF_ID, APP_NAME);
+
+--2022-06-09，索引新增
+-- 员工表
+CREATE INDEX afc_emp_index_code ON AFC_EMPLOYEE (CODE);
+-- 用户表
+CREATE INDEX afc_user_index_code ON AFC_USER (CODE);
+-- 机构表
+CREATE INDEX afc_org_index_code_ten ON AFC_ORG (CODE, TENANT_ID);
+-- CREATE INDEX afc_org_index_parent ON AFC_ORG (PARENT_ID);
+-- 员工机构关系表
+CREATE INDEX afc_r_org_position_index_emp ON AFC_R_ORG_POSITION (EMPLOYEE_ID);
+CREATE INDEX afc_r_org_position_index_org ON AFC_R_ORG_POSITION (ORG_ID);
+-- 岗位表
+CREATE INDEX afc_position_index_code_ten ON AFC_POSITION (CODE, TENANT_ID);
+-- 角色表
+CREATE INDEX afc_role_index_code_ten ON AFC_ROLE (CODE, TENANT_ID);
+CREATE INDEX afc_r_party_role_index_party ON AFC_R_PARTY_ROLE (PARTY_ID, PARTY_TYPE, ROLE_TYPE);
+-- 资源表
+-- CREATE INDEX afc_resource_index_role ON AFC_ROLE (ROLE_ID);
+CREATE INDEX afc_r_res_role_index_role ON AFC_R_RES_ROLE (ROLE_ID);
+-- 字典类型表
+CREATE INDEX iam_dict_type_index_code_ten ON AFC_DICT_TYPE (CODE, TENANT_ID);
+-- 字典项表
+CREATE INDEX iam_dict_entry_index_code_ten ON AFC_DICT_ENTRY (CODE, TENANT_ID);
+-- 菜单(循环查询)
+CREATE INDEX afc_online_user_code_ten ON AFC_ONLINE_USER (ONLINE_CODE, TENANT_ID);
+
+CREATE INDEX afc_resource_index_code_ten ON AFC_RESOURCE (CODE, TENANT_ID);
+
+
+-- 2022/8/4 增加公共资源管理模块
+DROP TABLE IF EXISTS AFC_DATASOURCE;
+CREATE TABLE AFC_DATASOURCE
+(
+    ID              NVARCHAR(64) NOT NULL,
+    CODE            NVARCHAR(64) NOT NULL,
+    NAME            NVARCHAR(64) NOT NULL,
+    LEVELS          NVARCHAR(64),
+    OWNING_SYSTEM   NVARCHAR(64),
+    OWNING_ORG_ID   NVARCHAR(64),
+    OWNING_ORG_NAME NVARCHAR(64),
+    USE_TO          NVARCHAR(64),
+    REMARK          NVARCHAR(max),
+    STATUS          NCHAR(1) DEFAULT '1',
+    CREATE_USER     NVARCHAR(64),
+    UPDATE_USER     NVARCHAR(64),
+    CREATE_TIME     DATETIME2,
+    UPDATE_TIME     DATETIME2,
+    TENANT_ID       NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_DATASOURCE_ENGINE;
+CREATE TABLE AFC_DATASOURCE_ENGINE
+(
+    ID              NVARCHAR(64) NOT NULL,
+    NAME            NVARCHAR(64) NOT NULL,
+    TYPES           NVARCHAR(32) NOT NULL,
+    CONNECTION_IP   NVARCHAR(32) NOT NULL,
+    CONNECTION_PORT NVARCHAR(32) NOT NULL,
+    ENV_TYPE        NVARCHAR(64),
+    LEVELS          NVARCHAR(64),
+    OWNING_SYSTEM   NVARCHAR(64),
+    OWNING_ORG_ID   NVARCHAR(64),
+    OWNING_ORG_NAME NVARCHAR(64),
+    STATUS          NCHAR(1) DEFAULT '1',
+    REMARK          NVARCHAR(max),
+    CREATE_USER     NVARCHAR(64),
+    UPDATE_USER     NVARCHAR(64),
+    CREATE_TIME     DATETIME2,
+    UPDATE_TIME     DATETIME2,
+    TENANT_ID       NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_R_DATASOURCE_MESSAGE;
+CREATE TABLE AFC_R_DATASOURCE_MESSAGE
+(
+    ID                NVARCHAR(64) NOT NULL,
+    ENGINE_ID         NVARCHAR(64) NOT NULL,
+    DATASOURCE_ID     NVARCHAR(64) NOT NULL,
+    ENV_TYPE          NVARCHAR(64) NOT NULL,
+    CONNECTION_PARAMS NVARCHAR(max),
+    CREATE_USER       NVARCHAR(64),
+    UPDATE_USER       NVARCHAR(64),
+    CREATE_TIME       DATETIME2,
+    UPDATE_TIME       DATETIME2,
+    TENANT_ID         NVARCHAR(64),
+    STATUS                   NCHAR(1)            DEFAULT '0' ,
+    EXTRACT_INSTANCE_ID      NVARCHAR(64)    ,
+    METADATA_STATISTICS      NVARCHAR(1024)  ,
+    SYNC_TIME                DATETIME2      ,
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_THEME_DIRECTORY;
+CREATE TABLE AFC_THEME_DIRECTORY
+(
+    ID          NVARCHAR(64) NOT NULL,
+    NAME        NVARCHAR(64),
+    CODE        NVARCHAR(64),
+    ORG_ID      NVARCHAR(64),
+    ORG_NAME    NVARCHAR(64),
+    REMARK      NVARCHAR(max),
+    IS_LEAF     NCHAR(1),
+    PARENT_ID   NVARCHAR(64),
+    CREATE_USER NVARCHAR(64),
+    UPDATE_USER NVARCHAR(64),
+    CREATE_TIME DATETIME2,
+    UPDATE_TIME DATETIME2,
+    TENANT_ID   NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_API_TOKEN;
+CREATE TABLE AFC_API_TOKEN
+(
+    ID          NVARCHAR(64)  NOT NULL,
+    TOKEN       NVARCHAR(64)  NOT NULL,
+    USER_ID     NVARCHAR(64)  NOT NULL,
+    CREATE_TIME DATETIME2     NOT NULL,
+    EXPIRE_TIME DATETIME2     NOT NULL,
+    REMARK      NVARCHAR(255) NULL,
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_DW_DATA_LEVEL;
+CREATE TABLE AFC_DW_DATA_LEVEL
+(
+    ID          NVARCHAR(64)  NOT NULL,
+    CODE        NVARCHAR(64)  NOT NULL,
+    NAME        NVARCHAR(255) NOT NULL,
+    ORDERS       NCHAR(1) DEFAULT '0',
+    TENANT_ID   NVARCHAR(64)  NULL,
+    CREATE_TIME DATETIME2     NULL,
+    UPDATE_TIME DATETIME2     NULL,
+    CREATE_USER NVARCHAR(64)  NULL,
+    UPDATE_USER NVARCHAR(64)  NULL,
+    REMARK      NVARCHAR(255) NULL,
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_DW_DATA_LEVEL_TEMPLATE;
+CREATE TABLE AFC_DW_DATA_LEVEL_TEMPLATE
+(
+    ID          NVARCHAR(64)  NOT NULL,
+    CODE        NVARCHAR(64)  NOT NULL,
+    NAME        NVARCHAR(255) NOT NULL,
+    ORDERS       NCHAR(1) DEFAULT '0',
+    TENANT_ID   NVARCHAR(64)  NULL,
+    CREATE_TIME DATETIME2     NULL,
+    UPDATE_TIME DATETIME2     NULL,
+    CREATE_USER NVARCHAR(64)  NULL,
+    UPDATE_USER NVARCHAR(64)  NULL,
+    REMARK      NVARCHAR(255) NULL,
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_DATASOURCE_METADATA;
+CREATE TABLE AFC_DATASOURCE_METADATA
+(
+    ID            NVARCHAR(64)  NOT NULL,
+    CODE          NVARCHAR(64)  NOT NULL,
+    NAME          NVARCHAR(255) NOT NULL,
+    CLASSIFIER_ID NVARCHAR(64)  NULL,
+    PARENT_ID     NVARCHAR(64)  NULL,
+    ATTR_MD5      NVARCHAR(255) NULL,
+    NAMESPACE     NVARCHAR(512) NULL,
+    CREATE_TIME   DATETIME2     NULL,
+    UPDATE_TIME   DATETIME2     NULL,
+    CREATE_USER   NVARCHAR(64)  NULL,
+    UPDATE_USER   NVARCHAR(64)  NULL,
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_DATASOURCE_SYNC_LOG;
+CREATE TABLE AFC_DATASOURCE_SYNC_LOG
+(
+    ID                  NVARCHAR(64) NOT NULL,
+    EXTRACT_INSTANCE_ID NVARCHAR(64) NOT NULL,
+    LOG_CONTENT         NVARCHAR(max),
+    SYNC_TIME           DATETIME2    NULL,
+    OPERATOR_USER       NVARCHAR(64) NULL,
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_SYS_VARIABLE_TEMPLATE;
+CREATE TABLE AFC_SYS_VARIABLE_TEMPLATE
+(
+    ID               NVARCHAR(64) NOT NULL,
+    CODE             NVARCHAR(64),
+    NAME             NVARCHAR(64),
+    VALUE            NVARCHAR(1024),
+    RES_GROUP_TPL_ID NVARCHAR(64),
+    IS_ENCRYPT       NVARCHAR(10),
+    DESCRIPTION      NVARCHAR(64),
+    SOURCE           NVARCHAR(64),
+    TYPES            NVARCHAR(64),
+    APP_TPL_ID       NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_LC_APPLICATION_TEMPLATE;
+CREATE TABLE AFC_LC_APPLICATION_TEMPLATE
+(
+    ID          NVARCHAR(64)  NOT NULL,
+    NAME        NVARCHAR(256),
+    CODE        NVARCHAR(256) NOT NULL,
+    CONTENT     VARBINARY(max),
+    TYPES       NVARCHAR(256),
+    STATUS      NCHAR(1) DEFAULT '1',
+    DESCRIPTION VARBINARY(max),
+    CREATE_TIME DATETIME2,
+    UPDATE_TIME DATETIME2,
+    CREATE_USER NVARCHAR(64),
+    UPDATE_USER NVARCHAR(64),
+    PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS AFC_GENERAL_I18N;
+CREATE TABLE AFC_GENERAL_I18N  (
+                                   CODE              NVARCHAR(64)     NOT NULL        ,
+                                   ENTITY_NAME       NVARCHAR(32)     NOT NULL        ,
+                                   PROPERTY_NAME     NVARCHAR(32)     NOT NULL        ,
+                                   VALUE             VARBINARY(max)             NULL            ,
+                                   LOCALE            NVARCHAR(16)     NOT NULL        ,
+                                   TENANT_ID         NVARCHAR(64)     NOT NULL        ,
+                                   PRIMARY KEY (CODE, LOCALE, TENANT_ID, ENTITY_NAME, PROPERTY_NAME)
+);
+
+DROP TABLE IF EXISTS AFC_SOURCE_MATERIAL;
+CREATE TABLE AFC_SOURCE_MATERIAL (
+                                     ID 						NVARCHAR(64) 		NOT NULL,
+                                     CODE 						NVARCHAR(64) 		NOT NULL,
+                                     NAME 						NVARCHAR(64) 		    	,
+                                     TYPES 					NVARCHAR(64)					,
+                                     MATERIAL_GROUP_ID 		NVARCHAR(64)					,
+                                     ICON_TYPE					NVARCHAR(64) 				,
+                                     FILE_ID					NVARCHAR(64)					,
+                                     CONTENT           		NVARCHAR(max)                    ,
+                                     EXTRA						NVARCHAR(max)					,
+                                     SORT_BY					DECIMAL(2, 0)				,
+                                     DESCRIPTION       		NVARCHAR(max)                        ,
+                                     CREATE_USER       		NVARCHAR(64)                 ,
+                                     UPDATE_USER       		NVARCHAR(64)                 ,
+                                     CREATE_TIME       		DATETIME2                    ,
+                                     UPDATE_TIME       		DATETIME2                    ,
+                                     TENANT_ID         		NVARCHAR(64)                 ,
+                                     PRIMARY KEY(ID)
+) ;
+
+DROP TABLE IF EXISTS AFC_MATERIAL_GROUP;
+CREATE TABLE AFC_MATERIAL_GROUP (
+                                    ID 						NVARCHAR(64) 		NOT NULL  ,
+                                    CODE						NVARCHAR(64)			NOT NULL  ,
+                                    NAME						NVARCHAR(64)					,
+                                    TYPES 					NVARCHAR(64)					,
+                                    MATERIAL_TYPE 			NVARCHAR(64)					,
+                                    SORT_BY					DECIMAL(2, 0)				,
+                                    DESCRIPTION       		NVARCHAR(max)                          ,
+                                    CREATE_USER       		NVARCHAR(64)                   ,
+                                    UPDATE_USER       		NVARCHAR(64)                   ,
+                                    CREATE_TIME       		DATETIME2                     ,
+                                    UPDATE_TIME      			DATETIME2                     ,
+                                    TENANT_ID       			NVARCHAR(64)                   ,
+                                    PRIMARY KEY (ID)
+) ;
+DROP TABLE IF EXISTS  AFC_R_DATASOURCE_PROJECT;
+CREATE TABLE AFC_R_DATASOURCE_PROJECT (
+                                          ID 						NVARCHAR(64) 		NOT NULL,
+                                          DATASOURCE_CODE			NVARCHAR(64)			NOT NULL ,
+                                          PROJECT_CODE				NVARCHAR(64)			NOT NULL,
+                                          PROJECT_MARK 				NVARCHAR(64)						,
+                                          EXT       		        NVARCHAR(max)                            ,
+                                          CREATE_USER       		NVARCHAR(64)                    ,
+                                          UPDATE_USER       		NVARCHAR(64)                    ,
+                                          CREATE_TIME       		DATETIME2                       ,
+                                          UPDATE_TIME      			DATETIME2                       ,
+                                          TENANT_ID       			NVARCHAR(64)                    ,
+                                          PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS  AFC_WIDGET;
+CREATE TABLE AFC_WIDGET  (
+                             ID                  NVARCHAR(64)           NOT NULL ,
+                             NAME                NVARCHAR(128)                   ,
+                             CODE                NVARCHAR(64)           NOT NULL ,
+                             SCOPE               NVARCHAR(64)                    ,
+                             TYPES               NVARCHAR(64)                    ,
+                             APP_ID              NVARCHAR(64)                    ,
+                             RES_ID              NVARCHAR(64)                    ,
+                             CONTENT             VARBINARY(max)                           ,
+                             MD5                 NVARCHAR(512)                   ,
+                             DESCRIPTION         NVARCHAR(max)                           ,
+                             CREATE_TIME         DATETIME2                      ,
+                             UPDATE_TIME         DATETIME2                      ,
+                             CREATE_USER         NVARCHAR(64)                    ,
+                             UPDATE_USER         NVARCHAR(64)                    ,
+                             TENANT_ID           NVARCHAR(64)                    ,
+                             PRIMARY KEY (ID)
+) ;
+
+DROP TABLE IF EXISTS  AFC_PORTAL;
+CREATE TABLE AFC_PORTAL  (
+                             ID                  NVARCHAR(64)           NOT NULL ,
+                             NAME                NVARCHAR(128)                   ,
+                             CODE                NVARCHAR(64)           NOT NULL ,
+                             SCOPE               NVARCHAR(64)                    ,
+                             TYPES               NVARCHAR(64)                    ,
+                             SORT_NO             DECIMAL(2, 0)                  ,
+                             CONTENT             TEXT                           ,
+                             MD5                 NVARCHAR(512)                   ,
+                             APP_ID              NVARCHAR(64)                    ,
+                             USER_ID             NVARCHAR(64)                    ,
+                             CREATE_TIME         DATETIME2                      ,
+                             UPDATE_TIME         DATETIME2                      ,
+                             CREATE_USER         NVARCHAR(64)                    ,
+                             UPDATE_USER         NVARCHAR(64)                    ,
+                             TENANT_ID           NVARCHAR(64)                    ,
+                             PRIMARY KEY (ID)
+) ;
+
+DROP TABLE IF EXISTS  AFC_WIDGET_TEMPLATE;
+CREATE TABLE AFC_WIDGET_TEMPLATE  (
+                                      ID                  NVARCHAR(64)           NOT NULL ,
+                                      NAME                NVARCHAR(128)                   ,
+                                      CODE                NVARCHAR(64)           NOT NULL ,
+                                      SCOPE               NVARCHAR(64)                    ,
+                                      TYPES               NVARCHAR(64)                    ,
+                                      APP_TPL_ID          NVARCHAR(64)                    ,
+                                      RES_TPL_ID          NVARCHAR(64)                    ,
+                                      CONTENT             TEXT                       ,
+                                      MD5                 NVARCHAR(512)                   ,
+                                      PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS  AFC_PORTAL_TEMPLATE;
+CREATE TABLE AFC_PORTAL_TEMPLATE  (
+                                      ID                  NVARCHAR(64)           NOT NULL ,
+                                      NAME                NVARCHAR(128)                   ,
+                                      CODE                NVARCHAR(64)           NOT NULL ,
+                                      SCOPE               NVARCHAR(64)                    ,
+                                      TYPES               NVARCHAR(64)                    ,
+                                      SORT_NO             DECIMAL(2, 0)                  ,
+                                      CONTENT             TEXT                       ,
+                                      MD5                 NVARCHAR(512)                   ,
+                                      APP_TPL_ID          NVARCHAR(64)                    ,
+                                      USER_TPL_ID         NVARCHAR(64)                    ,
+                                      PRIMARY KEY (ID)
+);
+-- 2022/4/22 afc_application_template表初始化应用数据
+INSERT INTO afc_application_template(ID, NAME, CODE, TYPES, SECRET, URL, DESCRIPTION, IS_FIXED, EXTRA, IS_SHARE, ACCESS_TOKEN, REFRESH_TOKEN, OPEN_TYPE, MICRO_URL, MICRO_MARK, DIMENSION_CODE, IS_LOWCODE, BPS_TENANT_ID) VALUES ('501', '应用基础门户', 'AFCENTER', NULL, 'b771a0ad37c34baeab2b6f73fbebcabd', '***', NULL,  NULL, NULL, '0', 5, 30, 'microApp', '[{"id":1658928923127,"microMark":"bfp","microUrl":"/"},{"id":1660550107529,"microMark":"ide","microUrl":"/"},{"id":1660550107530,"microMark":"portal","microUrl":"/"},{"id":1660550107531,"microMark":"widget","microUrl":"/"}]', 'afc', NULL, '0', NULL );
+
+-- 2022/4/22 afc_res_group_template初始化资源组数据
+
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('940', '默认分组', '501_public_group', NULL, NULL, NULL, '501', NULL, NULL, 0, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('950', '默认分组', 'sysvar_public_group', 'platform', 'systemVariable', NULL, '501', NULL, NULL, 0, '2');
+
+-- 2022/4/22 afc_resource_template初始化资源数据
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('641', '登录安全', 'login_security', 'url', '501', '29', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/login-security/index.vue"}', NULL,'2', 'afc-role-tenant-manager,afc-role-system-admin-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('642', '在线用户', 'online_user', 'url', '501', '32', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/online-user/index.vue"}', NULL, '2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('643', '操作审计', 'operate_audit', 'url', '501', '2', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/operate-audit/index.vue"}', NULL, '1','afc-role-sys-manager,afc-role-security-manager,afc-role-audit-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('644', '调试日志', 'debug_logs', 'url', '501', '1', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/debug-logs/index.vue"}', NULL, '1','afc-role-sys-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('648', '查看用户列表', 'user_list', 'url', '501', '26', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/user/list.vue"}', NULL, '2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('650', '重置密码', 'reset_password', 'url', '501', '26', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "/coframe/rights/user/reset_password.vue"}',  NULL, '2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('651', '权限调整', 'auth-edit', 'url', '501', '25', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/authedit/index.vue"}', NULL, '2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('652', '设置安全策略', 'access_rule', 'url', '501', '29', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "coframe/iprule/list.vue"}', NULL, '2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('653', '权限检索', 'auth_search', 'url', '501', '22', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/authlist/index.vue"}', NULL, '2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('654', '配置业务字典', 'dict_manager', 'url', '501', '33', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "coframe/dict/index.vue"}',NULL, '2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('660', '授权管理', 'role_auth', 'url', '501', '22', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "coframe/right/index.vue"}', NULL, '2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE, REUSE_TYPES ) VALUES ('661', '角色管理', 'role_manager', 'url', '501', '21', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/role/list.vue"}',NULL, '2','afc-role-tenant-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('663', '水印设置', 'watermark', 'url', '501', '31', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/watermark/index.vue"}',NULL, '2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('664', '应用管理', 'app', 'url', '501', '3', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/app/index.vue"}',  NULL, '2','afc-role-tenant-manager,afc-role-system-admin-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE, REUSE_TYPES ) VALUES ('665', '平台菜单', 'pc-menu', 'url', '501', '28', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/menu/pc-menu.vue"}',  NULL, '2','afc-role-tenant-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('671', '工作组管理', 'groupTree', 'url', '501', '18', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/group/index.vue"}',NULL, '2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('673', '机构管理', 'org_tree', 'url', '501', '9', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/org/index.vue"}',  NULL, '0','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('675', '岗位管理', 'position_msg', 'url', '501', '16', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/position/index.vue"}', NULL, '2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('701', '租户管理', 'tenant_index', 'url', '501', '1', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/tenant/index.vue"}',NULL, '1','afc-role-sys-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('727', '概要', 'tenant_dashboard', 'url', '501', '940', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/dashboard/index"}',NULL, '2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('728', '审计日志', 'tenant_operate_audit', 'url', '501', '34', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/operate-audit/index.vue"}', NULL, '2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE, REUSE_TYPES ) VALUES ('730', '系统变量', 'sysVariable', 'url', '501', '46', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/systemVariables/index.vue"}', NULL, '2','afc-role-tenant-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template ( ID ,  NAME ,  CODE ,  TYPES ,  APP_TPL_ID ,  RES_GROUP_TPL_ID ,  SUB_TYPE ,  DESCRIPTION ,  BUSINESS_OBJ_ID ,  CONTENT ,  IS_FIXED ,  IS_PLATFORM ,  ROLE_TPL_CODE ) VALUES ('731', '数据导入', 'dataImport', 'url', '501', '36', NULL, NULL, NULL, '{ "openType": "afcenter", "mark":null, "url":null, "params":null, "afcenterPath": "afcenter/data-import/index.vue"}', NULL, '2','afc-role-tenant-manager');
+
+-- 2022/4/22 afc_menu_template初始化菜单数据
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('181', '平台管理', 'CENTER', NULL, NULL, 1, '0', NULL, NULL, 'root', NULL, NULL, 'kapianxingshi', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('182', '租户管理', 'tenant', '701', NULL, 1, '1', NULL, NULL, '181', NULL, NULL, 'shezhi_3', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('183', '审计日志', 'operate_audit', '643', NULL, 2, '1', NULL, NULL, '181', NULL, NULL, 'shenhe', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('184', '登录安全', 'login_security', '641', NULL, 1, '1', NULL, NULL, '189', NULL, NULL, NULL, '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('185', '在线用户', 'online_users', '642', NULL, 4, '1', NULL, NULL, '189', NULL, NULL, NULL, '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('186', '调试日志', 'debug_logs', '644', NULL, 3, '1', NULL, NULL, '181',  NULL, NULL, 'shezhi_4', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('187', '组织权限中心', 'menu_auth', '727', NULL, 2, '0', NULL, NULL, 'root', NULL, NULL, 'fuwu', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('188', '应用管理', 'app', '664', NULL, 1, '1', NULL, NULL, '187',  NULL, NULL, 'fenlei', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('189', '安全管理', 'security', '641', NULL, 7, '0', NULL, NULL, '187',NULL, NULL, 'anquan', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('190', '水印管理', 'watermark', '663', NULL, 3, '1', NULL, NULL, '189',NULL, NULL, NULL, '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('191', '组织管理', 'menu_org', NULL, NULL, 2, '0', NULL, NULL, '187', NULL, NULL, 'tuandui3', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('192', '工作组管理', 'working-group', '671', NULL, 3, '1', NULL, NULL, '191', NULL, NULL, NULL, '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('193', '岗位管理', 'position_manage', '675', NULL, 2, '1', NULL, NULL, '191',NULL, NULL, NULL, '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('194', '机构管理', 'org_manage', '673', NULL, 1, '1', NULL, NULL, '191',NULL, NULL, NULL, '0');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('195', '工作流程', 'menu_process', NULL, NULL, 3, '0', NULL, NULL, 'root', NULL, NULL, 'falvsusong', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('205', '账号管理', 'menu_user_manager', '648', NULL, 3, '1', NULL, NULL, '187', NULL, NULL, 'geren', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('206', '菜单管理', 'menu_menu_manager', NULL , NULL, 5, '0', NULL, NULL, '187',NULL, NULL, 'zhi', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('209', '权限查询', 'menu-auth-list', '653', NULL, 2, '1', NULL, NULL, '223', NULL, NULL, NULL, '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('210', '权限调整', 'menu-auth-edit', '651', NULL, 3, '1', NULL, NULL, '223',NULL, NULL, NULL, '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('213', '通用管理', 'manager', NULL, NULL, 8, '0', NULL, NULL, '187',NULL, NULL, 'shezhi', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('223', '权限管理', 'role', '660', NULL, 4, '0', NULL, NULL, '187', NULL, NULL, 'qingchu', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('224', '业务字典', 'yewu', '654', NULL, 1, '1', NULL, NULL, '213', NULL, NULL, NULL, '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('231', '角色管理', 'rolemanage', '661', NULL, 1, '1', NULL, NULL, '223',  NULL, NULL, NULL, '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('233', '审计日志', 'tenant_operate_audit', '728', NULL, 9, '1', NULL, NULL, '187', NULL, NULL, 'dingdan', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('236', '系统变量', 'sysVariable', '730', NULL, 2, '1', NULL, NULL, '213', NULL, NULL, NULL, '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('237', '数据导入', 'dataImport', '731', NULL, 3, '1', NULL, NULL, '213', NULL, NULL, NULL, '2');
+
+-- 2022/4/22 afc_dict_type_template初始化字典类型数据
+INSERT INTO  afc_dict_type_template VALUES ('1', 'gender', '性别', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('2', 'sys_tenant_types', '租户类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('3', 'sys_position_types', '岗位类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('4', 'sys_app_types', '应用类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('5', 'sys_open_types', '页面加载方式', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('6', 'sys_resourse_types', '资源类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('7', 'sys_party_types', '角色管理参与者类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('8', 'sys_switch', '开关', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('9', 'sys_org_type', '机构类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('10', 'sys_card_type', '证件类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('11', 'bfp_yesorno', 'BFP_YESORNO', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('12', 'dws_dse_sys', '所属系统', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('13', 'dws_dse_levels', '数据源层次', NULL, NULL, '1', 0, '1', '1', NULL);
+-- 2022 4.24 初始化role-template
+INSERT INTO AFC_ROLE_TEMPLATE(ID, CODE, NAME, DESCRIPTION, TYPES, BUSINESS_OBJ_ID, IS_FIXED) VALUES ('1', 'afc-role-tenant-manager', '租户管理员', '租户管理员角色', 'platform', NULL, '1');
+INSERT INTO AFC_ROLE_TEMPLATE(ID, CODE, NAME, DESCRIPTION, TYPES, BUSINESS_OBJ_ID, IS_FIXED) VALUES ('2', 'afc-role-org-manager', '机构管理员', '机构管理员角色', 'platform', NULL, '1');
+INSERT INTO AFC_ROLE_TEMPLATE(ID, CODE, NAME, DESCRIPTION, TYPES, BUSINESS_OBJ_ID, IS_FIXED) VALUES ('3', 'afc-role-sys-manager', '平台管理员', '平台管理员角色', 'platform', NULL, '1');
+
+-- 初始化 AFC_SAFETY_SITE_TEMPLATE
+INSERT INTO AFC_SAFETY_SITE_TEMPLATE(ID, PASSWORD_LENGTH, PASSWORD_TYPES, IS_WATERMARK, WATERMARK_TYPES, REMINDER_CHANGE, IS_UPDATE, FIRST_UPDATE, ALLOW_FAIL, LOCK_TIME, FREE_TIME, DESCRIPTION, EXTRA, IS_SCANNING, SCANNING_TYPES, ALLOW_MUL_LOGIN, ONLY_DIF_TERMINAL) VALUES ('100', 6, '0', '0', NULL, 30, '1', '1', 5, 5, 30, '默认密码策略', NULL, NULL, NULL, '1', '0');
+
+-- 2022/4/22 afc_dict_entry_template初始化字典项数据
+INSERT INTO  afc_dict_entry_template VALUES ('1', '1', '男性', NULL, 1, '1', 0, '1', '0', NULL,NULL,'1');
+INSERT INTO  afc_dict_entry_template VALUES ('2', '2', '女性', NULL, 2, '1', 0, '1', '0', NULL, NULL, '1');
+INSERT INTO  afc_dict_entry_template VALUES ('3', '1', '是', NULL, NULL, '1', 0, '1', '0', NULL, NULL, '8');
+INSERT INTO  afc_dict_entry_template VALUES ('4', '0', '否', NULL, NULL, '1', 0, '1', '0', NULL, NULL, '8');
+INSERT INTO  afc_dict_entry_template VALUES ('5', 'user', '账号', NULL, 1,'1', 0, '1', '0', NULL, NULL, '7');
+INSERT INTO  afc_dict_entry_template VALUES ('6', 'org', '组织机构', NULL, 3, '1', 0, '1', '0', NULL, NULL, '7');
+INSERT INTO  afc_dict_entry_template VALUES ('7', 'position', '岗位', NULL, 4, '1', 0, '1', '0', NULL, NULL, '7');
+INSERT INTO  afc_dict_entry_template VALUES ('8', 'workGroup', '工作组', NULL, 5, '1', 0, '1', '0', NULL, NULL, '7');
+INSERT INTO  afc_dict_entry_template VALUES ('9', 'emp', '员工', NULL, 2, '1', 0, '1', '0', NULL, NULL, '7');
+INSERT INTO  afc_dict_entry_template VALUES ('10', 'data', '数据', NULL, 3, '1', 0, '1', '0', NULL, NULL,'6');
+INSERT INTO  afc_dict_entry_template VALUES ('11', 'function', '功能', NULL, 2, '1', 0, '1', '0', NULL, NULL, '6');
+INSERT INTO  afc_dict_entry_template VALUES ('12', 'url', '页面', NULL, 1, '1', 0, '1', '0', NULL, NULL, '6');
+INSERT INTO  afc_dict_entry_template VALUES ('13', 'afcenter', 'afcenter', NULL, 1, '1', 0, '1', '0', NULL, NULL, '5');
+INSERT INTO  afc_dict_entry_template VALUES ('14', 'iframe', 'iframe', NULL, 2,'1', 0, '1', '0', NULL, NULL, '5');
+INSERT INTO  afc_dict_entry_template VALUES ('15', 'microApp', '微前端', NULL, 3, '1', 0, '1', '0', NULL, NULL, '5');
+INSERT INTO  afc_dict_entry_template VALUES ('16', 'long', '长租户', NULL, 1, '1', 0, '1', '0',NULL, NULL, '2');
+INSERT INTO  afc_dict_entry_template VALUES ('17', 'short', '短租户', NULL, 2, '1', 0, '1', '0', NULL, NULL, '2');
+INSERT INTO  afc_dict_entry_template VALUES ('18', 'xz', '行政', NULL, NULL, '1', 0, '1', '0', NULL, NULL, '3');
+INSERT INTO  afc_dict_entry_template VALUES ('19', 'js', '开发', NULL, NULL, '1', 0, '1', '0', NULL, NULL,'3');
+INSERT INTO  afc_dict_entry_template VALUES ('20', 'zgs', '总公司', NULL, 1, '1', 0, '1', '0', NULL, NULL,'9');
+INSERT INTO  afc_dict_entry_template VALUES ('21', 'fgs', '分公司', NULL, 2, '1', 0, '1', '0', NULL, NULL,'9');
+INSERT INTO  afc_dict_entry_template VALUES ('22', 'bsc', '办事处', NULL, 3, '1', 0, '1', '0', NULL, NULL,'9');
+INSERT INTO  afc_dict_entry_template VALUES ('23', 'bm', '部门', NULL, NULL, '1', 0, '1', '0', NULL, NULL,'9');
+INSERT INTO  afc_dict_entry_template VALUES ('24', 'IDcard', '身份证', NULL, NULL, '1', 0, '1', '0', NULL, NULL,'10');
+INSERT INTO  afc_dict_entry_template VALUES ('25', 'passport', '护照', NULL, NULL, '1', 0, '1', '0', NULL, NULL,'10');
+INSERT INTO  afc_dict_entry_template VALUES ('26', 'drving', '驾照', NULL, NULL, '1', 0, '1', '0', NULL, NULL,'10');
+INSERT INTO  afc_dict_entry_template VALUES ('28', 'y', '是', NULL, NULL, '1', 0, '1', '0', NULL, NULL, '11');
+INSERT INTO  afc_dict_entry_template VALUES ('29', 'n', '否', NULL, NULL, '1', 0, '1', '0', NULL, NULL, '11');
+INSERT INTO  afc_dict_entry_template VALUES ('30', 'sys1', '系统1', NULL, 1, '1', 0, '1', '0', NULL, NULL, '12');
+INSERT INTO  afc_dict_entry_template VALUES ('31', 'sys2', '系统2', NULL, 2, '1', 0, '1', '0', NULL, NULL, '12');
+INSERT INTO  afc_dict_entry_template VALUES ('32', 'sys3', '系统3', NULL, 3, '1', 0, '1', '0', NULL, NULL, '12');
+INSERT INTO  afc_dict_entry_template VALUES ('33', 'level1', '前置层', NULL, 1, '1', 0, '1', '0', NULL, NULL, '13');
+INSERT INTO  afc_dict_entry_template VALUES ('34', 'level2', '后置层', NULL, 2, '1', 0, '1', '0', NULL, NULL, '13');
+
+INSERT INTO AFC_DIMENSION_TEMPLATE (ID, CODE, NAME, TYPES, DESCRIPTION, STATUS, SORT_BY, EXTRA) VALUES ('1', 'def_dimension', '行政', null, null, '1', 1, NULL);
+
+-- 2022/5/18 afc_res_group_template初始化资源组数据
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('1', '租户管理', 'tenantManager', NULL, NULL, NULL, '501', NULL, NULL, 6, '1');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('2', '平台审计日志', 'operateAudit', NULL, NULL, NULL, '501', NULL, NULL, 7, '1');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('3', '应用管理', 'appManager', NULL, NULL, NULL, '501', NULL, NULL, 8, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM, REUSE_TYPES) VALUES ('4', '应用资源管理', 'appResManager', NULL, NULL, NULL, '501', NULL, NULL, 9, '2','application');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM, REUSE_TYPES) VALUES ('5', '业务对象管理', 'businessObjectManager', NULL, NULL, NULL, '501', NULL, NULL, 10, '2','application');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('8', '维度管理', 'dimensionManager', NULL, NULL, NULL, '501', NULL, NULL, 13, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('9', '机构管理', 'orgManager', NULL, NULL, NULL, '501', NULL, NULL, 14, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('10', '机构角色信息管理', 'orgRoleManager', NULL, NULL, NULL, '501', NULL, NULL, 15, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('11', '员工管理', 'employeeManager', NULL, NULL, NULL, '501', NULL, NULL, 16, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('12', '员工角色信息管理', 'employeeRoleManager', NULL, NULL, NULL, '501', NULL, NULL, 17, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('13', '分级授权', 'MTP', NULL, NULL, NULL, '501', NULL, NULL, 18, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('14', '分级岗位角色管理', 'gradePositionRoleManager', NULL, NULL, NULL, '501', NULL, NULL, 19, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('16', '岗位管理', 'positionManager', NULL, NULL, NULL, '501', NULL, NULL, 21, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('17', '岗位角色信息管理', 'positionRoleManager', NULL, NULL, NULL, '501', NULL, NULL, 22, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('18', '工作组管理', 'workGroupManager', NULL, NULL, NULL, '501', NULL, NULL, 23, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('19', '工作组角色信息管理', 'workGroupRoleManager', NULL, NULL, NULL, '501', NULL, NULL, 24, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM, REUSE_TYPES) VALUES ('21', '角色管理', 'roleManager', NULL, NULL, NULL, '501', NULL, NULL, 25, '2','application');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('22', '权限管理', 'authManager', NULL, NULL, NULL, '501', NULL, NULL, 26, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('23', '成员管理', 'authRolePartyManager', NULL, NULL, NULL, '501', NULL, NULL, 27, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('24', '权限查询', 'authQuery', NULL, NULL, NULL, '501', NULL, NULL, 28, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('25', '权限调整', 'authUpdate', NULL, NULL, NULL, '501', NULL, NULL, 29, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('26', '员工账号管理', 'userManager', NULL, NULL, NULL, '501', NULL, NULL, 30, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('27', '员工角色信息管理', 'userRoleManager', NULL, NULL, NULL, '501', NULL, NULL, 31, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM, REUSE_TYPES) VALUES ('28', '菜单管理', 'menuManager', NULL, NULL, NULL, '501', NULL, NULL, 32, '2','application');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('29', '登录安全', 'loginSafety', NULL, NULL, NULL, '501', NULL, NULL, 33, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('31', '水印管理', 'waterMarkManager', NULL, NULL, NULL, '501', NULL, NULL, 35, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('32', '在线用户', 'onlineUser', NULL, NULL, NULL, '501', NULL, NULL, 36, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('33', '业务字典', 'dictManager', NULL, NULL, NULL, '501', NULL, NULL, 37, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('34', '租户审计日志', 'tenantOperateAudit', NULL, NULL, NULL, '501', NULL, NULL, 38, '0');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('35', '组织权限中心', 'orgAuthCenter', NULL, NULL, NULL, '501', NULL, NULL, 39, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('36', '数据导入', 'dataImport', NULL, NULL, NULL, '501', NULL, NULL, 40, '2');
+
+-- 2022/5/18 afc_resource_template初始化资源功能码数据
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('750', '查询租户列表', 'afc-f-tenant-query', 'function', '501', '1', NULL, NULL, NULL, null, NULL,'1','afc-role-sys-manager,afc-role-audit-manager,afc-role-security-manager,afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('751', '新增租户', 'afc-f-tenant-add', 'function', '501', '1', NULL, NULL, NULL, null, NULL,'1','afc-role-sys-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('752', '修改租户', 'afc-f-tenant-edit', 'function', '501', '1', NULL, NULL, NULL, null, NULL,'1','afc-role-sys-manager,afc-role-tenant-manager,afc-role-org-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('753', '禁用租户', 'afc-f-tenant-disable', 'function', '501', '1', NULL, NULL, NULL, null, NULL,'1','afc-role-sys-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('754', '启用租户', 'afc-f-tenant-enable', 'function', '501', '1', NULL, NULL, NULL, null, NULL,'1','afc-role-sys-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('756', '查询日志', 'afc-f-operation-logs-sys-query', 'function', '501', '2', NULL, NULL, NULL, null, NULL,'1','afc-role-sys-manager,afc-role-audit-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('757', '查看详情', 'afc-f-operation-logs-detail-query', 'function', '501', '2', NULL, NULL, NULL, null, NULL,'1','afc-role-sys-manager,afc-role-audit-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('758', '查询应用列表', 'afc-f-app-query', 'function', '501', '3', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('759', '新建应用', 'afc-f-app-add', 'function', '501', '3', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('761', '修改应用', 'afc-f-app-edit', 'function', '501', '3', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('762', '查询资源分组', 'afc-f-resgroup-query', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('763', '创建资源分组', 'afc-f-resgroup-add', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('764', '查询资源分组详情', 'afc-f-resgroup-find', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('765', '修改资源分组', 'afc-f-resgroup-edit', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('766', '删除资源分组', 'afc-f-resgroup-del', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('767', '查询功能列表', 'afc-f-resource-query', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('768', '新建功能', 'afc-f-resource-add', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('769', '查询功能详情', 'afc-f-resource-find', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('770', '修改功能', 'afc-f-resource-edit', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('771', '调整分组', 'afc-f-resource-edit-types', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('772', '查询业务对象列表', 'afc-f-businessObject-query', 'function', '501', '5', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('773', '新增业务对象', 'afc-f-businessObject-add', 'function', '501', '5', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('775', '修改业务对象', 'afc-f-businessObject-edit', 'function', '501', '5', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('776', '删除业务对象', 'afc-f-businessObject-del', 'function', '501', '5', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('777', '查询维度列表', 'afc-f-dimension-query', 'function', '501', '8', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('778', '新增维度', 'afc-f-dimension-add', 'function', '501', '8', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('779', '删除维度', 'afc-f-dimension-del', 'function', '501', '8', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('780', '查询机构列表', 'afc-f-org-query', 'function', '501', '9', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('781', '新建机构', 'afc-f-org-add', 'function', '501', '9', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('782', '查询机构详情', 'afc-f-org-find', 'function', '501', '9', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('783', '修改机构', 'afc-f-org-edit', 'function', '501', '9', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('784', '调整机构', 'afc-f-org-transfer', 'function', '501', '9', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('785', '删除机构', 'afc-f-org-del', 'function', '501', '9', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('786', '启用机构', 'afc-f-org-enable', 'function', '501', '9', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('787', '禁用机构', 'afc-f-org-disable', 'function', '501', '9', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('789', '新增员工', 'afc-f-employee-add', 'function', '501', '11', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('790', '查询员工详情', 'afc-f-employee-find', 'function', '501', '11', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('791', '修改员工', 'afc-f-employee-edit', 'function', '501', '11', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('792', '删除员工', 'afc-f-employee-del', 'function', '501', '11', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('793', '岗位查询', 'afc-f-org-employee-position-query', 'function', '501', '11', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('794', '新增岗位', 'afc-f-org-employee-position-add', 'function', '501', '11', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('795', '删除岗位', 'afc-f-org-employee-position-del', 'function', '501', '11', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('796', '查询员工账号列表', 'afc-f-employee-user-query', 'function', '501', '11', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('797', '查询员工角色列表', 'afc-f-employee-role-query', 'function', '501', '12', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('798', '新增员工角色', 'afc-f-employee-role-add', 'function', '501', '12', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('799', '删除员工角色', 'afc-f-employee-role-del', 'function', '501', '12', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('800', '查询机构角色列表', 'afc-f-org-role-query', 'function', '501', '10', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('801', '添加机构的角色', 'afc-f-org-role-add', 'function', '501', '10', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('802', '删除机构的角色', 'afc-f-org-role-del', 'function', '501', '10', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('803', '查询机构可选岗位列表', 'afc-f-org-enable-position-query', 'function', '501', '10', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('804', '查询机构可选角色列表', 'afc-f-org-enable-role-query', 'function', '501', '10', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('805', '查询分级管理列表', 'afc-f-org-manager-employee-query', 'function', '501', '13', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('806', '新增分级管理员', 'afc-f-org-manager-employee-add', 'function', '501', '13', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('807', '删除分级管理员', 'afc-f-org-manager-employee-del', 'function', '501', '13', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('808', '可管岗位/角色列表查询', 'afc-f-org-manager-resource-query', 'function', '501', '14', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('809', '添加可管岗位/角色', 'afc-f-org-manager-resource-add', 'function', '501', '14', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('810', '移动可管岗位/角色', 'afc-f-org-manager-resource-del', 'function', '501', '14', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('813', '新增岗位', 'afc-f-position-add', 'function', '501', '16', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('814', '查询岗位详情', 'afc-f-position-find', 'function', '501', '16', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('815', '修改岗位', 'afc-f-position-edit', 'function', '501', '16', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('816', '删除岗位', 'afc-f-position-del', 'function', '501', '16', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('817', '查询角色列表', 'afc-f-position-role-query', 'function', '501', '17', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('818', '新增角色', 'afc-f-position-role-add', 'function', '501', '17', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('819', '删除角色', 'afc-f-position-role-del', 'function', '501', '17', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('821', '新增工作组', 'afc-f-workgroup-add', 'function', '501', '18', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('822', '查询工作组详情', 'afc-f-workgroup-find', 'function', '501', '18', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('823', '修改工作组', 'afc-f-workgroup-edit', 'function', '501', '18', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('824', '删除工作组', 'afc-f-workgroup-del', 'function', '501', '18', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('825', '查询人员列表', 'afc-f-workgroup--employee-query', 'function', '501', '18', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('826', '新增人员', 'afc-f-workgroup-employee-add', 'function', '501', '18', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('827', '删除人员', 'afc-f-workgroup--employee-del', 'function', '501', '18', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('828', '查询角色列表', 'afc-f-workgroup-role-query', 'function', '501', '19', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('829', '新增角色', 'afc-f-workgroup-role-add', 'function', '501', '19', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('830', '删除角色', 'afc-f-workgroup-role-del', 'function', '501', '19', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('831', '角色列表/详情查询', 'afc-f-role-query', 'function', '501', '21', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('832', '新增角色', 'afc-f-role-add', 'function', '501', '21', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('834', '修改角色', 'afc-f-role-edit', 'function', '501', '21', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('835', '删除角色', 'afc-f-role-del', 'function', '501', '21', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('836', '查询权限列表', 'afc-f-auth-role-res-group-query', 'function', '501', '22', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('837', '保存权限', 'afc-f-auth-role-res-bind', 'function', '501', '22', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('838', '查询成员列表', 'afc-f-auth-role-party-query', 'function', '501', '23', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('839', '新增成员', 'afc-f-auth-role-party-bind', 'function', '501', '23', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,demo-role-project-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('840', '删除成员', 'afc-f-auth-role-party-unbind', 'function', '501', '23', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,demo-role-project-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('841', '查询参与者角色列表', 'afc-f-auth-party-roles-query', 'function', '501', '24', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('842', '查询权限', 'afc-f-auth-role-res-query', 'function', '501', '24', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('843', '调整权限', 'afc-f-auth-role-party-transfer', 'function', '501', '25', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('844', '查询员工账号列表', 'afc-f-user-query', 'function', '501', '26', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('845', '新增账号', 'afc-f-user-add', 'function', '501', '26', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('846', '修改账号', 'afc-f-user-edit', 'function', '501', '26', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('847', '删除账号', 'afc-f-user-del', 'function', '501', '26', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('848', '禁用账号', 'afc-f-user-disable', 'function', '501', '26', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('849', '启用账号', 'afc-f-user-enable', 'function', '501', '26', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('850', '解锁账号', 'afc-f-unpark-user-edit', 'function', '501', '26', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('851', '查询角色列表', 'afc-f-user-role-query', 'function', '501', '27', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('852', '新增角色', 'afc-f-user-role-add', 'function', '501', '27', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('853', '删除角色', 'afc-f-user-role-del', 'function', '501', '27', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('854', '查询菜单列表', 'afc-f-menu-query', 'function', '501', '28', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('855', '新增菜单', 'afc-f-menu-add', 'function', '501', '28', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('856', '查询菜单详情', 'afc-f-menu-find', 'function', '501', '28', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,afc-role-security-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('857', '修改菜单', 'afc-f-menu-edit', 'function', '501', '28', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('858', '删除菜单', 'afc-f-menu-del', 'function', '501', '28', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('860', '修改登录安全配置', 'afc-f-safety-edit', 'function', '501', '29', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('861', '添加锁定策略白名单', 'afc-f-whitelist-add', 'function', '501', '29', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('862', '删除锁定策略白名单', 'afc-f-whitelist-del', 'function', '501', '29', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('863', '创建水印配置', 'afc-f-watermark-add', 'function', '501', '31', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('864', '修改水印配置', 'afc-f-watermark-edit', 'function', '501', '31', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('865', '添加水印策略白名单', 'afc-f-water-mark-whitelist-add', 'function', '501', '31', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('866', '删除水印策略白名单', 'afc-f-water-mark-whitelist-del', 'function', '501', '31', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('867', '查询在线用户列表', 'afc-f-online-user-query', 'function', '501', '32', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('868', '强制下线', 'afc-f-online-user-logout', 'function', '501', '32', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('870', '新增业务字典分类', 'afc-f-dicttype-add', 'function', '501', '33', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('871', '查询业务字典分类详情', 'afc-f-dicttype-find', 'function', '501', '33', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('872', '修改业务字典分类', 'afc-f-dicttype-edit', 'function', '501', '33', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('873', '删除业务字典分类', 'afc-f-dicttype-del', 'function', '501', '33', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('875', '新增业务字典项', 'afc-f-dictentry-add', 'function', '501', '33', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('876', '查询业务字典项详情', 'afc-f-dictentry-find', 'function', '501', '33', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('877', '修改业务字典项', 'afc-f-dictentry-edit', 'function', '501', '33', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('878', '删除业务字典项', 'afc-f-dictentry-del', 'function', '501', '33', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('879', '查询租户日志', 'afc-f-operation-logs-tenant-query', 'function', '501', '34', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('880', '删除应用', 'afc-f-app-del', 'function', '501', '3', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('881', '删除资源', 'afc-f-resource-del', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('890', '角色编码校验', 'afc-f-role-exist', 'function', '501', '21', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('893', '查看租户日志详情', 'afc-f-operation-logs-detail-tenant-query', 'function', '501', '34', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('894', '修改维度', 'afc-f-dimension-edit', 'function', '501', '8', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('895', '平台日志导出', 'afc-f-operation-logs-sys-export', 'function', '501', '2', NULL, NULL, NULL, null, NULL,'1','afc-role-sys-manager,afc-role-audit-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('896', '租户日志导出', 'afc-f-operation-logs-tenant-export', 'function', '501', '34', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('897', '组织权限中心查询', 'afc-f-org-auth-center-query', 'function', '501', '35', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager,afc-role-org-manager,afc-role-security-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('898', '功能码导入', 'afc-f-funcode-tools-import', 'function', '501', '36', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('899', '功能码解析', 'afc-f-funcode-tools-import-parse', 'function', '501', '36', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('901', '下载导入日志', 'afc-f-import-log-download', 'function', '501', '36', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('902', '导入数据', 'afc-f-import-data', 'function', '501', '36', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('903', '下载导入模板', 'afc-f-import-template-download', 'function', '501', '36', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('904', '导出应用资源数据', 'afc-f-export-app-resource-data', 'function', '501', '36', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('905', '导出字典数据', 'afc-f-export-dict-data', 'function', '501', '36', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('906', '导出机构数据', 'afc-f-export-org-data', 'function', '501', '36', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('907', '导出人员数据', 'afc-f-export-employee-data', 'function', '501', '36', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('940', '新增分析数据源和应用的关系', 'afc-f-app-bi-datasource-add', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('941', '修改分析数据源和应用的关系', 'afc-f-app-bi-datasource-edit', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('942', '删除分析数据源和应用的关系', 'afc-f-app-bi-datasource-del', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('943', '分页查询分析数据源和应用的关系列表', 'afc-f-app-bi-datasource-query', 'function', '501', '4', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-security-manager,afc-role-system-admin-manager');
+
+
+
+-- 2022/5/20 afc_position_template初始化岗位数据
+INSERT INTO  afc_position_template(ID, CODE, NAME, TYPES, OBLIGATION, DESCRIPTION, EXTRA, STATUS, SORT_BY) VALUES ('1', 'xz_manager', '经理', '18', NULL, NULL, NULL, '1', 1);
+INSERT INTO  afc_position_template(ID, CODE, NAME, TYPES, OBLIGATION, DESCRIPTION, EXTRA, STATUS, SORT_BY) VALUES ('2', 'xz_employee', '员工', '18', NULL, NULL, NULL, '1', 2);
+INSERT INTO  afc_position_template(ID, CODE, NAME, TYPES, OBLIGATION, DESCRIPTION, EXTRA, STATUS, SORT_BY) VALUES ('3', 'js_manager', '经理', '19', NULL, NULL, NULL, '1', 1);
+INSERT INTO  afc_position_template(ID, CODE, NAME, TYPES, OBLIGATION, DESCRIPTION, EXTRA, STATUS, SORT_BY) VALUES ('4', 'js_employee', '员工', '19', NULL, NULL, NULL, '1', 2);
+
+-- 2022 6.06 三元管理角色初始化role-template
+INSERT INTO AFC_ROLE_TEMPLATE(ID, CODE, NAME, DESCRIPTION, TYPES, BUSINESS_OBJ_ID, IS_FIXED) VALUES ('8', 'afc-role-system-admin-manager', '系统管理员', '系统管理员角色', 'platform', NULL, '1');
+INSERT INTO AFC_ROLE_TEMPLATE(ID, CODE, NAME, DESCRIPTION, TYPES, BUSINESS_OBJ_ID, IS_FIXED) VALUES ('9', 'afc-role-security-manager', '安全保密管理员', '安全保密管理员角色', 'platform', NULL, '1');
+INSERT INTO AFC_ROLE_TEMPLATE(ID, CODE, NAME, DESCRIPTION, TYPES, BUSINESS_OBJ_ID, IS_FIXED) VALUES ('10', 'afc-role-audit-manager', '安全审计员', '安全审计员角色', 'platform', NULL, '1');
+
+-- 2022.07.13 初始化BFP应用
+-- INSERT INTO 'afc_application_template'(ID, NAME, 'CODE', 'TYPES', 'SECRET', 'URL', 'DESCRIPTION','IS_FIXED', 'EXTRA', 'IS_SHARE', 'ACCESS_TOKEN', 'REFRESH_TOKEN', 'OPEN_TYPE', 'MICRO_URL', 'MICRO_MARK') VALUES ('503', 'BFP', 'BFP', NULL, '791aefe0fdca49fd996c949cd7662753', '/', NULL,  NULL, NULL, '0', 5, 30, 'microApp', '/', 'bfp');
+-- 2022.07.13 初始化BFP中资源组
+-- INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('80', '默认分组', '503_public_group', NULL, NULL, NULL, '503', NULL, NULL, 0, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM, REUSE_TYPES) VALUES ('81', '工作流程', 'menu_process', NULL, NULL, NULL, '501', NULL, NULL, 45, '2','application');
+
+-- 2022.07.13 初始化BFP中资源
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('5031', '流程发起', 'bfp_process_apply', 'url', '501', '81', NULL, NULL, NULL, '{"openType":"microApp","mark":"bfp_process_apply_index","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceType":null,"resourceCode":null}', NULL,'2', 'afc-role-tenant-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('5032', '我的任务', 'bfp_my_task', 'url', '501', '81', NULL, NULL, NULL, '{"openType":"microApp","mark":"bfp_my_task","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceType":null,"resourceCode":null}', NULL, '2','afc-role-tenant-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('5035', '业务配置', 'bfp_biz_config', 'url', '501', '81', NULL, NULL, NULL, '{"openType":"microApp","mark":"bfp_biz_config","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceType":null,"resourceCode":null}', NULL, '2','afc-role-tenant-manager,app-role-application-manager','application');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('5036', '流程管理', 'bfp_process_manage', 'url', '501', '81', NULL, NULL, NULL, '{"openType":"microApp","mark":"","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceType":null,"resourceCode":null}', NULL, '2','afc-role-tenant-manager');
+
+-- 2022.07.13 初始化BFP菜单数据
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('300', '流程发起', 'bfp_process_apply', '5031', NULL, 2, '1', NULL, NULL, '195', NULL, NULL, 'fabu', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('301', '我的任务', 'bfp_my_task', '5032', NULL, 1, '1', NULL, NULL, '195', NULL, NULL, 'geren', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('302', '业务配置', 'bfp_biz_config', '5035', NULL, 3, '1', NULL, NULL, '195', NULL, NULL, 'yaoqingren', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('307', '流程管理', 'bfp_process_manage', '5036', NULL, 4, '0', NULL, NULL, '195', NULL, NULL, 'guanli', '2');
+
+
+-- 2022.07.20 初始化应用资源组数据
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('37', '低代码项目管理', 'lowCodeManager', NULL, NULL, NULL, '501', NULL, NULL, 41, '2');
+
+-- 2022.07.20 初始化应用创建时调用lowcode接口功能码资源
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('908', '创建低代码项目', 'afc-f-lowcode-project-add', 'function', '501', '37', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('909', '删除低代码项目', 'afc-f-lowcode-project-del', 'function', '501', '37', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('910', '修改低代码项目', 'afc-f-lowcode-project-edit', 'function', '501', '37', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+
+-- 2022.08.4 初始化公共资源管理模块的数据字典
+-- 所属系统和数据源层次
+-- 2022.08.4 初始化公共资源管理模块菜单和资源数据
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('38', '存算引擎管理', 'engineManager', NULL, NULL, NULL, '501', NULL, NULL, 42, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('39', '数据源管理', 'datasourceManager', NULL, NULL, NULL, '501', NULL, NULL, 43, '2');
+INSERT INTO  afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('40', '主题管理', 'themeManager', NULL, NULL, NULL, '501', NULL, NULL, 44, '2');
+
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('pub-res-911', '存算引擎管理', 'engineManager', 'url', '501', '38', NULL, NULL, NULL, '{"openType":"afcenter","mark":null,"url":null,"params":null,"afcenterPath":"afcenter/pubresource/storageEngineManage/index.vue"}', NULL, '2',NULL);
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('pub-res-912', '数据源管理', 'datasourceManager', 'url', '501', '39', NULL, NULL, NULL, '{"openType":"afcenter","mark":null,"url":null,"params":null,"afcenterPath":"afcenter/pubresource/dataSourceManage/index.vue"}', NULL, '2',NULL);
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('pub-res-913', '主题管理', 'themeManager', 'url', '501', '40', NULL, NULL, NULL, '{"openType":"afcenter","mark":null,"url":null,"params":null,"afcenterPath":"afcenter/pubresource/themeManage/index.vue"}', NULL, '2',NULL);
+
+
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('914', '查询存算引擎', 'afc-f-datasource-engine-query', 'function', '501', '38', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('915', '新增存算引擎', 'afc-f-datasource-engine-add', 'function', '501', '38', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('916', '修改存算引擎', 'afc-f-datasource-engine-edit', 'function', '501', '38', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('917', '删除存算引擎', 'afc-f-datasource-engine-del', 'function', '501', '38', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('918', '存算引擎连接测试', 'afc-f-datasource-engine-connection', 'function', '501', '38', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('919', '查询存算引擎类型', 'afc-f-datasource-engine-types', 'function', '501', '38', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('920', '查询数据源', 'afc-f-datasource-query', 'function', '501', '39', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('921', '新增数据源', 'afc-f-datasource-add', 'function', '501', '39', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('922', '修改数据源', 'afc-f-datasource-edit', 'function', '501', '39', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('923', '删除数据源', 'afc-f-datasource-del', 'function', '501', '39', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('924', '数据源连接测试', 'afc-f-datasource-connection', 'function', '501', '39', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('925', '查询数据源表信息', 'afc-f-datasource-tables', 'function', '501', '39', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('926', '查询主题', 'afc-f-theme-directory-query', 'function', '501', '40', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('927', '新增主题', 'afc-f-theme-directory-add', 'function', '501', '40', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('928', '修改主题', 'afc-f-theme-directory-edit', 'function', '501', '40', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('929', '删除主题', 'afc-f-theme-directory-del', 'function', '501', '40', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('303', '公共资源管理', 'public_resource_manager', NULL, NULL, 4, '0', NULL, NULL, 'root', NULL, NULL, 'tuandui3', '2');
+
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('304', '存算引擎管理', 'engine_manager', 'pub-res-911', NULL, 2, '1', NULL, NULL, '303', NULL, NULL, 'kapianxingshi', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('305', '数据源管理', 'datasource_manager', 'pub-res-912', NULL, 3, '1', NULL, NULL, '303', NULL, NULL, 'apparel', '2');
+INSERT INTO  afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('306', '主题管理', 'theme_manager', 'pub-res-913', NULL, 4, '1', NULL, NULL, '303', NULL, NULL, 'data', '2');
+
+-- 2022.08.05 bfp字典数据导入
+INSERT INTO  afc_dict_type_template VALUES ('14', 'BFP_PROCESS_STATE', '流程状态', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('15', 'BFP_YESORNO', '是否判断', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('16', 'BFP_OPINION_STATUS', '流程处理结果', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('17', 'BFP_NOTICE_TYPE', '通知类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('18', 'BFP_NOTICE_FLAG', '通知状态', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('19', 'BFP_NOTICE_VIEW_WAY', '通知查看方式', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('20', 'BFP_MESSAGE_SCOPE', '消息范围', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('21', 'BFP_MESSAGE_TRIGGER_RULE', '消息触发规则', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO  afc_dict_type_template VALUES ('22', 'BFP_MESSAGE_VIEW_WAY', '消息查看方式', NULL, NULL, '1', 0, '1', '1', NULL);
+
+INSERT INTO  afc_dict_entry_template VALUES ('35', '2', '运行', NULL, 1, '1', 0, '1', '0', NULL,NULL,'14');
+INSERT INTO  afc_dict_entry_template VALUES ('36', '3', '挂起', NULL, 2, '1', 0, '1', '0', NULL,NULL,'14');
+INSERT INTO  afc_dict_entry_template VALUES ('37', '7', '完成', NULL, 3, '1', 0, '1', '0', NULL,NULL,'14');
+INSERT INTO  afc_dict_entry_template VALUES ('38', '8', '终止', NULL, 4, '1', 0, '1', '0', NULL,NULL,'14');
+INSERT INTO  afc_dict_entry_template VALUES ('39', 'Y', '是', NULL, 1, '1', 0, '1', '0', NULL,NULL,'15');
+INSERT INTO  afc_dict_entry_template VALUES ('40', 'N', '否', NULL, 2, '1', 0, '1', '0', NULL,NULL,'15');
+INSERT INTO  afc_dict_entry_template VALUES ('41', '1', '发起', NULL, 1, '1', 0, '1', '0', NULL,NULL,'16');
+INSERT INTO  afc_dict_entry_template VALUES ('42', '2', '通过', NULL, 2, '1', 0, '1', '0', NULL,NULL,'16');
+INSERT INTO  afc_dict_entry_template VALUES ('43', '3', '撤回', NULL, 3, '1', 0, '1', '0', NULL,NULL,'16');
+INSERT INTO  afc_dict_entry_template VALUES ('44', '4', '回退', NULL, 4, '1', 0, '1', '0', NULL,NULL,'16');
+INSERT INTO  afc_dict_entry_template VALUES ('45', '5', '终止', NULL, 5, '1', 0, '1', '0', NULL,NULL,'16');
+INSERT INTO  afc_dict_entry_template VALUES ('46', '6', '加签', NULL, 6, '1', 0, '1', '0', NULL,NULL,'16');
+INSERT INTO  afc_dict_entry_template VALUES ('47', '8', '转交', NULL, 7, '1', 0, '1', '0', NULL,NULL,'16');
+INSERT INTO  afc_dict_entry_template VALUES ('48', '9', '协办', NULL, 8, '1', 0, '1', '0', NULL,NULL,'16');
+INSERT INTO  afc_dict_entry_template VALUES ('49', 'notice', '通知类消息', NULL, 1, '1', 0, '1', '0', NULL,NULL,'17');
+INSERT INTO  afc_dict_entry_template VALUES ('50', 'urge', '催办类消息', NULL, 2, '1', 0, '1', '0', NULL,NULL,'17');
+INSERT INTO  afc_dict_entry_template VALUES ('51', '0', '未阅', NULL, 1, '1', 0, '1', '0', NULL,NULL,'18');
+INSERT INTO  afc_dict_entry_template VALUES ('52', '1', '已阅', NULL, 2, '1', 0, '1', '0', NULL,NULL,'18');
+INSERT INTO  afc_dict_entry_template VALUES ('53', '1', '消息内容', NULL, 1, '1', 0, '1', '0', NULL,NULL,'19');
+INSERT INTO  afc_dict_entry_template VALUES ('54', '2', '消息内容+流程表单', NULL, 2, '1', 0, '1', '0', NULL,NULL,'19');
+INSERT INTO  afc_dict_entry_template VALUES ('55', '3', '消息内容+流程表单+添加意见', NULL, 3, '1', 0, '1', '0', NULL,NULL,'19');
+INSERT INTO  afc_dict_entry_template VALUES ('56', 'dest_participant', '指定的参与者', NULL, 1, '1', 0, '1', '0', NULL,NULL,'20');
+INSERT INTO  afc_dict_entry_template VALUES ('57', 'process_start_party', '流程发起人', NULL, 2, '1', 0, '1', '0', NULL,NULL,'20');
+INSERT INTO  afc_dict_entry_template VALUES ('58', 'next_activity_party', '下一环节审批人', NULL, 3, '1', 0, '1', '0', NULL,NULL,'20');
+INSERT INTO  afc_dict_entry_template VALUES ('59', '1', '工作项创建后', NULL, 1, '1', 0, '1', '0', NULL,NULL,'21');
+INSERT INTO  afc_dict_entry_template VALUES ('60', '2', '工作项完成后', NULL, 2, '1', 0, '1', '0', NULL,NULL,'21');
+INSERT INTO  afc_dict_entry_template VALUES ('61', '3', '工作项终止后', NULL, 3, '1', 0, '1', '0', NULL,NULL,'21');
+INSERT INTO  afc_dict_entry_template VALUES ('62', '1', '消息内容', NULL, 1, '1', 0, '1', '0', NULL,NULL,'22');
+INSERT INTO  afc_dict_entry_template VALUES ('63', '2', '流程表单', NULL, 2, '1', 0, '1', '0', NULL,NULL,'22');
+INSERT INTO  afc_dict_entry_template VALUES ('64', '3', '添加意见', NULL, 3, '1', 0, '1', '0', NULL,NULL,'22');
+
+INSERT INTO  afc_dict_entry_template VALUES ('67', 'lowView', '低开视图', NULL, 4, '1', 0, '1', '0', NULL, NULL, '5');
+INSERT INTO  afc_dict_entry_template VALUES ('71', 'lowForm', '低开表单', NULL, 5, '1', 0, '1', '0', NULL, NULL, '5');
+INSERT INTO  afc_dict_entry_template VALUES ('72', 'lowReport', '低开报表', NULL, 6, '1', 0, '1', '0', NULL, NULL, '5');
+
+-- 2022.08.31 业务对象数据导入
+INSERT INTO afc_business_object_template (ID, NAME, CODE, APP_TPL_ID, TYPES, DESCRIPTION) VALUES ('1', '低开项目', 'Lowcode_project', '501', NULL, NULL);
+
+-- 2022.08.31 低开页面资源数据导入
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('930', '我的项目', 'my_project', 'url', '501', '37', NULL, NULL, NULL, '{"openType":"microApp","mark":"myProject","url":null,"params":null,"afcenterPath":"afcenter/my-project/index.vue","appMark":null,"microMark":"ide"}', NULL, '2','afc-role-tenant-manager,afc-role-lowcode-manager');
+
+-- 2022.08.31 低开功能资源数据导入
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('931', '创建低开项目基线', 'afc-f-lowcode-baseline-add', 'function', '501', '37', NULL, NULL, '1', null, NULL,'2','lc-role-project-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('932', '删除低开项目基线信息', 'afc-f-lowcode-baseline-del', 'function', '501', '37', NULL, NULL, '1', null, NULL,'2','lc-role-project-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('933', '修改低开项目基线', 'afc-f-lowcode-baseline-edit', 'function', '501', '37', NULL, NULL, '1', null, NULL,'2','lc-role-project-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('934', '查询低开项目基线列表', 'afc-f-lowcode-baseline-query', 'function', '501', '37', NULL, NULL, '1', null, NULL,'2','lc-role-project-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('935', '导入低开项目', 'afc-f-lowcode-project-import', 'function', '501', '37', NULL, NULL, '1', null, NULL,'2','lc-role-project-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('936', '回退应用数据', 'afc-f-lowcode-project-reset', 'function', '501', '37', NULL, NULL, '1', null, NULL,'2','lc-role-project-manager');
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('937', '导出低开项目 ', 'afc-f-lowcode-project-export', 'function', '501', '37', NULL, NULL, '1', null, NULL,'2','lc-role-project-manager');
+
+
+-- 2022.08.31 低开页面菜单数据导入
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, IS_NEW_WINDOW_OPEN) VALUES ('308', '开发中心', 'dev_center', '930', NULL, 8, '0', NULL, NULL, 'root', NULL, NULL, 'tianxie1', '2', 'fullScreen');
+
+-- 2022.08.31 LowCode角色数据导入
+INSERT INTO AFC_ROLE_TEMPLATE(ID, CODE, NAME, DESCRIPTION, TYPES, BUSINESS_OBJ_ID, IS_FIXED) VALUES ('11', 'afc-role-lowcode-manager', '低开开发', '低开开发人员', 'platform', NULL, '1');
+INSERT INTO AFC_ROLE_TEMPLATE(ID, CODE, NAME, DESCRIPTION, TYPES, BUSINESS_OBJ_ID, IS_FIXED) VALUES ('12', 'lc-role-project-manager', '低开项目管理员', '低开项目管理员', 'businessObject', '1', '1');
+INSERT INTO AFC_ROLE_TEMPLATE(ID, CODE, NAME, DESCRIPTION, TYPES, BUSINESS_OBJ_ID, IS_FIXED) VALUES ('13', 'lc-role-project-developer', '低开项目开发', '低开项目开发角色', 'businessObject', '1', '1');
+
+INSERT INTO afc_dict_type_template VALUES ('23', 'sys_env_types', '环境类别', NULL, NULL, '1', 0, '1', '1', NULL);
+
+INSERT INTO afc_dict_entry_template VALUES ('68', 'dev', '开发环境', NULL, 1, '1', 0, '1', '0', NULL, NULL, '23');
+INSERT INTO afc_dict_entry_template VALUES ('69', 'pro', '生产环境', NULL, 3, '1', 0, '1', '0', NULL, NULL, '23');
+INSERT INTO afc_dict_entry_template VALUES ('70', 'test', '测试环境', NULL, 2, '1', 0, '1', '0', NULL, NULL, '23');
+
+INSERT INTO afc_sys_variable_template (ID, CODE, NAME, VALUE, RES_GROUP_TPL_ID, IS_ENCRYPT, DESCRIPTION, SOURCE, TYPES, APP_TPL_ID) VALUES('122', 'BI_USE', 'BI_USE', 'false', '950', '0', NULL, NULL, 'platform', NULL);
+INSERT INTO afc_sys_variable_template (ID, CODE, NAME, VALUE, RES_GROUP_TPL_ID, IS_ENCRYPT, DESCRIPTION, SOURCE, TYPES, APP_TPL_ID) VALUES('123', 'BI_USERNAME', 'BI_USERNAME', 'admin', '950', '0', NULL, NULL, 'platform', NULL);
+INSERT INTO afc_sys_variable_template (ID, CODE, NAME, VALUE, RES_GROUP_TPL_ID, IS_ENCRYPT, DESCRIPTION, SOURCE, TYPES, APP_TPL_ID) VALUES('124', 'BI_PASSWORD', 'BI_PASSWORD', 'root123', '950', '0', NULL, NULL, 'platform', NULL);
+INSERT INTO afc_sys_variable_template (ID, CODE, NAME, VALUE, RES_GROUP_TPL_ID, IS_ENCRYPT, DESCRIPTION, SOURCE, TYPES, APP_TPL_ID) VALUES('125', 'BI_URL', 'BI_URL', 'http://localhost:8026/cboard', '950', '0', 'BI平台地址', NULL, 'platform', NULL);
+INSERT INTO afc_sys_variable_template (ID, CODE, NAME, VALUE, RES_GROUP_TPL_ID, IS_ENCRYPT, DESCRIPTION, SOURCE, TYPES, APP_TPL_ID) VALUES('146', 'BI_MOBILE_URL', 'BI_MOBILE_URL', 'http://localhost:8026/cboard', '950', '0', 'BI的移动平台地址', NULL, 'platform', NULL);
+INSERT INTO afc_sys_variable_template (ID, CODE, NAME, VALUE, RES_GROUP_TPL_ID, IS_ENCRYPT, DESCRIPTION, SOURCE, TYPES, APP_TPL_ID) VALUES('147', 'BI_SERVER_URL', 'BI_SERVER_URL', 'http://localhost:8026/cboard', '950', '0', 'BI的服务地址', NULL, 'platform', NULL);
+-- 2022 11 10 增加业务字典类型和字典项
+INSERT INTO afc_dict_type_template VALUES ('24', 'sys_resource_sub_types', '资源二级类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_entry_template VALUES ('73', 'highcode', '高开功能码', NULL, 1, '1', 0, '1', '0', NULL, NULL, '24');
+INSERT INTO afc_dict_entry_template VALUES ('74', 'lowcode', '低开功能码', NULL, 2, '1', 0, '1', '0', NULL, NULL, '24');
+
+-- 2022-11-11 增加afc-token资源、菜单、功能码
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, MENU_ICON, OPEN_TYPE, IS_PLATFORM, MENU_TYPE, BUSINESS_OBJ_ID, ROLE_TPL_CODE, IS_NEW_WINDOW_OPEN) VALUES ('309', '访问凭证', 'access_token', '944', null, 1, '1', null, null, '189', null, null, null, '2', null, null, null, null);
+INSERT INTO afc_res_group_template (ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, SORT_NO, IS_FIXED, IS_PLATFORM) VALUES ('960', '访问凭证', 'accessToken', null, null, null, '501', null, 34, null, '2');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('944', '访问凭证', 'access_token', 'url', '501', '960', null, null, '{"openType":"afcenter","mark":null,"url":null,"params":null,"microUrl":null,"microMark":null,"isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCenter","query":null,"processDefName":null,"afcenterPath":"afcenter/access-token/index.vue"}', null, 'afc-role-tenant-manager', null, '2');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('945', '管理员权限', 'afc-f-access-token-admin', 'function', '501', '960', null, null, null, null, 'afc-role-tenant-manager', null, '2');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('946', '个人用户权限', 'afc-f-access-token-person', 'function', '501', '960', null, null, null, null, 'afc-role-tenant-manager', null, '2');
+
+-- 2022-11-16 增加业务字典类型和字典项
+INSERT INTO afc_dict_type_template VALUES ('25', 'BI_RESOURCE_TYPE', 'BI资源类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_entry_template VALUES ('80', 'freelayout', '看板', NULL, 1, '1', 0, '1', '0', NULL, NULL, '25');
+INSERT INTO afc_dict_entry_template VALUES ('81', 'datasource', '数据源', NULL, 2, '1', 0, '1', '0', NULL, NULL, '25');
+INSERT INTO afc_dict_entry_template VALUES ('82', 'dataset', '数据集', NULL, 3, '1', 0, '1', '0', NULL, NULL, '25');
+INSERT INTO afc_dict_entry_template VALUES ('83', 'cockpit', '大屏', NULL, 4, '1', 0, '1', '0', NULL, NULL, '25');
+INSERT INTO afc_dict_entry_template VALUES ('84', 'reportDesigner', '复杂报表', NULL, 5, '1', 0, '1', '0', NULL, NULL, '25');
+
+-- 2022-11-17 支持主岗位设置
+INSERT INTO  afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('947', '切换主岗位', 'afc-f-org-employee-position-switch-main', 'function', '501', '11', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-org-manager,afc-role-system-admin-manager');
+
+-- 2022-11-18 增加性别字典项
+INSERT INTO afc_dict_entry_template VALUES ('85', '0', '未知的性别', NULL, 3, '1', 0, '1', '0', NULL,NULL,'1');
+INSERT INTO afc_dict_entry_template VALUES ('86', '9', '未说明的性别', NULL, 4, '1', 0, '1', '0', NULL,NULL,'1');
+
+-- 2022-11-18 增加省市区业务字典
+INSERT INTO afc_dict_type_template VALUES ('26', 'province', '省', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_type_template VALUES ('27', 'municipality', '市', '26', NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_type_template VALUES ('28', 'district', '区', '27', NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_entry_template VALUES ('100', '110000', '北京市', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('101', '110100', '北京市', '100', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('102', '110101', '东城区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('103', '110102', '西城区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('104', '110105', '朝阳区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('105', '110106', '丰台区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('106', '110107', '石景山区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('107', '110108', '海淀区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('108', '110109', '门头沟区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('109', '110111', '房山区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('110', '110112', '通州区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('111', '110113', '顺义区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('112', '110114', '昌平区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('113', '110115', '大兴区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('114', '110116', '怀柔区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('115', '110117', '平谷区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('116', '110118', '密云区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('117', '110119', '延庆区', '101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('118', '120000', '天津市', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('119', '120100', '天津市', '118', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('120', '120101', '和平区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('121', '120102', '河东区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('122', '120103', '河西区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('123', '120104', '南开区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('124', '120105', '河北区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('125', '120106', '红桥区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('126', '120110', '东丽区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('127', '120111', '西青区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('128', '120112', '津南区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('129', '120113', '北辰区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('130', '120114', '武清区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('131', '120115', '宝坻区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('132', '120116', '滨海新区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('133', '120117', '宁河区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('134', '120118', '静海区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('135', '120119', '蓟州区', '119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('136', '130000', '河北省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('137', '130100', '石家庄市', '136', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('138', '130102', '长安区', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('139', '130104', '桥西区', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('140', '130105', '新华区', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('141', '130107', '井陉矿区', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('142', '130108', '裕华区', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('143', '130109', '藁城区', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('144', '130110', '鹿泉区', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('145', '130111', '栾城区', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('146', '130121', '井陉县', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('147', '130123', '正定县', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('148', '130125', '行唐县', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('149', '130126', '灵寿县', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('150', '130127', '高邑县', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('151', '130128', '深泽县', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('152', '130129', '赞皇县', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('153', '130130', '无极县', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('154', '130131', '平山县', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('155', '130132', '元氏县', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('156', '130133', '赵县', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('157', '130181', '辛集市', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('158', '130183', '晋州市', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('159', '130184', '新乐市', '137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('160', '130200', '唐山市', '136', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('161', '130202', '路南区', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('162', '130203', '路北区', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('163', '130204', '古冶区', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('164', '130205', '开平区', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('165', '130207', '丰南区', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('166', '130208', '丰润区', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('167', '130209', '曹妃甸区', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('168', '130224', '滦南县', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('169', '130225', '乐亭县', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('170', '130227', '迁西县', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('171', '130229', '玉田县', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('172', '130230', '芦台区', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('173', '130281', '遵化市', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('174', '130283', '迁安市', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('175', '130284', '滦州市', '160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('176', '130300', '秦皇岛市', '136', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('177', '130302', '海港区', '176', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('178', '130303', '山海关区', '176', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('179', '130304', '北戴河区', '176', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('180', '130306', '抚宁区', '176', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('181', '130321', '青龙满族自治县', '176', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('182', '130322', '昌黎县', '176', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('183', '130324', '卢龙县', '176', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('184', '130400', '邯郸市', '136', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('185', '130402', '邯山区', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('186', '130403', '丛台区', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('187', '130404', '复兴区', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('188', '130406', '峰峰矿区', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('189', '130407', '肥乡区', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('190', '130408', '永年区', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('191', '130423', '临漳县', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('192', '130424', '成安县', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('193', '130425', '大名县', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('194', '130426', '涉县', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('195', '130427', '磁县', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('196', '130430', '邱县', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('197', '130431', '鸡泽县', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('198', '130432', '广平县', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('199', '130433', '馆陶县', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('200', '130434', '魏县', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('201', '130435', '曲周县', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('202', '130481', '武安市', '184', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('203', '130500', '邢台市', '136', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('204', '130502', '襄都区', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('205', '130503', '信都区', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('206', '130505', '任泽区', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('207', '130506', '南和区', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('208', '130522', '临城县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('209', '130523', '内丘县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('210', '130524', '柏乡县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('211', '130525', '隆尧县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('212', '130528', '宁晋县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('213', '130529', '巨鹿县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('214', '130530', '新河县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('215', '130531', '广宗县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('216', '130532', '平乡县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('217', '130533', '威县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('218', '130534', '清河县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('219', '130535', '临西县', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('220', '130581', '南宫市', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('221', '130582', '沙河市', '203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('222', '130600', '保定市', '136', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('223', '130602', '竞秀区', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('224', '130606', '莲池区', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('225', '130607', '满城区', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('226', '130608', '清苑区', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('227', '130609', '徐水区', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('228', '130623', '涞水县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('229', '130624', '阜平县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('230', '130626', '定兴县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('231', '130627', '唐县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('232', '130628', '高阳县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('233', '130629', '容城县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('234', '130630', '涞源县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('235', '130631', '望都县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('236', '130632', '安新县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('237', '130633', '易县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('238', '130634', '曲阳县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('239', '130635', '蠡县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('240', '130636', '顺平县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('241', '130637', '博野县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('242', '130638', '雄县', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('243', '130681', '涿州市', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('244', '130682', '定州市', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('245', '130683', '安国市', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('246', '130684', '高碑店市', '222', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('247', '130700', '张家口市', '136', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('248', '130702', '桥东区', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('249', '130703', '桥西区', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('250', '130705', '宣化区', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('251', '130706', '下花园区', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('252', '130708', '万全区', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('253', '130709', '崇礼区', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('254', '130722', '张北县', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('255', '130723', '康保县', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('256', '130724', '沽源县', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('257', '130725', '尚义县', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('258', '130726', '蔚县', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('259', '130727', '阳原县', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('260', '130728', '怀安县', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('261', '130730', '怀来县', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('262', '130731', '涿鹿县', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('263', '130732', '赤城县', '247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('264', '130800', '承德市', '136', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('265', '130802', '双桥区', '264', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('266', '130803', '双滦区', '264', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('267', '130804', '鹰手营子矿区', '264', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('268', '130821', '承德县', '264', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('269', '130822', '兴隆县', '264', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('270', '130824', '滦平县', '264', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('271', '130825', '隆化县', '264', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('272', '130826', '丰宁满族自治县', '264', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('273', '130827', '宽城满族自治县', '264', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('274', '130828', '围场满族蒙古族自治县', '264', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('275', '130881', '平泉市', '264', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('276', '130900', '沧州市', '136', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('277', '130902', '新华区', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('278', '130903', '运河区', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('279', '130921', '沧县', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('280', '130922', '青县', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('281', '130923', '东光县', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('282', '130924', '海兴县', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('283', '130925', '盐山县', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('284', '130926', '肃宁县', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('285', '130927', '南皮县', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('286', '130928', '吴桥县', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('287', '130929', '献县', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('288', '130930', '孟村回族自治县', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('289', '130981', '泊头市', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('290', '130982', '任丘市', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('291', '130983', '黄骅市', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('292', '130984', '河间市', '276', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('293', '131000', '廊坊市', '136', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('294', '131002', '安次区', '293', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('295', '131003', '广阳区', '293', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('296', '131022', '固安县', '293', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('297', '131023', '永清县', '293', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('298', '131024', '香河县', '293', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('299', '131025', '大城县', '293', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('300', '131026', '文安县', '293', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('301', '131028', '大厂回族自治县', '293', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('302', '131081', '霸州市', '293', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('303', '131082', '三河市', '293', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('304', '131100', '衡水市', '136', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('305', '131102', '桃城区', '304', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('306', '131103', '冀州区', '304', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('307', '131121', '枣强县', '304', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('308', '131122', '武邑县', '304', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('309', '131123', '武强县', '304', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('310', '131124', '饶阳县', '304', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('311', '131125', '安平县', '304', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('312', '131126', '故城县', '304', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('313', '131127', '景县', '304', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('314', '131128', '阜城县', '304', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('315', '131182', '深州市', '304', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('316', '140000', '山西省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('317', '140100', '太原市', '316', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('318', '140105', '小店区', '317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('319', '140106', '迎泽区', '317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('320', '140107', '杏花岭区', '317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('321', '140108', '尖草坪区', '317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('322', '140109', '万柏林区', '317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('323', '140110', '晋源区', '317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('324', '140121', '清徐县', '317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('325', '140122', '阳曲县', '317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('326', '140123', '娄烦县', '317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('327', '140181', '古交市', '317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('328', '140200', '大同市', '316', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('329', '140212', '新荣区', '328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('330', '140213', '平城区', '328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('331', '140214', '云冈区', '328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('332', '140215', '云州区', '328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('333', '140221', '阳高县', '328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('334', '140222', '天镇县', '328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('335', '140223', '广灵县', '328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('336', '140224', '灵丘县', '328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('337', '140225', '浑源县', '328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('338', '140226', '左云县', '328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('339', '140300', '阳泉市', '316', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('340', '140302', '城区', '339', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('341', '140303', '矿区', '339', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('342', '140311', '郊区', '339', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('343', '140321', '平定县', '339', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('344', '140322', '盂县', '339', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('345', '140400', '长治市', '316', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('346', '140403', '潞州区', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('347', '140404', '上党区', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('348', '140405', '屯留区', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('349', '140406', '潞城区', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('350', '140423', '襄垣县', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('351', '140425', '平顺县', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('352', '140426', '黎城县', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('353', '140427', '壶关县', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('354', '140428', '长子县', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('355', '140429', '武乡县', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('356', '140430', '沁县', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('357', '140431', '沁源县', '345', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('358', '140500', '晋城市', '316', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('359', '140502', '城区', '358', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('360', '140521', '沁水县', '358', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('361', '140522', '阳城县', '358', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('362', '140524', '陵川县', '358', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('363', '140525', '泽州县', '358', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('364', '140581', '高平市', '358', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('365', '140600', '朔州市', '316', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('366', '140602', '朔城区', '365', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('367', '140603', '平鲁区', '365', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('368', '140621', '山阴县', '365', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('369', '140622', '应县', '365', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('370', '140623', '右玉县', '365', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('371', '140681', '怀仁市', '365', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('372', '140700', '晋中市', '316', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('373', '140702', '榆次区', '372', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('374', '140703', '太谷区', '372', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('375', '140721', '榆社县', '372', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('376', '140722', '左权县', '372', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('377', '140723', '和顺县', '372', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('378', '140724', '昔阳县', '372', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('379', '140725', '寿阳县', '372', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('380', '140727', '祁县', '372', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('381', '140728', '平遥县', '372', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('382', '140729', '灵石县', '372', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('383', '140781', '介休市', '372', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('384', '140800', '运城市', '316', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('385', '140802', '盐湖区', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('386', '140821', '临猗县', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('387', '140822', '万荣县', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('388', '140823', '闻喜县', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('389', '140824', '稷山县', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('390', '140825', '新绛县', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('391', '140826', '绛县', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('392', '140827', '垣曲县', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('393', '140828', '夏县', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('394', '140829', '平陆县', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('395', '140830', '芮城县', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('396', '140881', '永济市', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('397', '140882', '河津市', '384', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('398', '140900', '忻州市', '316', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('399', '140902', '忻府区', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('400', '140921', '定襄县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('401', '140922', '五台县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('402', '140923', '代县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('403', '140924', '繁峙县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('404', '140925', '宁武县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('405', '140926', '静乐县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('406', '140927', '神池县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('407', '140928', '五寨县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('408', '140929', '岢岚县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('409', '140930', '河曲县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('410', '140931', '保德县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('411', '140932', '偏关县', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('412', '140981', '原平市', '398', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('413', '141000', '临汾市', '316', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('414', '141002', '尧都区', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('415', '141021', '曲沃县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('416', '141022', '翼城县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('417', '141023', '襄汾县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('418', '141024', '洪洞县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('419', '141025', '古县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('420', '141026', '安泽县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('421', '141027', '浮山县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('422', '141028', '吉县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('423', '141029', '乡宁县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('424', '141030', '大宁县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('425', '141031', '隰县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('426', '141032', '永和县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('427', '141033', '蒲县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('428', '141034', '汾西县', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('429', '141081', '侯马市', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('430', '141082', '霍州市', '413', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('431', '141100', '吕梁市', '316', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('432', '141102', '离石区', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('433', '141121', '文水县', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('434', '141122', '交城县', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('435', '141123', '兴县', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('436', '141124', '临县', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('437', '141125', '柳林县', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('438', '141126', '石楼县', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('439', '141127', '岚县', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('440', '141128', '方山县', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('441', '141129', '中阳县', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('442', '141130', '交口县', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('443', '141181', '孝义市', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('444', '141182', '汾阳市', '431', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('445', '150000', '内蒙古自治区', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('446', '150100', '呼和浩特市', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('447', '150102', '新城区', '446', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('448', '150103', '回民区', '446', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('449', '150104', '玉泉区', '446', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('450', '150105', '赛罕区', '446', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('451', '150121', '土默特左旗', '446', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('452', '150122', '托克托县', '446', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('453', '150123', '和林格尔县', '446', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('454', '150124', '清水河县', '446', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('455', '150125', '武川县', '446', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('456', '150200', '包头市', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('457', '150202', '东河区', '456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('458', '150203', '昆都仑区', '456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('459', '150204', '青山区', '456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('460', '150205', '石拐区', '456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('461', '150206', '白云鄂博矿区', '456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('462', '150207', '九原区', '456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('463', '150221', '土默特右旗', '456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('464', '150222', '固阳县', '456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('465', '150223', '达尔罕茂明安联合旗', '456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('466', '150300', '乌海市', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('467', '150302', '海勃湾区', '466', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('468', '150303', '海南区', '466', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('469', '150304', '乌达区', '466', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('470', '150400', '赤峰市', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('471', '150402', '红山区', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('472', '150403', '元宝山区', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('473', '150404', '松山区', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('474', '150421', '阿鲁科尔沁旗', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('475', '150422', '巴林左旗', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('476', '150423', '巴林右旗', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('477', '150424', '林西县', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('478', '150425', '克什克腾旗', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('479', '150426', '翁牛特旗', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('480', '150428', '喀喇沁旗', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('481', '150429', '宁城县', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('482', '150430', '敖汉旗', '470', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('483', '150500', '通辽市', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('484', '150502', '科尔沁区', '483', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('485', '150521', '科尔沁左翼中旗', '483', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('486', '150522', '科尔沁左翼后旗', '483', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('487', '150523', '开鲁县', '483', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('488', '150524', '库伦旗', '483', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('489', '150525', '奈曼旗', '483', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('490', '150526', '扎鲁特旗', '483', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('491', '150581', '霍林郭勒市', '483', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('492', '150600', '鄂尔多斯市', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('493', '150602', '东胜区', '492', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('494', '150603', '康巴什区', '492', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('495', '150621', '达拉特旗', '492', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('496', '150622', '准格尔旗', '492', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('497', '150623', '鄂托克前旗', '492', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('498', '150624', '鄂托克旗', '492', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('499', '150625', '杭锦旗', '492', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('500', '150626', '乌审旗', '492', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('501', '150627', '伊金霍洛旗', '492', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('502', '150700', '呼伦贝尔市', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('503', '150702', '海拉尔区', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('504', '150703', '扎赉诺尔区', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('505', '150721', '阿荣旗', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('506', '150722', '莫力达瓦达斡尔族自治旗', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('507', '150723', '鄂伦春自治旗', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('508', '150724', '鄂温克族自治旗', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('509', '150725', '陈巴尔虎旗', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('510', '150726', '新巴尔虎左旗', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('511', '150727', '新巴尔虎右旗', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('512', '150781', '满洲里市', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('513', '150782', '牙克石市', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('514', '150783', '扎兰屯市', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('515', '150784', '额尔古纳市', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('516', '150785', '根河市', '502', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('517', '150800', '巴彦淖尔市', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('518', '150802', '临河区', '517', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('519', '150821', '五原县', '517', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('520', '150822', '磴口县', '517', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('521', '150823', '乌拉特前旗', '517', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('522', '150824', '乌拉特中旗', '517', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('523', '150825', '乌拉特后旗', '517', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('524', '150826', '杭锦后旗', '517', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('525', '150900', '乌兰察布市', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('526', '150902', '集宁区', '525', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('527', '150921', '卓资县', '525', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('528', '150922', '化德县', '525', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('529', '150923', '商都县', '525', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('530', '150924', '兴和县', '525', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('531', '150925', '凉城县', '525', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('532', '150926', '察哈尔右翼前旗', '525', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('533', '150927', '察哈尔右翼中旗', '525', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('534', '150928', '察哈尔右翼后旗', '525', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('535', '150929', '四子王旗', '525', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('536', '150981', '丰镇市', '525', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('537', '152200', '兴安盟', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('538', '152201', '乌兰浩特市', '537', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('539', '152202', '阿尔山市', '537', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('540', '152221', '科尔沁右翼前旗', '537', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('541', '152222', '科尔沁右翼中旗', '537', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('542', '152223', '扎赉特旗', '537', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('543', '152224', '突泉县', '537', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('544', '152500', '锡林郭勒盟', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('545', '152501', '二连浩特市', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('546', '152502', '锡林浩特市', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('547', '152522', '阿巴嘎旗', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('548', '152523', '苏尼特左旗', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('549', '152524', '苏尼特右旗', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('550', '152525', '东乌珠穆沁旗', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('551', '152526', '西乌珠穆沁旗', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('552', '152527', '太仆寺旗', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('553', '152528', '镶黄旗', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('554', '152529', '正镶白旗', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('555', '152530', '正蓝旗', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('556', '152531', '多伦县', '544', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('557', '152900', '阿拉善盟', '445', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('558', '152921', '阿拉善左旗', '557', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('559', '152922', '阿拉善右旗', '557', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('560', '152923', '额济纳旗', '557', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('561', '210000', '辽宁省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('562', '210100', '沈阳市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('563', '210102', '和平区', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('564', '210103', '沈河区', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('565', '210104', '大东区', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('566', '210105', '皇姑区', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('567', '210106', '铁西区', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('568', '210111', '苏家屯区', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('569', '210112', '浑南区', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('570', '210113', '沈北新区', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('571', '210114', '于洪区', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('572', '210115', '辽中区', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('573', '210123', '康平县', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('574', '210124', '法库县', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('575', '210181', '新民市', '562', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('576', '210200', '大连市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('577', '210202', '中山区', '576', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('578', '210203', '西岗区', '576', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('579', '210204', '沙河口区', '576', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('580', '210211', '甘井子区', '576', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('581', '210212', '旅顺口区', '576', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('582', '210213', '金州区', '576', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('583', '210214', '普兰店区', '576', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('584', '210224', '长海县', '576', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('585', '210281', '瓦房店市', '576', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('586', '210283', '庄河市', '576', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('587', '210300', '鞍山市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('588', '210302', '铁东区', '587', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('589', '210303', '铁西区', '587', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('590', '210304', '立山区', '587', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('591', '210311', '千山区', '587', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('592', '210321', '台安县', '587', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('593', '210323', '岫岩满族自治县', '587', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('594', '210381', '海城市', '587', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('595', '210400', '抚顺市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('596', '210402', '新抚区', '595', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('597', '210403', '东洲区', '595', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('598', '210404', '望花区', '595', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('599', '210411', '顺城区', '595', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('600', '210421', '抚顺县', '595', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('601', '210422', '新宾满族自治县', '595', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('602', '210423', '清原满族自治县', '595', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('603', '210500', '本溪市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('604', '210502', '平山区', '603', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('605', '210503', '溪湖区', '603', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('606', '210504', '明山区', '603', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('607', '210505', '南芬区', '603', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('608', '210521', '本溪满族自治县', '603', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('609', '210522', '桓仁满族自治县', '603', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('610', '210600', '丹东市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('611', '210602', '元宝区', '610', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('612', '210603', '振兴区', '610', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('613', '210604', '振安区', '610', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('614', '210624', '宽甸满族自治县', '610', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('615', '210681', '东港市', '610', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('616', '210682', '凤城市', '610', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('617', '210700', '锦州市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('618', '210702', '古塔区', '617', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('619', '210703', '凌河区', '617', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('620', '210711', '太和区', '617', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('621', '210726', '黑山县', '617', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('622', '210727', '义县', '617', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('623', '210781', '凌海市', '617', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('624', '210782', '北镇市', '617', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('625', '210800', '营口市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('626', '210802', '站前区', '625', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('627', '210803', '西市区', '625', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('628', '210804', '鲅鱼圈区', '625', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('629', '210811', '老边区', '625', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('630', '210881', '盖州市', '625', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('631', '210882', '大石桥市', '625', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('632', '210900', '阜新市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('633', '210902', '海州区', '632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('634', '210903', '新邱区', '632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('635', '210904', '太平区', '632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('636', '210905', '清河门区', '632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('637', '210911', '细河区', '632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('638', '210921', '阜新蒙古族自治县', '632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('639', '210922', '彰武县', '632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('640', '211000', '辽阳市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('641', '211002', '白塔区', '640', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('642', '211003', '文圣区', '640', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('643', '211004', '宏伟区', '640', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('644', '211005', '弓长岭区', '640', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('645', '211011', '太子河区', '640', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('646', '211021', '辽阳县', '640', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('647', '211081', '灯塔市', '640', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('648', '211100', '盘锦市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('649', '211102', '双台子区', '648', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('650', '211103', '兴隆台区', '648', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('651', '211104', '大洼区', '648', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('652', '211122', '盘山县', '648', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('653', '211200', '铁岭市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('654', '211202', '银州区', '653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('655', '211204', '清河区', '653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('656', '211221', '铁岭县', '653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('657', '211223', '西丰县', '653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('658', '211224', '昌图县', '653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('659', '211281', '调兵山市', '653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('660', '211282', '开原市', '653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('661', '211300', '朝阳市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('662', '211302', '双塔区', '661', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('663', '211303', '龙城区', '661', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('664', '211321', '朝阳县', '661', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('665', '211322', '建平县', '661', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('666', '211324', '喀喇沁左翼蒙古族自治县', '661', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('667', '211381', '北票市', '661', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('668', '211382', '凌源市', '661', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('669', '211400', '葫芦岛市', '561', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('670', '211402', '连山区', '669', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('671', '211403', '龙港区', '669', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('672', '211404', '南票区', '669', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('673', '211421', '绥中县', '669', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('674', '211422', '建昌县', '669', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('675', '211481', '兴城市', '669', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('676', '220000', '吉林省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('677', '220100', '长春市', '676', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('678', '220102', '南关区', '677', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('679', '220103', '宽城区', '677', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('680', '220104', '朝阳区', '677', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('681', '220105', '二道区', '677', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('682', '220106', '绿园区', '677', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('683', '220112', '双阳区', '677', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('684', '220113', '九台区', '677', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('685', '220122', '农安县', '677', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('686', '220182', '榆树市', '677', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('687', '220183', '德惠市', '677', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('688', '220184', '公主岭市', '677', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('689', '220200', '吉林市', '676', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('690', '220202', '昌邑区', '689', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('691', '220203', '龙潭区', '689', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('692', '220204', '船营区', '689', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('693', '220211', '丰满区', '689', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('694', '220221', '永吉县', '689', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('695', '220281', '蛟河市', '689', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('696', '220282', '桦甸市', '689', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('697', '220283', '舒兰市', '689', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('698', '220284', '磐石市', '689', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('699', '220300', '四平市', '676', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('700', '220302', '铁西区', '699', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('701', '220303', '铁东区', '699', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('702', '220322', '梨树县', '699', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('703', '220323', '伊通满族自治县', '699', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('704', '220382', '双辽市', '699', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('705', '220400', '辽源市', '676', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('706', '220402', '龙山区', '705', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('707', '220403', '西安区', '705', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('708', '220421', '东丰县', '705', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('709', '220422', '东辽县', '705', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('710', '220500', '通化市', '676', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('711', '220502', '东昌区', '710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('712', '220503', '二道江区', '710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('713', '220521', '通化县', '710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('714', '220523', '辉南县', '710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('715', '220524', '柳河县', '710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('716', '220581', '梅河口市', '710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('717', '220582', '集安市', '710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('718', '220600', '白山市', '676', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('719', '220602', '浑江区', '718', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('720', '220605', '江源区', '718', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('721', '220621', '抚松县', '718', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('722', '220622', '靖宇县', '718', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('723', '220623', '长白朝鲜族自治县', '718', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('724', '220681', '临江市', '718', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('725', '220700', '松原市', '676', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('726', '220702', '宁江区', '725', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('727', '220721', '前郭尔罗斯蒙古族自治县', '725', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('728', '220722', '长岭县', '725', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('729', '220723', '乾安县', '725', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('730', '220781', '扶余市', '725', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('731', '220800', '白城市', '676', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('732', '220802', '洮北区', '731', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('733', '220821', '镇赉县', '731', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('734', '220822', '通榆县', '731', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('735', '220881', '洮南市', '731', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('736', '220882', '大安市', '731', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('737', '222400', '延边朝鲜族自治州', '676', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('738', '222401', '延吉市', '737', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('739', '222402', '图们市', '737', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('740', '222403', '敦化市', '737', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('741', '222404', '珲春市', '737', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('742', '222405', '龙井市', '737', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('743', '222406', '和龙市', '737', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('744', '222424', '汪清县', '737', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('745', '222426', '安图县', '737', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('746', '230000', '黑龙江省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('747', '230100', '哈尔滨市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('748', '230102', '道里区', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('749', '230103', '南岗区', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('750', '230104', '道外区', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('751', '230108', '平房区', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('752', '230109', '松北区', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('753', '230110', '香坊区', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('754', '230111', '呼兰区', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('755', '230112', '阿城区', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('756', '230113', '双城区', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('757', '230123', '依兰县', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('758', '230124', '方正县', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('759', '230125', '宾县', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('760', '230126', '巴彦县', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('761', '230127', '木兰县', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('762', '230128', '通河县', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('763', '230129', '延寿县', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('764', '230183', '尚志市', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('765', '230184', '五常市', '747', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('766', '230200', '齐齐哈尔市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('767', '230202', '龙沙区', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('768', '230203', '建华区', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('769', '230204', '铁锋区', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('770', '230205', '昂昂溪区', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('771', '230206', '富拉尔基区', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('772', '230207', '碾子山区', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('773', '230208', '梅里斯达斡尔族区', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('774', '230221', '龙江县', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('775', '230223', '依安县', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('776', '230224', '泰来县', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('777', '230225', '甘南县', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('778', '230227', '富裕县', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('779', '230229', '克山县', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('780', '230230', '克东县', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('781', '230231', '拜泉县', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('782', '230281', '讷河市', '766', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('783', '230300', '鸡西市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('784', '230302', '鸡冠区', '783', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('785', '230303', '恒山区', '783', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('786', '230304', '滴道区', '783', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('787', '230305', '梨树区', '783', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('788', '230306', '城子河区', '783', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('789', '230307', '麻山区', '783', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('790', '230321', '鸡东县', '783', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('791', '230381', '虎林市', '783', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('792', '230382', '密山市', '783', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('793', '230400', '鹤岗市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('794', '230402', '向阳区', '793', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('795', '230403', '工农区', '793', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('796', '230404', '南山区', '793', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('797', '230405', '兴安区', '793', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('798', '230406', '东山区', '793', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('799', '230407', '兴山区', '793', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('800', '230421', '萝北县', '793', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('801', '230422', '绥滨县', '793', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('802', '230500', '双鸭山市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('803', '230502', '尖山区', '802', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('804', '230503', '岭东区', '802', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('805', '230505', '四方台区', '802', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('806', '230506', '宝山区', '802', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('807', '230521', '集贤县', '802', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('808', '230522', '友谊县', '802', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('809', '230523', '宝清县', '802', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('810', '230524', '饶河县', '802', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('811', '230600', '大庆市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('812', '230602', '萨尔图区', '811', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('813', '230603', '龙凤区', '811', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('814', '230604', '让胡路区', '811', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('815', '230605', '红岗区', '811', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('816', '230606', '大同区', '811', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('817', '230621', '肇州县', '811', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('818', '230622', '肇源县', '811', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('819', '230623', '林甸县', '811', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('820', '230624', '杜尔伯特蒙古族自治县', '811', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('821', '230700', '伊春市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('822', '230717', '伊美区', '821', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('823', '230718', '乌翠区', '821', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('824', '230719', '友好区', '821', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('825', '230722', '嘉荫县', '821', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('826', '230723', '汤旺县', '821', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('827', '230724', '丰林县', '821', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('828', '230725', '大箐山县', '821', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('829', '230726', '南岔县', '821', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('830', '230751', '金林区', '821', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('831', '230781', '铁力市', '821', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('832', '230800', '佳木斯市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('833', '230803', '向阳区', '832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('834', '230804', '前进区', '832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('835', '230805', '东风区', '832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('836', '230811', '郊区', '832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('837', '230822', '桦南县', '832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('838', '230826', '桦川县', '832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('839', '230828', '汤原县', '832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('840', '230881', '同江市', '832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('841', '230882', '富锦市', '832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('842', '230883', '抚远市', '832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('843', '230900', '七台河市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('844', '230902', '新兴区', '843', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('845', '230903', '桃山区', '843', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('846', '230904', '茄子河区', '843', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('847', '230921', '勃利县', '843', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('848', '231000', '牡丹江市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('849', '231002', '东安区', '848', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('850', '231003', '阳明区', '848', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('851', '231004', '爱民区', '848', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('852', '231005', '西安区', '848', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('853', '231025', '林口县', '848', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('854', '231081', '绥芬河市', '848', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('855', '231083', '海林市', '848', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('856', '231084', '宁安市', '848', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('857', '231085', '穆棱市', '848', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('858', '231086', '东宁市', '848', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('859', '231100', '黑河市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('860', '231102', '爱辉区', '859', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('861', '231123', '逊克县', '859', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('862', '231124', '孙吴县', '859', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('863', '231181', '北安市', '859', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('864', '231182', '五大连池市', '859', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('865', '231183', '嫩江市', '859', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('866', '231200', '绥化市', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('867', '231202', '北林区', '866', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('868', '231221', '望奎县', '866', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('869', '231222', '兰西县', '866', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('870', '231223', '青冈县', '866', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('871', '231224', '庆安县', '866', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('872', '231225', '明水县', '866', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('873', '231226', '绥棱县', '866', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('874', '231281', '安达市', '866', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('875', '231282', '肇东市', '866', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('876', '231283', '海伦市', '866', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('877', '232700', '大兴安岭地区', '746', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('878', '232701', '漠河市', '877', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('879', '232721', '呼玛县', '877', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('880', '232722', '塔河县', '877', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('881', '232761', '加格达奇区', '877', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('882', '310000', '上海市', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('883', '310100', '上海市', '882', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('884', '310101', '黄浦区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('885', '310104', '徐汇区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('886', '310105', '长宁区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('887', '310106', '静安区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('888', '310107', '普陀区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('889', '310109', '虹口区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('890', '310110', '杨浦区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('891', '310112', '闵行区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('892', '310113', '宝山区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('893', '310114', '嘉定区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('894', '310115', '浦东新区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('895', '310116', '金山区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('896', '310117', '松江区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('897', '310118', '青浦区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('898', '310120', '奉贤区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('899', '310151', '崇明区', '883', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('900', '320000', '江苏省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('901', '320100', '南京市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('902', '320102', '玄武区', '901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('903', '320104', '秦淮区', '901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('904', '320105', '建邺区', '901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('905', '320106', '鼓楼区', '901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('906', '320111', '浦口区', '901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('907', '320113', '栖霞区', '901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('908', '320114', '雨花台区', '901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('909', '320115', '江宁区', '901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('910', '320116', '六合区', '901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('911', '320117', '溧水区', '901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('912', '320118', '高淳区', '901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('913', '320200', '无锡市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('914', '320205', '锡山区', '913', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('915', '320206', '惠山区', '913', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('916', '320211', '滨湖区', '913', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('917', '320213', '梁溪区', '913', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('918', '320214', '新吴区', '913', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('919', '320281', '江阴市', '913', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('920', '320282', '宜兴市', '913', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('921', '320300', '徐州市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('922', '320302', '鼓楼区', '921', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('923', '320303', '云龙区', '921', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('924', '320305', '贾汪区', '921', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('925', '320311', '泉山区', '921', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('926', '320312', '铜山区', '921', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('927', '320321', '丰县', '921', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('928', '320322', '沛县', '921', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('929', '320324', '睢宁县', '921', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('930', '320381', '新沂市', '921', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('931', '320382', '邳州市', '921', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('932', '320400', '常州市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('933', '320402', '天宁区', '932', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('934', '320404', '钟楼区', '932', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('935', '320411', '新北区', '932', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('936', '320412', '武进区', '932', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('937', '320413', '金坛区', '932', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('938', '320481', '溧阳市', '932', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('939', '320500', '苏州市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('940', '320505', '虎丘区', '939', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('941', '320506', '吴中区', '939', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('942', '320507', '相城区', '939', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('943', '320508', '姑苏区', '939', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('944', '320509', '吴江区', '939', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('945', '320581', '常熟市', '939', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('946', '320582', '张家港市', '939', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('947', '320583', '昆山市', '939', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('948', '320585', '太仓市', '939', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('949', '320600', '南通市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('950', '320602', '崇川区', '949', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('951', '320612', '通州区', '949', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('952', '320623', '如东县', '949', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('953', '320681', '启东市', '949', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('954', '320682', '如皋市', '949', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('955', '320684', '海门区', '949', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('956', '320685', '海安市', '949', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('957', '320700', '连云港市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('958', '320703', '连云区', '957', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('959', '320706', '海州区', '957', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('960', '320707', '赣榆区', '957', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('961', '320722', '东海县', '957', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('962', '320723', '灌云县', '957', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('963', '320724', '灌南县', '957', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('964', '320800', '淮安市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('965', '320803', '淮安区', '964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('966', '320804', '淮阴区', '964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('967', '320812', '清江浦区', '964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('968', '320813', '洪泽区', '964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('969', '320826', '涟水县', '964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('970', '320830', '盱眙县', '964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('971', '320831', '金湖县', '964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('972', '320900', '盐城市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('973', '320902', '亭湖区', '972', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('974', '320903', '盐都区', '972', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('975', '320904', '大丰区', '972', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('976', '320921', '响水县', '972', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('977', '320922', '滨海县', '972', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('978', '320923', '阜宁县', '972', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('979', '320924', '射阳县', '972', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('980', '320925', '建湖县', '972', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('981', '320981', '东台市', '972', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('982', '321000', '扬州市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('983', '321002', '广陵区', '982', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('984', '321003', '邗江区', '982', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('985', '321012', '江都区', '982', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('986', '321023', '宝应县', '982', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('987', '321081', '仪征市', '982', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('988', '321084', '高邮市', '982', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('989', '321100', '镇江市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('990', '321102', '京口区', '989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('991', '321111', '润州区', '989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('992', '321112', '丹徒区', '989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('993', '321181', '丹阳市', '989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('994', '321182', '扬中市', '989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('995', '321183', '句容市', '989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('996', '321200', '泰州市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('997', '321202', '海陵区', '996', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('998', '321203', '高港区', '996', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('999', '321204', '姜堰区', '996', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1000', '321281', '兴化市', '996', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1001', '321282', '靖江市', '996', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1002', '321283', '泰兴市', '996', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1003', '321300', '宿迁市', '900', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1004', '321302', '宿城区', '1003', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1005', '321311', '宿豫区', '1003', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1006', '321322', '沭阳县', '1003', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1007', '321323', '泗阳县', '1003', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1008', '321324', '泗洪县', '1003', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1009', '330000', '浙江省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('1010', '330100', '杭州市', '1009', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1011', '330102', '上城区', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1012', '330103', '下城区', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1013', '330104', '江干区', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1014', '330105', '拱墅区', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1015', '330106', '西湖区', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1016', '330108', '滨江区', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1017', '330109', '萧山区', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1018', '330110', '余杭区', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1019', '330111', '富阳区', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1020', '330112', '临安区', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1021', '330122', '桐庐县', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1022', '330127', '淳安县', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1023', '330182', '建德市', '1010', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1024', '330200', '宁波市', '1009', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1025', '330203', '海曙区', '1024', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1026', '330205', '江北区', '1024', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1027', '330206', '北仑区', '1024', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1028', '330211', '镇海区', '1024', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1029', '330212', '鄞州区', '1024', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1030', '330213', '奉化区', '1024', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1031', '330225', '象山县', '1024', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1032', '330226', '宁海县', '1024', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1033', '330281', '余姚市', '1024', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1034', '330282', '慈溪市', '1024', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1035', '330300', '温州市', '1009', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1036', '330302', '鹿城区', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1037', '330303', '龙湾区', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1038', '330304', '瓯海区', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1039', '330305', '洞头区', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1040', '330324', '永嘉县', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1041', '330326', '平阳县', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1042', '330327', '苍南县', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1043', '330328', '文成县', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1044', '330329', '泰顺县', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1045', '330381', '瑞安市', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1046', '330382', '乐清市', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1047', '330383', '龙港市', '1035', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1048', '330400', '嘉兴市', '1009', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1049', '330402', '南湖区', '1048', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1050', '330411', '秀洲区', '1048', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1051', '330421', '嘉善县', '1048', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1052', '330424', '海盐县', '1048', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1053', '330481', '海宁市', '1048', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1054', '330482', '平湖市', '1048', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1055', '330483', '桐乡市', '1048', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1056', '330500', '湖州市', '1009', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1057', '330502', '吴兴区', '1056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1058', '330503', '南浔区', '1056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1059', '330521', '德清县', '1056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1060', '330522', '长兴县', '1056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1061', '330523', '安吉县', '1056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1062', '330600', '绍兴市', '1009', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1063', '330602', '越城区', '1062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1064', '330603', '柯桥区', '1062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1065', '330604', '上虞区', '1062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1066', '330624', '新昌县', '1062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1067', '330681', '诸暨市', '1062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1068', '330683', '嵊州市', '1062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1069', '330700', '金华市', '1009', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1070', '330702', '婺城区', '1069', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1071', '330703', '金东区', '1069', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1072', '330723', '武义县', '1069', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1073', '330726', '浦江县', '1069', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1074', '330727', '磐安县', '1069', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1075', '330781', '兰溪市', '1069', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1076', '330782', '义乌市', '1069', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1077', '330783', '东阳市', '1069', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1078', '330784', '永康市', '1069', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1079', '330800', '衢州市', '1009', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1080', '330802', '柯城区', '1079', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1081', '330803', '衢江区', '1079', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1082', '330822', '常山县', '1079', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1083', '330824', '开化县', '1079', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1084', '330825', '龙游县', '1079', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1085', '330881', '江山市', '1079', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1086', '330900', '舟山市', '1009', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1087', '330902', '定海区', '1086', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1088', '330903', '普陀区', '1086', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1089', '330921', '岱山县', '1086', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1090', '330922', '嵊泗县', '1086', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1091', '331000', '台州市', '1009', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1092', '331002', '椒江区', '1091', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1093', '331003', '黄岩区', '1091', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1094', '331004', '路桥区', '1091', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1095', '331022', '三门县', '1091', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1096', '331023', '天台县', '1091', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1097', '331024', '仙居县', '1091', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1098', '331081', '温岭市', '1091', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1099', '331082', '临海市', '1091', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1100', '331083', '玉环市', '1091', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1101', '331100', '丽水市', '1009', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1102', '331102', '莲都区', '1101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1103', '331121', '青田县', '1101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1104', '331122', '缙云县', '1101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1105', '331123', '遂昌县', '1101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1106', '331124', '松阳县', '1101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1107', '331125', '云和县', '1101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1108', '331126', '庆元县', '1101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1109', '331127', '景宁畲族自治县', '1101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1110', '331181', '龙泉市', '1101', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1111', '340000', '安徽省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('1112', '340100', '合肥市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1113', '340102', '瑶海区', '1112', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1114', '340103', '庐阳区', '1112', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1115', '340104', '蜀山区', '1112', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1116', '340111', '包河区', '1112', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1117', '340121', '长丰县', '1112', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1118', '340122', '肥东县', '1112', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1119', '340123', '肥西县', '1112', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1120', '340124', '庐江县', '1112', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1121', '340181', '巢湖市', '1112', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1122', '340200', '芜湖市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1123', '340202', '镜湖区', '1122', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1124', '340203', '弋江区', '1122', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1125', '340207', '鸠江区', '1122', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1126', '340221', '湾沚区', '1122', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1127', '340222', '繁昌区', '1122', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1128', '340223', '南陵县', '1122', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1129', '340281', '无为市', '1122', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1130', '340300', '蚌埠市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1131', '340302', '龙子湖区', '1130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1132', '340303', '蚌山区', '1130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1133', '340304', '禹会区', '1130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1134', '340311', '淮上区', '1130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1135', '340321', '怀远县', '1130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1136', '340322', '五河县', '1130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1137', '340323', '固镇县', '1130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1138', '340400', '淮南市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1139', '340402', '大通区', '1138', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1140', '340403', '田家庵区', '1138', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1141', '340404', '谢家集区', '1138', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1142', '340405', '八公山区', '1138', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1143', '340406', '潘集区', '1138', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1144', '340421', '凤台县', '1138', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1145', '340422', '寿县', '1138', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1146', '340500', '马鞍山市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1147', '340503', '花山区', '1146', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1148', '340504', '雨山区', '1146', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1149', '340506', '博望区', '1146', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1150', '340521', '当涂县', '1146', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1151', '340522', '含山县', '1146', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1152', '340523', '和县', '1146', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1153', '340600', '淮北市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1154', '340602', '杜集区', '1153', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1155', '340603', '相山区', '1153', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1156', '340604', '烈山区', '1153', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1157', '340621', '濉溪县', '1153', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1158', '340700', '铜陵市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1159', '340705', '铜官区', '1158', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1160', '340706', '义安区', '1158', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1161', '340711', '郊区', '1158', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1162', '340722', '枞阳县', '1158', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1163', '340800', '安庆市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1164', '340802', '迎江区', '1163', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1165', '340803', '大观区', '1163', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1166', '340811', '宜秀区', '1163', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1167', '340822', '怀宁县', '1163', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1168', '340825', '太湖县', '1163', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1169', '340826', '宿松县', '1163', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1170', '340827', '望江县', '1163', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1171', '340828', '岳西县', '1163', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1172', '340881', '桐城市', '1163', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1173', '340882', '潜山市', '1163', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1174', '341000', '黄山市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1175', '341002', '屯溪区', '1174', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1176', '341003', '黄山区', '1174', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1177', '341004', '徽州区', '1174', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1178', '341021', '歙县', '1174', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1179', '341022', '休宁县', '1174', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1180', '341023', '黟县', '1174', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1181', '341024', '祁门县', '1174', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1182', '341100', '滁州市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1183', '341102', '琅琊区', '1182', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1184', '341103', '南谯区', '1182', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1185', '341122', '来安县', '1182', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1186', '341124', '全椒县', '1182', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1187', '341125', '定远县', '1182', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1188', '341126', '凤阳县', '1182', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1189', '341181', '天长市', '1182', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1190', '341182', '明光市', '1182', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1191', '341200', '阜阳市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1192', '341202', '颍州区', '1191', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1193', '341203', '颍东区', '1191', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1194', '341204', '颍泉区', '1191', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1195', '341221', '临泉县', '1191', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1196', '341222', '太和县', '1191', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1197', '341225', '阜南县', '1191', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1198', '341226', '颍上县', '1191', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1199', '341282', '界首市', '1191', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1200', '341300', '宿州市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1201', '341302', '埇桥区', '1200', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1202', '341321', '砀山县', '1200', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1203', '341322', '萧县', '1200', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1204', '341323', '灵璧县', '1200', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1205', '341324', '泗县', '1200', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1206', '341500', '六安市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1207', '341502', '金安区', '1206', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1208', '341503', '裕安区', '1206', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1209', '341504', '叶集区', '1206', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1210', '341522', '霍邱县', '1206', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1211', '341523', '舒城县', '1206', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1212', '341524', '金寨县', '1206', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1213', '341525', '霍山县', '1206', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1214', '341600', '亳州市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1215', '341602', '谯城区', '1214', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1216', '341621', '涡阳县', '1214', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1217', '341622', '蒙城县', '1214', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1218', '341623', '利辛县', '1214', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1219', '341700', '池州市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1220', '341702', '贵池区', '1219', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1221', '341721', '东至县', '1219', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1222', '341722', '石台县', '1219', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1223', '341723', '青阳县', '1219', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1224', '341800', '宣城市', '1111', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1225', '341802', '宣州区', '1224', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1226', '341821', '郎溪县', '1224', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1227', '341823', '泾县', '1224', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1228', '341824', '绩溪县', '1224', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1229', '341825', '旌德县', '1224', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1230', '341881', '宁国市', '1224', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1231', '341882', '广德市', '1224', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1232', '350000', '福建省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('1233', '350100', '福州市', '1232', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1234', '350102', '鼓楼区', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1235', '350103', '台江区', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1236', '350104', '仓山区', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1237', '350105', '马尾区', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1238', '350111', '晋安区', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1239', '350112', '长乐区', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1240', '350121', '闽侯县', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1241', '350122', '连江县', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1242', '350123', '罗源县', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1243', '350124', '闽清县', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1244', '350125', '永泰县', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1245', '350128', '平潭县', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1246', '350181', '福清市', '1233', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1247', '350200', '厦门市', '1232', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1248', '350203', '思明区', '1247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1249', '350205', '海沧区', '1247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1250', '350206', '湖里区', '1247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1251', '350211', '集美区', '1247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1252', '350212', '同安区', '1247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1253', '350213', '翔安区', '1247', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1254', '350300', '莆田市', '1232', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1255', '350302', '城厢区', '1254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1256', '350303', '涵江区', '1254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1257', '350304', '荔城区', '1254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1258', '350305', '秀屿区', '1254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1259', '350322', '仙游县', '1254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1260', '350400', '三明市', '1232', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1261', '350402', '梅列区', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1262', '350403', '三元区', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1263', '350421', '明溪县', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1264', '350423', '清流县', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1265', '350424', '宁化县', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1266', '350425', '大田县', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1267', '350426', '尤溪县', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1268', '350427', '沙县', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1269', '350428', '将乐县', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1270', '350429', '泰宁县', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1271', '350430', '建宁县', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1272', '350481', '永安市', '1260', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1273', '350500', '泉州市', '1232', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1274', '350502', '鲤城区', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1275', '350503', '丰泽区', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1276', '350504', '洛江区', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1277', '350505', '泉港区', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1278', '350521', '惠安县', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1279', '350524', '安溪县', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1280', '350525', '永春县', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1281', '350526', '德化县', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1282', '350527', '金门县', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1283', '350581', '石狮市', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1284', '350582', '晋江市', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1285', '350583', '南安市', '1273', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1286', '350600', '漳州市', '1232', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1287', '350602', '芗城区', '1286', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1288', '350603', '龙文区', '1286', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1289', '350622', '云霄县', '1286', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1290', '350623', '漳浦县', '1286', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1291', '350624', '诏安县', '1286', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1292', '350625', '长泰县', '1286', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1293', '350626', '东山县', '1286', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1294', '350627', '南靖县', '1286', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1295', '350628', '平和县', '1286', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1296', '350629', '华安县', '1286', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1297', '350681', '龙海市', '1286', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1298', '350700', '南平市', '1232', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1299', '350702', '延平区', '1298', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1300', '350703', '建阳区', '1298', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1301', '350721', '顺昌县', '1298', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1302', '350722', '浦城县', '1298', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1303', '350723', '光泽县', '1298', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1304', '350724', '松溪县', '1298', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1305', '350725', '政和县', '1298', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1306', '350781', '邵武市', '1298', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1307', '350782', '武夷山市', '1298', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1308', '350783', '建瓯市', '1298', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1309', '350800', '龙岩市', '1232', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1310', '350802', '新罗区', '1309', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1311', '350803', '永定区', '1309', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1312', '350821', '长汀县', '1309', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1313', '350823', '上杭县', '1309', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1314', '350824', '武平县', '1309', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1315', '350825', '连城县', '1309', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1316', '350881', '漳平市', '1309', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1317', '350900', '宁德市', '1232', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1318', '350902', '蕉城区', '1317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1319', '350921', '霞浦县', '1317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1320', '350922', '古田县', '1317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1321', '350923', '屏南县', '1317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1322', '350924', '寿宁县', '1317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1323', '350925', '周宁县', '1317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1324', '350926', '柘荣县', '1317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1325', '350981', '福安市', '1317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1326', '350982', '福鼎市', '1317', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1327', '360000', '江西省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('1328', '360100', '南昌市', '1327', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1329', '360102', '东湖区', '1328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1330', '360103', '西湖区', '1328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1331', '360104', '青云谱区', '1328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1332', '360111', '青山湖区', '1328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1333', '360112', '新建区', '1328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1334', '360113', '红谷滩区', '1328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1335', '360121', '南昌县', '1328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1336', '360123', '安义县', '1328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1337', '360124', '进贤县', '1328', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1338', '360200', '景德镇市', '1327', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1339', '360202', '昌江区', '1338', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1340', '360203', '珠山区', '1338', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1341', '360222', '浮梁县', '1338', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1342', '360281', '乐平市', '1338', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1343', '360300', '萍乡市', '1327', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1344', '360302', '安源区', '1343', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1345', '360313', '湘东区', '1343', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1346', '360321', '莲花县', '1343', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1347', '360322', '上栗县', '1343', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1348', '360323', '芦溪县', '1343', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1349', '360400', '九江市', '1327', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1350', '360402', '濂溪区', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1351', '360403', '浔阳区', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1352', '360404', '柴桑区', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1353', '360423', '武宁县', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1354', '360424', '修水县', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1355', '360425', '永修县', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1356', '360426', '德安县', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1357', '360428', '都昌县', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1358', '360429', '湖口县', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1359', '360430', '彭泽县', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1360', '360481', '瑞昌市', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1361', '360482', '共青城市', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1362', '360483', '庐山市', '1349', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1363', '360500', '新余市', '1327', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1364', '360502', '渝水区', '1363', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1365', '360521', '分宜县', '1363', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1366', '360600', '鹰潭市', '1327', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1367', '360602', '月湖区', '1366', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1368', '360603', '余江区', '1366', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1369', '360681', '贵溪市', '1366', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1370', '360700', '赣州市', '1327', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1371', '360702', '章贡区', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1372', '360703', '南康区', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1373', '360704', '赣县区', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1374', '360722', '信丰县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1375', '360723', '大余县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1376', '360724', '上犹县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1377', '360725', '崇义县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1378', '360726', '安远县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1379', '360728', '定南县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1380', '360729', '全南县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1381', '360730', '宁都县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1382', '360731', '于都县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1383', '360732', '兴国县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1384', '360733', '会昌县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1385', '360734', '寻乌县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1386', '360735', '石城县', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1387', '360781', '瑞金市', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1388', '360783', '龙南市', '1370', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1389', '360800', '吉安市', '1327', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1390', '360802', '吉州区', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1391', '360803', '青原区', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1392', '360821', '吉安县', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1393', '360822', '吉水县', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1394', '360823', '峡江县', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1395', '360824', '新干县', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1396', '360825', '永丰县', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1397', '360826', '泰和县', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1398', '360827', '遂川县', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1399', '360828', '万安县', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1400', '360829', '安福县', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1401', '360830', '永新县', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1402', '360881', '井冈山市', '1389', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1403', '360900', '宜春市', '1327', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1404', '360902', '袁州区', '1403', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1405', '360921', '奉新县', '1403', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1406', '360922', '万载县', '1403', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1407', '360923', '上高县', '1403', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1408', '360924', '宜丰县', '1403', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1409', '360925', '靖安县', '1403', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1410', '360926', '铜鼓县', '1403', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1411', '360981', '丰城市', '1403', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1412', '360982', '樟树市', '1403', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1413', '360983', '高安市', '1403', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1414', '361000', '抚州市', '1327', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1415', '361002', '临川区', '1414', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1416', '361003', '东乡区', '1414', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1417', '361021', '南城县', '1414', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1418', '361022', '黎川县', '1414', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1419', '361023', '南丰县', '1414', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1420', '361024', '崇仁县', '1414', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1421', '361025', '乐安县', '1414', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1422', '361026', '宜黄县', '1414', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1423', '361027', '金溪县', '1414', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1424', '361028', '资溪县', '1414', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1425', '361030', '广昌县', '1414', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1426', '361100', '上饶市', '1327', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1427', '361102', '信州区', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1428', '361103', '广丰区', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1429', '361104', '广信区', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1430', '361123', '玉山县', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1431', '361124', '铅山县', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1432', '361125', '横峰县', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1433', '361126', '弋阳县', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1434', '361127', '余干县', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1435', '361128', '鄱阳县', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1436', '361129', '万年县', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1437', '361130', '婺源县', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1438', '361181', '德兴市', '1426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1439', '370000', '山东省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('1440', '370100', '济南市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1441', '370102', '历下区', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1442', '370103', '市中区', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1443', '370104', '槐荫区', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1444', '370105', '天桥区', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1445', '370112', '历城区', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1446', '370113', '长清区', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1447', '370114', '章丘区', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1448', '370115', '济阳区', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1449', '370116', '莱芜区', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1450', '370117', '钢城区', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1451', '370124', '平阴县', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1452', '370126', '商河县', '1440', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1453', '370200', '青岛市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1454', '370202', '市南区', '1453', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1455', '370203', '市北区', '1453', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1456', '370211', '黄岛区', '1453', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1457', '370212', '崂山区', '1453', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1458', '370213', '李沧区', '1453', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1459', '370214', '城阳区', '1453', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1460', '370215', '即墨区', '1453', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1461', '370281', '胶州市', '1453', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1462', '370283', '平度市', '1453', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1463', '370285', '莱西市', '1453', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1464', '370300', '淄博市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1465', '370302', '淄川区', '1464', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1466', '370303', '张店区', '1464', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1467', '370304', '博山区', '1464', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1468', '370305', '临淄区', '1464', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1469', '370306', '周村区', '1464', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1470', '370321', '桓台县', '1464', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1471', '370322', '高青县', '1464', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1472', '370323', '沂源县', '1464', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1473', '370400', '枣庄市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1474', '370402', '市中区', '1473', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1475', '370403', '薛城区', '1473', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1476', '370404', '峄城区', '1473', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1477', '370405', '台儿庄区', '1473', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1478', '370406', '山亭区', '1473', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1479', '370481', '滕州市', '1473', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1480', '370500', '东营市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1481', '370502', '东营区', '1480', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1482', '370503', '河口区', '1480', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1483', '370505', '垦利区', '1480', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1484', '370522', '利津县', '1480', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1485', '370523', '广饶县', '1480', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1486', '370600', '烟台市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1487', '370602', '芝罘区', '1486', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1488', '370611', '福山区', '1486', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1489', '370612', '牟平区', '1486', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1490', '370613', '莱山区', '1486', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1491', '370614', '蓬莱区', '1486', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1492', '370681', '龙口市', '1486', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1493', '370682', '莱阳市', '1486', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1494', '370683', '莱州市', '1486', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1495', '370685', '招远市', '1486', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1496', '370686', '栖霞市', '1486', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1497', '370687', '海阳市', '1486', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1498', '370700', '潍坊市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1499', '370702', '潍城区', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1500', '370703', '寒亭区', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1501', '370704', '坊子区', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1502', '370705', '奎文区', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1503', '370724', '临朐县', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1504', '370725', '昌乐县', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1505', '370781', '青州市', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1506', '370782', '诸城市', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1507', '370783', '寿光市', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1508', '370784', '安丘市', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1509', '370785', '高密市', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1510', '370786', '昌邑市', '1498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1511', '370800', '济宁市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1512', '370811', '任城区', '1511', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1513', '370812', '兖州区', '1511', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1514', '370826', '微山县', '1511', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1515', '370827', '鱼台县', '1511', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1516', '370828', '金乡县', '1511', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1517', '370829', '嘉祥县', '1511', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1518', '370830', '汶上县', '1511', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1519', '370831', '泗水县', '1511', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1520', '370832', '梁山县', '1511', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1521', '370881', '曲阜市', '1511', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1522', '370883', '邹城市', '1511', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1523', '370900', '泰安市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1524', '370902', '泰山区', '1523', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1525', '370911', '岱岳区', '1523', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1526', '370921', '宁阳县', '1523', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1527', '370923', '东平县', '1523', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1528', '370982', '新泰市', '1523', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1529', '370983', '肥城市', '1523', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1530', '371000', '威海市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1531', '371002', '环翠区', '1530', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1532', '371003', '文登区', '1530', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1533', '371082', '荣成市', '1530', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1534', '371083', '乳山市', '1530', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1535', '371100', '日照市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1536', '371102', '东港区', '1535', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1537', '371103', '岚山区', '1535', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1538', '371121', '五莲县', '1535', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1539', '371122', '莒县', '1535', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1540', '371300', '临沂市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1541', '371302', '兰山区', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1542', '371311', '罗庄区', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1543', '371312', '河东区', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1544', '371321', '沂南县', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1545', '371322', '郯城县', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1546', '371323', '沂水县', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1547', '371324', '兰陵县', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1548', '371325', '费县', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1549', '371326', '平邑县', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1550', '371327', '莒南县', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1551', '371328', '蒙阴县', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1552', '371329', '临沭县', '1540', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1553', '371400', '德州市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1554', '371402', '德城区', '1553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1555', '371403', '陵城区', '1553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1556', '371422', '宁津县', '1553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1557', '371423', '庆云县', '1553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1558', '371424', '临邑县', '1553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1559', '371425', '齐河县', '1553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1560', '371426', '平原县', '1553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1561', '371427', '夏津县', '1553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1562', '371428', '武城县', '1553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1563', '371481', '乐陵市', '1553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1564', '371482', '禹城市', '1553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1565', '371500', '聊城市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1566', '371502', '东昌府区', '1565', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1567', '371503', '茌平区', '1565', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1568', '371521', '阳谷县', '1565', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1569', '371522', '莘县', '1565', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1570', '371524', '东阿县', '1565', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1571', '371525', '冠县', '1565', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1572', '371526', '高唐县', '1565', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1573', '371581', '临清市', '1565', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1574', '371600', '滨州市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1575', '371602', '滨城区', '1574', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1576', '371603', '沾化区', '1574', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1577', '371621', '惠民县', '1574', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1578', '371622', '阳信县', '1574', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1579', '371623', '无棣县', '1574', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1580', '371625', '博兴县', '1574', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1581', '371681', '邹平市', '1574', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1582', '371700', '菏泽市', '1439', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1583', '371702', '牡丹区', '1582', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1584', '371703', '定陶区', '1582', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1585', '371721', '曹县', '1582', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1586', '371722', '单县', '1582', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1587', '371723', '成武县', '1582', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1588', '371724', '巨野县', '1582', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1589', '371725', '郓城县', '1582', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1590', '371726', '鄄城县', '1582', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1591', '371728', '东明县', '1582', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1592', '410000', '河南省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('1593', '410100', '郑州市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1594', '410102', '中原区', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1595', '410103', '二七区', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1596', '410104', '管城回族区', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1597', '410105', '金水区', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1598', '410106', '上街区', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1599', '410108', '惠济区', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1600', '410122', '中牟县', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1601', '410181', '巩义市', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1602', '410182', '荥阳市', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1603', '410183', '新密市', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1604', '410184', '新郑市', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1605', '410185', '登封市', '1593', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1606', '410200', '开封市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1607', '410202', '龙亭区', '1606', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1608', '410203', '顺河回族区', '1606', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1609', '410204', '鼓楼区', '1606', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1610', '410205', '禹王台区', '1606', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1611', '410212', '祥符区', '1606', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1612', '410221', '杞县', '1606', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1613', '410222', '通许县', '1606', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1614', '410223', '尉氏县', '1606', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1615', '410225', '兰考县', '1606', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1616', '410300', '洛阳市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1617', '410302', '老城区', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1618', '410303', '西工区', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1619', '410304', '瀍河回族区', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1620', '410305', '涧西区', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1621', '410306', '吉利区', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1622', '410311', '洛龙区', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1623', '410322', '孟津县', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1624', '410323', '新安县', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1625', '410324', '栾川县', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1626', '410325', '嵩县', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1627', '410326', '汝阳县', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1628', '410327', '宜阳县', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1629', '410328', '洛宁县', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1630', '410329', '伊川县', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1631', '410381', '偃师市', '1616', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1632', '410400', '平顶山市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1633', '410402', '新华区', '1632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1634', '410403', '卫东区', '1632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1635', '410404', '石龙区', '1632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1636', '410411', '湛河区', '1632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1637', '410421', '宝丰县', '1632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1638', '410422', '叶县', '1632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1639', '410423', '鲁山县', '1632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1640', '410425', '郏县', '1632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1641', '410481', '舞钢市', '1632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1642', '410482', '汝州市', '1632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1643', '410500', '安阳市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1644', '410502', '文峰区', '1643', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1645', '410503', '北关区', '1643', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1646', '410505', '殷都区', '1643', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1647', '410506', '龙安区', '1643', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1648', '410522', '安阳县', '1643', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1649', '410523', '汤阴县', '1643', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1650', '410526', '滑县', '1643', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1651', '410527', '内黄县', '1643', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1652', '410581', '林州市', '1643', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1653', '410600', '鹤壁市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1654', '410602', '鹤山区', '1653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1655', '410603', '山城区', '1653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1656', '410611', '淇滨区', '1653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1657', '410621', '浚县', '1653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1658', '410622', '淇县', '1653', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1659', '410700', '新乡市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1660', '410702', '红旗区', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1661', '410703', '卫滨区', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1662', '410704', '凤泉区', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1663', '410711', '牧野区', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1664', '410721', '新乡县', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1665', '410724', '获嘉县', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1666', '410725', '原阳县', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1667', '410726', '延津县', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1668', '410727', '封丘县', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1669', '410781', '卫辉市', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1670', '410782', '辉县市', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1671', '410783', '长垣市', '1659', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1672', '410800', '焦作市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1673', '410802', '解放区', '1672', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1674', '410803', '中站区', '1672', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1675', '410804', '马村区', '1672', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1676', '410811', '山阳区', '1672', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1677', '410821', '修武县', '1672', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1678', '410822', '博爱县', '1672', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1679', '410823', '武陟县', '1672', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1680', '410825', '温县', '1672', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1681', '410882', '沁阳市', '1672', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1682', '410883', '孟州市', '1672', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1683', '410900', '濮阳市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1684', '410902', '华龙区', '1683', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1685', '410922', '清丰县', '1683', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1686', '410923', '南乐县', '1683', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1687', '410926', '范县', '1683', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1688', '410927', '台前县', '1683', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1689', '410928', '濮阳县', '1683', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1690', '411000', '许昌市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1691', '411002', '魏都区', '1690', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1692', '411003', '建安区', '1690', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1693', '411024', '鄢陵县', '1690', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1694', '411025', '襄城县', '1690', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1695', '411081', '禹州市', '1690', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1696', '411082', '长葛市', '1690', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1697', '411100', '漯河市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1698', '411102', '源汇区', '1697', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1699', '411103', '郾城区', '1697', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1700', '411104', '召陵区', '1697', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1701', '411121', '舞阳县', '1697', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1702', '411122', '临颍县', '1697', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1703', '411200', '三门峡市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1704', '411202', '湖滨区', '1703', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1705', '411203', '陕州区', '1703', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1706', '411221', '渑池县', '1703', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1707', '411224', '卢氏县', '1703', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1708', '411281', '义马市', '1703', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1709', '411282', '灵宝市', '1703', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1710', '411300', '南阳市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1711', '411302', '宛城区', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1712', '411303', '卧龙区', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1713', '411321', '南召县', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1714', '411322', '方城县', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1715', '411323', '西峡县', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1716', '411324', '镇平县', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1717', '411325', '内乡县', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1718', '411326', '淅川县', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1719', '411327', '社旗县', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1720', '411328', '唐河县', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1721', '411329', '新野县', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1722', '411330', '桐柏县', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1723', '411381', '邓州市', '1710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1724', '411400', '商丘市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1725', '411402', '梁园区', '1724', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1726', '411403', '睢阳区', '1724', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1727', '411421', '民权县', '1724', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1728', '411422', '睢县', '1724', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1729', '411423', '宁陵县', '1724', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1730', '411424', '柘城县', '1724', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1731', '411425', '虞城县', '1724', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1732', '411426', '夏邑县', '1724', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1733', '411481', '永城市', '1724', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1734', '411500', '信阳市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1735', '411502', '浉河区', '1734', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1736', '411503', '平桥区', '1734', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1737', '411521', '罗山县', '1734', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1738', '411522', '光山县', '1734', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1739', '411523', '新县', '1734', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1740', '411524', '商城县', '1734', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1741', '411525', '固始县', '1734', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1742', '411526', '潢川县', '1734', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1743', '411527', '淮滨县', '1734', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1744', '411528', '息县', '1734', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1745', '411600', '周口市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1746', '411602', '川汇区', '1745', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1747', '411603', '淮阳区', '1745', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1748', '411621', '扶沟县', '1745', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1749', '411622', '西华县', '1745', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1750', '411623', '商水县', '1745', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1751', '411624', '沈丘县', '1745', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1752', '411625', '郸城县', '1745', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1753', '411627', '太康县', '1745', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1754', '411628', '鹿邑县', '1745', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1755', '411681', '项城市', '1745', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1756', '411700', '驻马店市', '1592', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1757', '411702', '驿城区', '1756', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1758', '411721', '西平县', '1756', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1759', '411722', '上蔡县', '1756', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1760', '411723', '平舆县', '1756', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1761', '411724', '正阳县', '1756', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1762', '411725', '确山县', '1756', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1763', '411726', '泌阳县', '1756', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1764', '411727', '汝南县', '1756', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1765', '411728', '遂平县', '1756', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1766', '411729', '新蔡县', '1756', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1767', '420000', '湖北省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('1768', '420100', '武汉市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1769', '420102', '江岸区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1770', '420103', '江汉区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1771', '420104', '硚口区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1772', '420105', '汉阳区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1773', '420106', '武昌区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1774', '420107', '青山区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1775', '420111', '洪山区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1776', '420112', '东西湖区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1777', '420113', '汉南区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1778', '420114', '蔡甸区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1779', '420115', '江夏区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1780', '420116', '黄陂区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1781', '420117', '新洲区', '1768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1782', '420200', '黄石市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1783', '420202', '黄石港区', '1782', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1784', '420203', '西塞山区', '1782', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1785', '420204', '下陆区', '1782', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1786', '420205', '铁山区', '1782', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1787', '420222', '阳新县', '1782', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1788', '420281', '大冶市', '1782', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1789', '420300', '十堰市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1790', '420302', '茅箭区', '1789', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1791', '420303', '张湾区', '1789', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1792', '420304', '郧阳区', '1789', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1793', '420322', '郧西县', '1789', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1794', '420323', '竹山县', '1789', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1795', '420324', '竹溪县', '1789', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1796', '420325', '房县', '1789', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1797', '420381', '丹江口市', '1789', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1798', '420500', '宜昌市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1799', '420502', '西陵区', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1800', '420503', '伍家岗区', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1801', '420504', '点军区', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1802', '420505', '猇亭区', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1803', '420506', '夷陵区', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1804', '420525', '远安县', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1805', '420526', '兴山县', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1806', '420527', '秭归县', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1807', '420528', '长阳土家族自治县', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1808', '420529', '五峰土家族自治县', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1809', '420581', '宜都市', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1810', '420582', '当阳市', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1811', '420583', '枝江市', '1798', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1812', '420600', '襄阳市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1813', '420602', '襄城区', '1812', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1814', '420606', '樊城区', '1812', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1815', '420607', '襄州区', '1812', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1816', '420624', '南漳县', '1812', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1817', '420625', '谷城县', '1812', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1818', '420626', '保康县', '1812', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1819', '420682', '老河口市', '1812', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1820', '420683', '枣阳市', '1812', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1821', '420684', '宜城市', '1812', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1822', '420700', '鄂州市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1823', '420702', '梁子湖区', '1822', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1824', '420703', '华容区', '1822', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1825', '420704', '鄂城区', '1822', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1826', '420800', '荆门市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1827', '420802', '东宝区', '1826', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1828', '420804', '掇刀区', '1826', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1829', '420822', '沙洋县', '1826', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1830', '420881', '钟祥市', '1826', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1831', '420882', '京山市', '1826', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1832', '420900', '孝感市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1833', '420902', '孝南区', '1832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1834', '420921', '孝昌县', '1832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1835', '420922', '大悟县', '1832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1836', '420923', '云梦县', '1832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1837', '420981', '应城市', '1832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1838', '420982', '安陆市', '1832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1839', '420984', '汉川市', '1832', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1840', '421000', '荆州市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1841', '421002', '沙市区', '1840', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1842', '421003', '荆州区', '1840', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1843', '421022', '公安县', '1840', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1844', '421023', '监利市', '1840', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1845', '421024', '江陵县', '1840', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1846', '421081', '石首市', '1840', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1847', '421083', '洪湖市', '1840', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1848', '421087', '松滋市', '1840', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1849', '421100', '黄冈市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1850', '421102', '黄州区', '1849', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1851', '421121', '团风县', '1849', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1852', '421122', '红安县', '1849', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1853', '421123', '罗田县', '1849', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1854', '421124', '英山县', '1849', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1855', '421125', '浠水县', '1849', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1856', '421126', '蕲春县', '1849', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1857', '421127', '黄梅县', '1849', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1858', '421181', '麻城市', '1849', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1859', '421182', '武穴市', '1849', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1860', '421200', '咸宁市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1861', '421202', '咸安区', '1860', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1862', '421221', '嘉鱼县', '1860', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1863', '421222', '通城县', '1860', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1864', '421223', '崇阳县', '1860', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1865', '421224', '通山县', '1860', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1866', '421281', '赤壁市', '1860', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1867', '421300', '随州市', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1868', '421303', '曾都区', '1867', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1869', '421321', '随县', '1867', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1870', '421381', '广水市', '1867', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1871', '422800', '恩施土家族苗族自治州', '1767', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1872', '422801', '恩施市', '1871', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1873', '422802', '利川市', '1871', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1874', '422822', '建始县', '1871', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1875', '422823', '巴东县', '1871', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1876', '422825', '宣恩县', '1871', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1877', '422826', '咸丰县', '1871', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1878', '422827', '来凤县', '1871', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1879', '422828', '鹤峰县', '1871', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1880', '430000', '湖南省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('1881', '430100', '长沙市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1882', '430102', '芙蓉区', '1881', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1883', '430103', '天心区', '1881', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1884', '430104', '岳麓区', '1881', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1885', '430105', '开福区', '1881', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1886', '430111', '雨花区', '1881', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1887', '430112', '望城区', '1881', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1888', '430121', '长沙县', '1881', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1889', '430181', '浏阳市', '1881', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1890', '430182', '宁乡市', '1881', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1891', '430200', '株洲市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1892', '430202', '荷塘区', '1891', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1893', '430203', '芦淞区', '1891', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1894', '430204', '石峰区', '1891', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1895', '430211', '天元区', '1891', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1896', '430212', '渌口区', '1891', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1897', '430223', '攸县', '1891', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1898', '430224', '茶陵县', '1891', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1899', '430225', '炎陵县', '1891', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1900', '430281', '醴陵市', '1891', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1901', '430300', '湘潭市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1902', '430302', '雨湖区', '1901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1903', '430304', '岳塘区', '1901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1904', '430321', '湘潭县', '1901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1905', '430381', '湘乡市', '1901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1906', '430382', '韶山市', '1901', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1907', '430400', '衡阳市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1908', '430405', '珠晖区', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1909', '430406', '雁峰区', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1910', '430407', '石鼓区', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1911', '430408', '蒸湘区', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1912', '430412', '南岳区', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1913', '430421', '衡阳县', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1914', '430422', '衡南县', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1915', '430423', '衡山县', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1916', '430424', '衡东县', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1917', '430426', '祁东县', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1918', '430481', '耒阳市', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1919', '430482', '常宁市', '1907', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1920', '430500', '邵阳市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1921', '430502', '双清区', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1922', '430503', '大祥区', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1923', '430511', '北塔区', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1924', '430522', '新邵县', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1925', '430523', '邵阳县', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1926', '430524', '隆回县', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1927', '430525', '洞口县', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1928', '430527', '绥宁县', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1929', '430528', '新宁县', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1930', '430529', '城步苗族自治县', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1931', '430581', '武冈市', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1932', '430582', '邵东市', '1920', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1933', '430600', '岳阳市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1934', '430602', '岳阳楼区', '1933', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1935', '430603', '云溪区', '1933', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1936', '430611', '君山区', '1933', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1937', '430621', '岳阳县', '1933', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1938', '430623', '华容县', '1933', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1939', '430624', '湘阴县', '1933', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1940', '430626', '平江县', '1933', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1941', '430681', '汨罗市', '1933', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1942', '430682', '临湘市', '1933', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1943', '430700', '常德市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1944', '430702', '武陵区', '1943', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1945', '430703', '鼎城区', '1943', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1946', '430721', '安乡县', '1943', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1947', '430722', '汉寿县', '1943', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1948', '430723', '澧县', '1943', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1949', '430724', '临澧县', '1943', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1950', '430725', '桃源县', '1943', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1951', '430726', '石门县', '1943', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1952', '430781', '津市市', '1943', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1953', '430800', '张家界市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1954', '430802', '永定区', '1953', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1955', '430811', '武陵源区', '1953', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1956', '430821', '慈利县', '1953', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1957', '430822', '桑植县', '1953', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1958', '430900', '益阳市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1959', '430902', '资阳区', '1958', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1960', '430903', '赫山区', '1958', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1961', '430921', '南县', '1958', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1962', '430922', '桃江县', '1958', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1963', '430923', '安化县', '1958', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1964', '430981', '沅江市', '1958', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1965', '431000', '郴州市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1966', '431002', '北湖区', '1965', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1967', '431003', '苏仙区', '1965', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1968', '431021', '桂阳县', '1965', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1969', '431022', '宜章县', '1965', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1970', '431023', '永兴县', '1965', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1971', '431024', '嘉禾县', '1965', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1972', '431025', '临武县', '1965', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1973', '431026', '汝城县', '1965', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1974', '431027', '桂东县', '1965', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1975', '431028', '安仁县', '1965', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1976', '431081', '资兴市', '1965', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1977', '431100', '永州市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1978', '431102', '零陵区', '1977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1979', '431103', '冷水滩区', '1977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1980', '431121', '祁阳县', '1977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1981', '431122', '东安县', '1977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1982', '431123', '双牌县', '1977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1983', '431124', '道县', '1977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1984', '431125', '江永县', '1977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1985', '431126', '宁远县', '1977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1986', '431127', '蓝山县', '1977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1987', '431128', '新田县', '1977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1988', '431129', '江华瑶族自治县', '1977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1989', '431200', '怀化市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('1990', '431202', '鹤城区', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1991', '431221', '中方县', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1992', '431222', '沅陵县', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1993', '431223', '辰溪县', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1994', '431224', '溆浦县', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1995', '431225', '会同县', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1996', '431226', '麻阳苗族自治县', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1997', '431227', '新晃侗族自治县', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1998', '431228', '芷江侗族自治县', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('1999', '431229', '靖州苗族侗族自治县', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2000', '431230', '通道侗族自治县', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2001', '431281', '洪江市', '1989', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2002', '431300', '娄底市', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2003', '431302', '娄星区', '2002', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2004', '431321', '双峰县', '2002', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2005', '431322', '新化县', '2002', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2006', '431381', '冷水江市', '2002', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2007', '431382', '涟源市', '2002', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2008', '433100', '湘西土家族苗族自治州', '1880', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2009', '433101', '吉首市', '2008', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2010', '433122', '泸溪县', '2008', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2011', '433123', '凤凰县', '2008', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2012', '433124', '花垣县', '2008', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2013', '433125', '保靖县', '2008', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2014', '433126', '古丈县', '2008', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2015', '433127', '永顺县', '2008', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2016', '433130', '龙山县', '2008', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2017', '440000', '广东省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('2018', '440100', '广州市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2019', '440103', '荔湾区', '2018', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2020', '440104', '越秀区', '2018', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2021', '440105', '海珠区', '2018', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2022', '440106', '天河区', '2018', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2023', '440111', '白云区', '2018', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2024', '440112', '黄埔区', '2018', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2025', '440113', '番禺区', '2018', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2026', '440114', '花都区', '2018', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2027', '440115', '南沙区', '2018', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2028', '440117', '从化区', '2018', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2029', '440118', '增城区', '2018', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2030', '440200', '韶关市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2031', '440203', '武江区', '2030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2032', '440204', '浈江区', '2030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2033', '440205', '曲江区', '2030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2034', '440222', '始兴县', '2030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2035', '440224', '仁化县', '2030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2036', '440229', '翁源县', '2030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2037', '440232', '乳源瑶族自治县', '2030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2038', '440233', '新丰县', '2030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2039', '440281', '乐昌市', '2030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2040', '440282', '南雄市', '2030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2041', '440300', '深圳市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2042', '440303', '罗湖区', '2041', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2043', '440304', '福田区', '2041', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2044', '440305', '南山区', '2041', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2045', '440306', '宝安区', '2041', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2046', '440307', '龙岗区', '2041', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2047', '440308', '盐田区', '2041', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2048', '440309', '龙华区', '2041', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2049', '440310', '坪山区', '2041', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2050', '440311', '光明区', '2041', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2051', '440400', '珠海市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2052', '440402', '香洲区', '2051', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2053', '440403', '斗门区', '2051', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2054', '440404', '金湾区', '2051', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2055', '440499', '香洲区澳门大学横琴校区(由澳门特别行政区实施管辖)', '2051', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2056', '440500', '汕头市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2057', '440507', '龙湖区', '2056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2058', '440511', '金平区', '2056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2059', '440512', '濠江区', '2056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2060', '440513', '潮阳区', '2056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2061', '440514', '潮南区', '2056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2062', '440515', '澄海区', '2056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2063', '440523', '南澳县', '2056', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2064', '440600', '佛山市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2065', '440604', '禅城区', '2064', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2066', '440605', '南海区', '2064', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2067', '440606', '顺德区', '2064', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2068', '440607', '三水区', '2064', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2069', '440608', '高明区', '2064', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2070', '440700', '江门市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2071', '440703', '蓬江区', '2070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2072', '440704', '江海区', '2070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2073', '440705', '新会区', '2070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2074', '440781', '台山市', '2070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2075', '440783', '开平市', '2070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2076', '440784', '鹤山市', '2070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2077', '440785', '恩平市', '2070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2078', '440800', '湛江市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2079', '440802', '赤坎区', '2078', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2080', '440803', '霞山区', '2078', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2081', '440804', '坡头区', '2078', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2082', '440811', '麻章区', '2078', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2083', '440823', '遂溪县', '2078', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2084', '440825', '徐闻县', '2078', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2085', '440881', '廉江市', '2078', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2086', '440882', '雷州市', '2078', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2087', '440883', '吴川市', '2078', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2088', '440900', '茂名市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2089', '440902', '茂南区', '2088', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2090', '440904', '电白区', '2088', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2091', '440981', '高州市', '2088', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2092', '440982', '化州市', '2088', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2093', '440983', '信宜市', '2088', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2094', '441200', '肇庆市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2095', '441202', '端州区', '2094', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2096', '441203', '鼎湖区', '2094', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2097', '441204', '高要区', '2094', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2098', '441223', '广宁县', '2094', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2099', '441224', '怀集县', '2094', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2100', '441225', '封开县', '2094', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2101', '441226', '德庆县', '2094', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2102', '441284', '四会市', '2094', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2103', '441300', '惠州市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2104', '441302', '惠城区', '2103', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2105', '441303', '惠阳区', '2103', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2106', '441322', '博罗县', '2103', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2107', '441323', '惠东县', '2103', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2108', '441324', '龙门县', '2103', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2109', '441400', '梅州市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2110', '441402', '梅江区', '2109', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2111', '441403', '梅县区', '2109', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2112', '441422', '大埔县', '2109', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2113', '441423', '丰顺县', '2109', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2114', '441424', '五华县', '2109', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2115', '441426', '平远县', '2109', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2116', '441427', '蕉岭县', '2109', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2117', '441481', '兴宁市', '2109', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2118', '441500', '汕尾市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2119', '441502', '城区', '2118', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2120', '441521', '海丰县', '2118', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2121', '441523', '陆河县', '2118', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2122', '441581', '陆丰市', '2118', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2123', '441600', '河源市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2124', '441602', '源城区', '2123', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2125', '441621', '紫金县', '2123', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2126', '441622', '龙川县', '2123', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2127', '441623', '连平县', '2123', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2128', '441624', '和平县', '2123', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2129', '441625', '东源县', '2123', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2130', '441700', '阳江市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2131', '441702', '江城区', '2130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2132', '441704', '阳东区', '2130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2133', '441721', '阳西县', '2130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2134', '441781', '阳春市', '2130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2135', '441800', '清远市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2136', '441802', '清城区', '2135', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2137', '441803', '清新区', '2135', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2138', '441821', '佛冈县', '2135', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2139', '441823', '阳山县', '2135', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2140', '441825', '连山壮族瑶族自治县', '2135', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2141', '441826', '连南瑶族自治县', '2135', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2142', '441881', '英德市', '2135', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2143', '441882', '连州市', '2135', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2144', '441900', '东莞市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2145', '441999', '东莞市', '2144', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2146', '442000', '中山市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2147', '442099', '中山市', '2146', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2148', '445100', '潮州市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2149', '445102', '湘桥区', '2148', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2150', '445103', '潮安区', '2148', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2151', '445122', '饶平县', '2148', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2152', '445200', '揭阳市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2153', '445202', '榕城区', '2152', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2154', '445203', '揭东区', '2152', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2155', '445222', '揭西县', '2152', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2156', '445224', '惠来县', '2152', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2157', '445281', '普宁市', '2152', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2158', '445300', '云浮市', '2017', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2159', '445302', '云城区', '2158', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2160', '445303', '云安区', '2158', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2161', '445321', '新兴县', '2158', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2162', '445322', '郁南县', '2158', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2163', '445381', '罗定市', '2158', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2164', '450000', '广西壮族自治区', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('2165', '450100', '南宁市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2166', '450102', '兴宁区', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2167', '450103', '青秀区', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2168', '450105', '江南区', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2169', '450107', '西乡塘区', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2170', '450108', '良庆区', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2171', '450109', '邕宁区', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2172', '450110', '武鸣区', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2173', '450123', '隆安县', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2174', '450124', '马山县', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2175', '450125', '上林县', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2176', '450126', '宾阳县', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2177', '450127', '横县', '2165', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2178', '450200', '柳州市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2179', '450202', '城中区', '2178', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2180', '450203', '鱼峰区', '2178', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2181', '450204', '柳南区', '2178', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2182', '450205', '柳北区', '2178', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2183', '450206', '柳江区', '2178', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2184', '450222', '柳城县', '2178', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2185', '450223', '鹿寨县', '2178', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2186', '450224', '融安县', '2178', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2187', '450225', '融水苗族自治县', '2178', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2188', '450226', '三江侗族自治县', '2178', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2189', '450300', '桂林市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2190', '450302', '秀峰区', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2191', '450303', '叠彩区', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2192', '450304', '象山区', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2193', '450305', '七星区', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2194', '450311', '雁山区', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2195', '450312', '临桂区', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2196', '450321', '阳朔县', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2197', '450323', '灵川县', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2198', '450324', '全州县', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2199', '450325', '兴安县', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2200', '450326', '永福县', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2201', '450327', '灌阳县', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2202', '450328', '龙胜各族自治县', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2203', '450329', '资源县', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2204', '450330', '平乐县', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2205', '450332', '恭城瑶族自治县', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2206', '450381', '荔浦市', '2189', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2207', '450400', '梧州市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2208', '450403', '万秀区', '2207', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2209', '450405', '长洲区', '2207', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2210', '450406', '龙圩区', '2207', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2211', '450421', '苍梧县', '2207', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2212', '450422', '藤县', '2207', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2213', '450423', '蒙山县', '2207', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2214', '450481', '岑溪市', '2207', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2215', '450500', '北海市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2216', '450502', '海城区', '2215', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2217', '450503', '银海区', '2215', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2218', '450512', '铁山港区', '2215', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2219', '450521', '合浦县', '2215', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2220', '450600', '防城港市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2221', '450602', '港口区', '2220', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2222', '450603', '防城区', '2220', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2223', '450621', '上思县', '2220', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2224', '450681', '东兴市', '2220', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2225', '450700', '钦州市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2226', '450702', '钦南区', '2225', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2227', '450703', '钦北区', '2225', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2228', '450721', '灵山县', '2225', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2229', '450722', '浦北县', '2225', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2230', '450800', '贵港市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2231', '450802', '港北区', '2230', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2232', '450803', '港南区', '2230', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2233', '450804', '覃塘区', '2230', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2234', '450821', '平南县', '2230', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2235', '450881', '桂平市', '2230', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2236', '450900', '玉林市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2237', '450902', '玉州区', '2236', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2238', '450903', '福绵区', '2236', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2239', '450921', '容县', '2236', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2240', '450922', '陆川县', '2236', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2241', '450923', '博白县', '2236', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2242', '450924', '兴业县', '2236', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2243', '450981', '北流市', '2236', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2244', '451000', '百色市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2245', '451002', '右江区', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2246', '451003', '田阳区', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2247', '451022', '田东县', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2248', '451024', '德保县', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2249', '451026', '那坡县', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2250', '451027', '凌云县', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2251', '451028', '乐业县', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2252', '451029', '田林县', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2253', '451030', '西林县', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2254', '451031', '隆林各族自治县', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2255', '451081', '靖西市', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2256', '451082', '平果市', '2244', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2257', '451100', '贺州市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2258', '451102', '八步区', '2257', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2259', '451103', '平桂区', '2257', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2260', '451121', '昭平县', '2257', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2261', '451122', '钟山县', '2257', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2262', '451123', '富川瑶族自治县', '2257', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2263', '451200', '河池市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2264', '451202', '金城江区', '2263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2265', '451203', '宜州区', '2263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2266', '451221', '南丹县', '2263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2267', '451222', '天峨县', '2263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2268', '451223', '凤山县', '2263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2269', '451224', '东兰县', '2263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2270', '451225', '罗城仫佬族自治县', '2263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2271', '451226', '环江毛南族自治县', '2263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2272', '451227', '巴马瑶族自治县', '2263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2273', '451228', '都安瑶族自治县', '2263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2274', '451229', '大化瑶族自治县', '2263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2275', '451300', '来宾市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2276', '451302', '兴宾区', '2275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2277', '451321', '忻城县', '2275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2278', '451322', '象州县', '2275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2279', '451323', '武宣县', '2275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2280', '451324', '金秀瑶族自治县', '2275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2281', '451381', '合山市', '2275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2282', '451400', '崇左市', '2164', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2283', '451402', '江州区', '2282', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2284', '451421', '扶绥县', '2282', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2285', '451422', '宁明县', '2282', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2286', '451423', '龙州县', '2282', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2287', '451424', '大新县', '2282', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2288', '451425', '天等县', '2282', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2289', '451481', '凭祥市', '2282', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2290', '460000', '海南省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('2291', '460100', '海口市', '2290', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2292', '460105', '秀英区', '2291', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2293', '460106', '龙华区', '2291', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2294', '460107', '琼山区', '2291', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2295', '460108', '美兰区', '2291', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2296', '460200', '三亚市', '2290', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2297', '460202', '海棠区', '2296', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2298', '460203', '吉阳区', '2296', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2299', '460204', '天涯区', '2296', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2300', '460205', '崖州区', '2296', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2301', '460300', '三沙市', '2290', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2302', '460321', '西沙群岛', '2301', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2303', '460322', '南沙群岛', '2301', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2304', '460323', '中沙群岛的岛礁及其海域', '2301', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2305', '460400', '儋州市', '2290', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2306', '460499', '儋州市', '2305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2307', '500000', '重庆市', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('2308', '500100', '重庆市', '2307', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2309', '500101', '万州区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2310', '500102', '涪陵区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2311', '500103', '渝中区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2312', '500104', '大渡口区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2313', '500105', '江北区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2314', '500106', '沙坪坝区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2315', '500107', '九龙坡区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2316', '500108', '南岸区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2317', '500109', '北碚区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2318', '500110', '綦江区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2319', '500111', '大足区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2320', '500112', '渝北区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2321', '500113', '巴南区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2322', '500114', '黔江区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2323', '500115', '长寿区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2324', '500116', '江津区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2325', '500117', '合川区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2326', '500118', '永川区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2327', '500119', '南川区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2328', '500120', '璧山区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2329', '500151', '铜梁区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2330', '500152', '潼南区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2331', '500153', '荣昌区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2332', '500154', '开州区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2333', '500155', '梁平区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2334', '500156', '武隆区', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2335', '500229', '城口县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2336', '500230', '丰都县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2337', '500231', '垫江县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2338', '500233', '忠县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2339', '500235', '云阳县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2340', '500236', '奉节县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2341', '500237', '巫山县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2342', '500238', '巫溪县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2343', '500240', '石柱土家族自治县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2344', '500241', '秀山土家族苗族自治县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2345', '500242', '酉阳土家族苗族自治县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2346', '500243', '彭水苗族土家族自治县', '2308', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2347', '510000', '四川省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('2348', '510100', '成都市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2349', '510104', '锦江区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2350', '510105', '青羊区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2351', '510106', '金牛区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2352', '510107', '武侯区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2353', '510108', '成华区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2354', '510112', '龙泉驿区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2355', '510113', '青白江区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2356', '510114', '新都区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2357', '510115', '温江区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2358', '510116', '双流区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2359', '510117', '郫都区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2360', '510118', '新津区', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2361', '510121', '金堂县', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2362', '510129', '大邑县', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2363', '510131', '蒲江县', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2364', '510181', '都江堰市', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2365', '510182', '彭州市', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2366', '510183', '邛崃市', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2367', '510184', '崇州市', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2368', '510185', '简阳市', '2348', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2369', '510300', '自贡市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2370', '510302', '自流井区', '2369', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2371', '510303', '贡井区', '2369', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2372', '510304', '大安区', '2369', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2373', '510311', '沿滩区', '2369', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2374', '510321', '荣县', '2369', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2375', '510322', '富顺县', '2369', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2376', '510400', '攀枝花市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2377', '510402', '东区', '2376', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2378', '510403', '西区', '2376', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2379', '510411', '仁和区', '2376', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2380', '510421', '米易县', '2376', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2381', '510422', '盐边县', '2376', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2382', '510500', '泸州市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2383', '510502', '江阳区', '2382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2384', '510503', '纳溪区', '2382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2385', '510504', '龙马潭区', '2382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2386', '510521', '泸县', '2382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2387', '510522', '合江县', '2382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2388', '510524', '叙永县', '2382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2389', '510525', '古蔺县', '2382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2390', '510600', '德阳市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2391', '510603', '旌阳区', '2390', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2392', '510604', '罗江区', '2390', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2393', '510623', '中江县', '2390', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2394', '510681', '广汉市', '2390', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2395', '510682', '什邡市', '2390', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2396', '510683', '绵竹市', '2390', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2397', '510700', '绵阳市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2398', '510703', '涪城区', '2397', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2399', '510704', '游仙区', '2397', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2400', '510705', '安州区', '2397', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2401', '510722', '三台县', '2397', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2402', '510723', '盐亭县', '2397', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2403', '510725', '梓潼县', '2397', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2404', '510726', '北川羌族自治县', '2397', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2405', '510727', '平武县', '2397', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2406', '510781', '江油市', '2397', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2407', '510800', '广元市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2408', '510802', '利州区', '2407', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2409', '510811', '昭化区', '2407', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2410', '510812', '朝天区', '2407', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2411', '510821', '旺苍县', '2407', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2412', '510822', '青川县', '2407', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2413', '510823', '剑阁县', '2407', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2414', '510824', '苍溪县', '2407', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2415', '510900', '遂宁市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2416', '510903', '船山区', '2415', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2417', '510904', '安居区', '2415', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2418', '510921', '蓬溪县', '2415', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2419', '510923', '大英县', '2415', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2420', '510981', '射洪市', '2415', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2421', '511000', '内江市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2422', '511002', '市中区', '2421', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2423', '511011', '东兴区', '2421', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2424', '511024', '威远县', '2421', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2425', '511025', '资中县', '2421', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2426', '511083', '隆昌市', '2421', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2427', '511100', '乐山市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2428', '511102', '市中区', '2427', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2429', '511111', '沙湾区', '2427', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2430', '511112', '五通桥区', '2427', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2431', '511113', '金口河区', '2427', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2432', '511123', '犍为县', '2427', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2433', '511124', '井研县', '2427', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2434', '511126', '夹江县', '2427', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2435', '511129', '沐川县', '2427', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2436', '511132', '峨边彝族自治县', '2427', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2437', '511133', '马边彝族自治县', '2427', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2438', '511181', '峨眉山市', '2427', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2439', '511300', '南充市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2440', '511302', '顺庆区', '2439', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2441', '511303', '高坪区', '2439', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2442', '511304', '嘉陵区', '2439', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2443', '511321', '南部县', '2439', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2444', '511322', '营山县', '2439', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2445', '511323', '蓬安县', '2439', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2446', '511324', '仪陇县', '2439', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2447', '511325', '西充县', '2439', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2448', '511381', '阆中市', '2439', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2449', '511400', '眉山市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2450', '511402', '东坡区', '2449', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2451', '511403', '彭山区', '2449', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2452', '511421', '仁寿县', '2449', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2453', '511423', '洪雅县', '2449', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2454', '511424', '丹棱县', '2449', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2455', '511425', '青神县', '2449', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2456', '511500', '宜宾市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2457', '511502', '翠屏区', '2456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2458', '511503', '南溪区', '2456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2459', '511504', '叙州区', '2456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2460', '511523', '江安县', '2456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2461', '511524', '长宁县', '2456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2462', '511525', '高县', '2456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2463', '511526', '珙县', '2456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2464', '511527', '筠连县', '2456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2465', '511528', '兴文县', '2456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2466', '511529', '屏山县', '2456', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2467', '511600', '广安市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2468', '511602', '广安区', '2467', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2469', '511603', '前锋区', '2467', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2470', '511621', '岳池县', '2467', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2471', '511622', '武胜县', '2467', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2472', '511623', '邻水县', '2467', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2473', '511681', '华蓥市', '2467', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2474', '511700', '达州市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2475', '511702', '通川区', '2474', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2476', '511703', '达川区', '2474', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2477', '511722', '宣汉县', '2474', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2478', '511723', '开江县', '2474', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2479', '511724', '大竹县', '2474', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2480', '511725', '渠县', '2474', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2481', '511781', '万源市', '2474', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2482', '511800', '雅安市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2483', '511802', '雨城区', '2482', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2484', '511803', '名山区', '2482', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2485', '511822', '荥经县', '2482', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2486', '511823', '汉源县', '2482', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2487', '511824', '石棉县', '2482', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2488', '511825', '天全县', '2482', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2489', '511826', '芦山县', '2482', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2490', '511827', '宝兴县', '2482', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2491', '511900', '巴中市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2492', '511902', '巴州区', '2491', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2493', '511903', '恩阳区', '2491', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2494', '511921', '通江县', '2491', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2495', '511922', '南江县', '2491', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2496', '511923', '平昌县', '2491', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2497', '512000', '资阳市', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2498', '512002', '雁江区', '2497', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2499', '512021', '安岳县', '2497', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2500', '512022', '乐至县', '2497', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2501', '513200', '阿坝藏族羌族自治州', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2502', '513201', '马尔康市', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2503', '513221', '汶川县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2504', '513222', '理县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2505', '513223', '茂县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2506', '513224', '松潘县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2507', '513225', '九寨沟县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2508', '513226', '金川县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2509', '513227', '小金县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2510', '513228', '黑水县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2511', '513230', '壤塘县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2512', '513231', '阿坝县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2513', '513232', '若尔盖县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2514', '513233', '红原县', '2501', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2515', '513300', '甘孜藏族自治州', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2516', '513301', '康定市', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2517', '513322', '泸定县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2518', '513323', '丹巴县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2519', '513324', '九龙县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2520', '513325', '雅江县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2521', '513326', '道孚县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2522', '513327', '炉霍县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2523', '513328', '甘孜县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2524', '513329', '新龙县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2525', '513330', '德格县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2526', '513331', '白玉县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2527', '513332', '石渠县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2528', '513333', '色达县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2529', '513334', '理塘县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2530', '513335', '巴塘县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2531', '513336', '乡城县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2532', '513337', '稻城县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2533', '513338', '得荣县', '2515', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2534', '513400', '凉山彝族自治州', '2347', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2535', '513401', '西昌市', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2536', '513422', '木里藏族自治县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2537', '513423', '盐源县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2538', '513424', '德昌县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2539', '513425', '会理县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2540', '513426', '会东县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2541', '513427', '宁南县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2542', '513428', '普格县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2543', '513429', '布拖县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2544', '513430', '金阳县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2545', '513431', '昭觉县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2546', '513432', '喜德县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2547', '513433', '冕宁县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2548', '513434', '越西县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2549', '513435', '甘洛县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2550', '513436', '美姑县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2551', '513437', '雷波县', '2534', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2552', '520000', '贵州省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('2553', '520100', '贵阳市', '2552', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2554', '520102', '南明区', '2553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2555', '520103', '云岩区', '2553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2556', '520111', '花溪区', '2553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2557', '520112', '乌当区', '2553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2558', '520113', '白云区', '2553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2559', '520115', '观山湖区', '2553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2560', '520121', '开阳县', '2553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2561', '520122', '息烽县', '2553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2562', '520123', '修文县', '2553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2563', '520181', '清镇市', '2553', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2564', '520200', '六盘水市', '2552', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2565', '520201', '钟山区', '2564', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2566', '520203', '六枝特区', '2564', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2567', '520221', '水城区', '2564', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2568', '520281', '盘州市', '2564', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2569', '520300', '遵义市', '2552', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2570', '520302', '红花岗区', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2571', '520303', '汇川区', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2572', '520304', '播州区', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2573', '520322', '桐梓县', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2574', '520323', '绥阳县', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2575', '520324', '正安县', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2576', '520325', '道真仡佬族苗族自治县', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2577', '520326', '务川仡佬族苗族自治县', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2578', '520327', '凤冈县', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2579', '520328', '湄潭县', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2580', '520329', '余庆县', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2581', '520330', '习水县', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2582', '520381', '赤水市', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2583', '520382', '仁怀市', '2569', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2584', '520400', '安顺市', '2552', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2585', '520402', '西秀区', '2584', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2586', '520403', '平坝区', '2584', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2587', '520422', '普定县', '2584', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2588', '520423', '镇宁布依族苗族自治县', '2584', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2589', '520424', '关岭布依族苗族自治县', '2584', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2590', '520425', '紫云苗族布依族自治县', '2584', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2591', '520500', '毕节市', '2552', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2592', '520502', '七星关区', '2591', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2593', '520521', '大方县', '2591', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2594', '520522', '黔西县', '2591', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2595', '520523', '金沙县', '2591', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2596', '520524', '织金县', '2591', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2597', '520525', '纳雍县', '2591', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2598', '520526', '威宁彝族回族苗族自治县', '2591', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2599', '520527', '赫章县', '2591', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2600', '520600', '铜仁市', '2552', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2601', '520602', '碧江区', '2600', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2602', '520603', '万山区', '2600', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2603', '520621', '江口县', '2600', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2604', '520622', '玉屏侗族自治县', '2600', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2605', '520623', '石阡县', '2600', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2606', '520624', '思南县', '2600', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2607', '520625', '印江土家族苗族自治县', '2600', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2608', '520626', '德江县', '2600', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2609', '520627', '沿河土家族自治县', '2600', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2610', '520628', '松桃苗族自治县', '2600', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2611', '522300', '黔西南布依族苗族自治州', '2552', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2612', '522301', '兴义市', '2611', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2613', '522302', '兴仁市', '2611', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2614', '522323', '普安县', '2611', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2615', '522324', '晴隆县', '2611', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2616', '522325', '贞丰县', '2611', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2617', '522326', '望谟县', '2611', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2618', '522327', '册亨县', '2611', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2619', '522328', '安龙县', '2611', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2620', '522600', '黔东南苗族侗族自治州', '2552', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2621', '522601', '凯里市', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2622', '522622', '黄平县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2623', '522623', '施秉县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2624', '522624', '三穗县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2625', '522625', '镇远县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2626', '522626', '岑巩县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2627', '522627', '天柱县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2628', '522628', '锦屏县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2629', '522629', '剑河县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2630', '522630', '台江县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2631', '522631', '黎平县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2632', '522632', '榕江县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2633', '522633', '从江县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2634', '522634', '雷山县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2635', '522635', '麻江县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2636', '522636', '丹寨县', '2620', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2637', '522700', '黔南布依族苗族自治州', '2552', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2638', '522701', '都匀市', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2639', '522702', '福泉市', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2640', '522722', '荔波县', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2641', '522723', '贵定县', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2642', '522725', '瓮安县', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2643', '522726', '独山县', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2644', '522727', '平塘县', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2645', '522728', '罗甸县', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2646', '522729', '长顺县', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2647', '522730', '龙里县', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2648', '522731', '惠水县', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2649', '522732', '三都水族自治县', '2637', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2650', '530000', '云南省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('2651', '530100', '昆明市', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2652', '530102', '五华区', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2653', '530103', '盘龙区', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2654', '530111', '官渡区', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2655', '530112', '西山区', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2656', '530113', '东川区', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2657', '530114', '呈贡区', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2658', '530115', '晋宁区', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2659', '530124', '富民县', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2660', '530125', '宜良县', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2661', '530126', '石林彝族自治县', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2662', '530127', '嵩明县', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2663', '530128', '禄劝彝族苗族自治县', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2664', '530129', '寻甸回族彝族自治县', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2665', '530181', '安宁市', '2651', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2666', '530300', '曲靖市', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2667', '530302', '麒麟区', '2666', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2668', '530303', '沾益区', '2666', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2669', '530304', '马龙区', '2666', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2670', '530322', '陆良县', '2666', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2671', '530323', '师宗县', '2666', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2672', '530324', '罗平县', '2666', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2673', '530325', '富源县', '2666', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2674', '530326', '会泽县', '2666', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2675', '530381', '宣威市', '2666', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2676', '530400', '玉溪市', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2677', '530402', '红塔区', '2676', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2678', '530403', '江川区', '2676', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2679', '530423', '通海县', '2676', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2680', '530424', '华宁县', '2676', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2681', '530425', '易门县', '2676', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2682', '530426', '峨山彝族自治县', '2676', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2683', '530427', '新平彝族傣族自治县', '2676', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2684', '530428', '元江县', '2676', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2685', '530481', '澄江市', '2676', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2686', '530500', '保山市', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2687', '530502', '隆阳区', '2686', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2688', '530521', '施甸县', '2686', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2689', '530523', '龙陵县', '2686', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2690', '530524', '昌宁县', '2686', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2691', '530581', '腾冲市', '2686', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2692', '530600', '昭通市', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2693', '530602', '昭阳区', '2692', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2694', '530621', '鲁甸县', '2692', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2695', '530622', '巧家县', '2692', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2696', '530623', '盐津县', '2692', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2697', '530624', '大关县', '2692', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2698', '530625', '永善县', '2692', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2699', '530626', '绥江县', '2692', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2700', '530627', '镇雄县', '2692', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2701', '530628', '彝良县', '2692', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2702', '530629', '威信县', '2692', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2703', '530681', '水富市', '2692', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2704', '530700', '丽江市', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2705', '530702', '古城区', '2704', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2706', '530721', '玉龙纳西族自治县', '2704', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2707', '530722', '永胜县', '2704', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2708', '530723', '华坪县', '2704', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2709', '530724', '宁蒗彝族自治县', '2704', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2710', '530800', '普洱市', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2711', '530802', '思茅区', '2710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2712', '530821', '宁洱哈尼族彝族自治县', '2710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2713', '530822', '墨江哈尼族自治县', '2710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2714', '530823', '景东彝族自治县', '2710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2715', '530824', '景谷傣族彝族自治县', '2710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2716', '530825', '镇沅县', '2710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2717', '530826', '江城哈尼族彝族自治县', '2710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2718', '530827', '孟连县', '2710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2719', '530828', '澜沧拉祜族自治县', '2710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2720', '530829', '西盟佤族自治县', '2710', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2721', '530900', '临沧市', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2722', '530902', '临翔区', '2721', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2723', '530921', '凤庆县', '2721', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2724', '530922', '云县', '2721', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2725', '530923', '永德县', '2721', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2726', '530924', '镇康县', '2721', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2727', '530925', '双江县', '2721', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2728', '530926', '耿马傣族佤族自治县', '2721', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2729', '530927', '沧源佤族自治县', '2721', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2730', '532300', '楚雄彝族自治州', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2731', '532301', '楚雄市', '2730', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2732', '532322', '双柏县', '2730', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2733', '532323', '牟定县', '2730', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2734', '532324', '南华县', '2730', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2735', '532325', '姚安县', '2730', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2736', '532326', '大姚县', '2730', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2737', '532327', '永仁县', '2730', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2738', '532328', '元谋县', '2730', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2739', '532329', '武定县', '2730', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2740', '532331', '禄丰县', '2730', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2741', '532500', '红河哈尼族彝族自治州', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2742', '532501', '个旧市', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2743', '532502', '开远市', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2744', '532503', '蒙自市', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2745', '532504', '弥勒市', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2746', '532523', '屏边苗族自治县', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2747', '532524', '建水县', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2748', '532525', '石屏县', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2749', '532527', '泸西县', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2750', '532528', '元阳县', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2751', '532529', '红河县', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2752', '532530', '金平苗族瑶族傣族自治县', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2753', '532531', '绿春县', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2754', '532532', '河口瑶族自治县', '2741', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2755', '532600', '文山壮族苗族自治州', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2756', '532601', '文山市', '2755', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2757', '532622', '砚山县', '2755', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2758', '532623', '西畴县', '2755', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2759', '532624', '麻栗坡县', '2755', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2760', '532625', '马关县', '2755', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2761', '532626', '丘北县', '2755', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2762', '532627', '广南县', '2755', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2763', '532628', '富宁县', '2755', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2764', '532800', '西双版纳傣族自治州', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2765', '532801', '景洪市', '2764', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2766', '532822', '勐海县', '2764', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2767', '532823', '勐腊县', '2764', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2768', '532900', '大理白族自治州', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2769', '532901', '大理市', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2770', '532922', '漾濞彝族自治县', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2771', '532923', '祥云县', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2772', '532924', '宾川县', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2773', '532925', '弥渡县', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2774', '532926', '南涧彝族自治县', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2775', '532927', '巍山彝族回族自治县', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2776', '532928', '永平县', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2777', '532929', '云龙县', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2778', '532930', '洱源县', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2779', '532931', '剑川县', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2780', '532932', '鹤庆县', '2768', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2781', '533100', '德宏傣族景颇族自治州', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2782', '533102', '瑞丽市', '2781', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2783', '533103', '芒市', '2781', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2784', '533122', '梁河县', '2781', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2785', '533123', '盈江县', '2781', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2786', '533124', '陇川县', '2781', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2787', '533300', '怒江傈僳族自治州', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2788', '533301', '泸水市', '2787', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2789', '533323', '福贡县', '2787', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2790', '533324', '贡山独龙族怒族自治县', '2787', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2791', '533325', '兰坪白族普米族自治县', '2787', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2792', '533400', '迪庆藏族自治州', '2650', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2793', '533401', '香格里拉市', '2792', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2794', '533422', '德钦县', '2792', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2795', '533423', '维西傈僳族自治县', '2792', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2796', '540000', '西藏自治区', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('2797', '540100', '拉萨市', '2796', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2798', '540102', '城关区', '2797', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2799', '540103', '堆龙德庆区', '2797', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2800', '540104', '达孜区', '2797', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2801', '540121', '林周县', '2797', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2802', '540122', '当雄县', '2797', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2803', '540123', '尼木县', '2797', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2804', '540124', '曲水县', '2797', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2805', '540127', '墨竹工卡县', '2797', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2806', '540200', '日喀则市', '2796', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2807', '540202', '桑珠孜区', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2808', '540221', '南木林县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2809', '540222', '江孜县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2810', '540223', '定日县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2811', '540224', '萨迦县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2812', '540225', '拉孜县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2813', '540226', '昂仁县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2814', '540227', '谢通门县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2815', '540228', '白朗县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2816', '540229', '仁布县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2817', '540230', '康马县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2818', '540231', '定结县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2819', '540232', '仲巴县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2820', '540233', '亚东县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2821', '540234', '吉隆县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2822', '540235', '聂拉木县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2823', '540236', '萨嘎县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2824', '540237', '岗巴县', '2806', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2825', '540300', '昌都市', '2796', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2826', '540302', '卡若区', '2825', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2827', '540321', '江达县', '2825', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2828', '540322', '贡觉县', '2825', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2829', '540323', '类乌齐县', '2825', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2830', '540324', '丁青县', '2825', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2831', '540325', '察雅县', '2825', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2832', '540326', '八宿县', '2825', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2833', '540327', '左贡县', '2825', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2834', '540328', '芒康县', '2825', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2835', '540329', '洛隆县', '2825', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2836', '540330', '边坝县', '2825', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2837', '540400', '林芝市', '2796', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2838', '540402', '巴宜区', '2837', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2839', '540421', '工布江达县', '2837', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2840', '540422', '米林县', '2837', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2841', '540423', '墨脱县', '2837', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2842', '540424', '波密县', '2837', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2843', '540425', '察隅县', '2837', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2844', '540426', '朗县', '2837', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2845', '540500', '山南市', '2796', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2846', '540502', '乃东区', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2847', '540521', '扎囊县', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2848', '540522', '贡嘎县', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2849', '540523', '桑日县', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2850', '540524', '琼结县', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2851', '540525', '曲松县', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2852', '540526', '措美县', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2853', '540527', '洛扎县', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2854', '540528', '加查县', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2855', '540529', '隆子县', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2856', '540530', '错那县', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2857', '540531', '浪卡子县', '2845', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2858', '540600', '那曲市', '2796', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2859', '540602', '色尼区', '2858', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2860', '540621', '嘉黎县', '2858', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2861', '540622', '比如县', '2858', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2862', '540623', '聂荣县', '2858', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2863', '540624', '安多县', '2858', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2864', '540625', '申扎县', '2858', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2865', '540626', '索县', '2858', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2866', '540627', '班戈县', '2858', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2867', '540628', '巴青县', '2858', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2868', '540629', '尼玛县', '2858', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2869', '540630', '双湖县', '2858', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2870', '542500', '阿里地区', '2796', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2871', '542521', '普兰县', '2870', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2872', '542522', '札达县', '2870', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2873', '542523', '噶尔县', '2870', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2874', '542524', '日土县', '2870', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2875', '542525', '革吉县', '2870', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2876', '542526', '改则县', '2870', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2877', '542527', '措勤县', '2870', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2878', '610000', '陕西省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('2879', '610100', '西安市', '2878', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2880', '610102', '新城区', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2881', '610103', '碑林区', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2882', '610104', '莲湖区', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2883', '610111', '灞桥区', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2884', '610112', '未央区', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2885', '610113', '雁塔区', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2886', '610114', '阎良区', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2887', '610115', '临潼区', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2888', '610116', '长安区', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2889', '610117', '高陵区', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2890', '610118', '鄠邑区', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2891', '610122', '蓝田县', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2892', '610124', '周至县', '2879', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2893', '610200', '铜川市', '2878', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2894', '610202', '王益区', '2893', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2895', '610203', '印台区', '2893', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2896', '610204', '耀州区', '2893', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2897', '610222', '宜君县', '2893', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2898', '610300', '宝鸡市', '2878', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2899', '610302', '渭滨区', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2900', '610303', '金台区', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2901', '610304', '陈仓区', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2902', '610322', '凤翔县', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2903', '610323', '岐山县', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2904', '610324', '扶风县', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2905', '610326', '眉县', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2906', '610327', '陇县', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2907', '610328', '千阳县', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2908', '610329', '麟游县', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2909', '610330', '凤县', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2910', '610331', '太白县', '2898', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2911', '610400', '咸阳市', '2878', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2912', '610402', '秦都区', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2913', '610403', '杨陵区', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2914', '610404', '渭城区', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2915', '610422', '三原县', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2916', '610423', '泾阳县', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2917', '610424', '乾县', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2918', '610425', '礼泉县', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2919', '610426', '永寿县', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2920', '610428', '长武县', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2921', '610429', '旬邑县', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2922', '610430', '淳化县', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2923', '610431', '武功县', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2924', '610481', '兴平市', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2925', '610482', '彬州市', '2911', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2926', '610500', '渭南市', '2878', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2927', '610502', '临渭区', '2926', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2928', '610503', '华州区', '2926', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2929', '610522', '潼关县', '2926', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2930', '610523', '大荔县', '2926', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2931', '610524', '合阳县', '2926', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2932', '610525', '澄城县', '2926', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2933', '610526', '蒲城县', '2926', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2934', '610527', '白水县', '2926', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2935', '610528', '富平县', '2926', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2936', '610581', '韩城市', '2926', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2937', '610582', '华阴市', '2926', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2938', '610600', '延安市', '2878', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2939', '610602', '宝塔区', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2940', '610603', '安塞区', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2941', '610621', '延长县', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2942', '610622', '延川县', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2943', '610625', '志丹县', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2944', '610626', '吴起县', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2945', '610627', '甘泉县', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2946', '610628', '富县', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2947', '610629', '洛川县', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2948', '610630', '宜川县', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2949', '610631', '黄龙县', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2950', '610632', '黄陵县', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2951', '610681', '子长市', '2938', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2952', '610700', '汉中市', '2878', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2953', '610702', '汉台区', '2952', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2954', '610703', '南郑区', '2952', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2955', '610722', '城固县', '2952', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2956', '610723', '洋县', '2952', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2957', '610724', '西乡县', '2952', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2958', '610725', '勉县', '2952', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2959', '610726', '宁强县', '2952', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2960', '610727', '略阳县', '2952', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2961', '610728', '镇巴县', '2952', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2962', '610729', '留坝县', '2952', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2963', '610730', '佛坪县', '2952', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2964', '610800', '榆林市', '2878', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2965', '610802', '榆阳区', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2966', '610803', '横山区', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2967', '610822', '府谷县', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2968', '610824', '靖边县', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2969', '610825', '定边县', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2970', '610826', '绥德县', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2971', '610827', '米脂县', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2972', '610828', '佳县', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2973', '610829', '吴堡县', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2974', '610830', '清涧县', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2975', '610831', '子洲县', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2976', '610881', '神木市', '2964', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2977', '610900', '安康市', '2878', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2978', '610902', '汉滨区', '2977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2979', '610921', '汉阴县', '2977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2980', '610922', '石泉县', '2977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2981', '610923', '宁陕县', '2977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2982', '610924', '紫阳县', '2977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2983', '610925', '岚皋县', '2977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2984', '610926', '平利县', '2977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2985', '610927', '镇坪县', '2977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2986', '610928', '旬阳县', '2977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2987', '610929', '白河县', '2977', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2988', '611000', '商洛市', '2878', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2989', '611002', '商州区', '2988', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2990', '611021', '洛南县', '2988', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2991', '611022', '丹凤县', '2988', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2992', '611023', '商南县', '2988', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2993', '611024', '山阳县', '2988', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2994', '611025', '镇安县', '2988', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2995', '611026', '柞水县', '2988', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2996', '620000', '甘肃省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('2997', '620100', '兰州市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('2998', '620102', '城关区', '2997', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('2999', '620103', '七里河区', '2997', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3000', '620104', '西固区', '2997', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3001', '620105', '安宁区', '2997', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3002', '620111', '红古区', '2997', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3003', '620121', '永登县', '2997', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3004', '620122', '皋兰县', '2997', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3005', '620123', '榆中县', '2997', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3006', '620200', '嘉峪关市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3007', '620299', '嘉峪关市', '3006', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3008', '620300', '金昌市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3009', '620302', '金川区', '3008', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3010', '620321', '永昌县', '3008', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3011', '620400', '白银市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3012', '620402', '白银区', '3011', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3013', '620403', '平川区', '3011', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3014', '620421', '靖远县', '3011', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3015', '620422', '会宁县', '3011', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3016', '620423', '景泰县', '3011', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3017', '620500', '天水市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3018', '620502', '秦州区', '3017', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3019', '620503', '麦积区', '3017', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3020', '620521', '清水县', '3017', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3021', '620522', '秦安县', '3017', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3022', '620523', '甘谷县', '3017', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3023', '620524', '武山县', '3017', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3024', '620525', '张家川回族自治县', '3017', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3025', '620600', '武威市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3026', '620602', '凉州区', '3025', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3027', '620621', '民勤县', '3025', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3028', '620622', '古浪县', '3025', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3029', '620623', '天祝藏族自治县', '3025', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3030', '620700', '张掖市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3031', '620702', '甘州区', '3030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3032', '620721', '肃南裕固族自治县', '3030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3033', '620722', '民乐县', '3030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3034', '620723', '临泽县', '3030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3035', '620724', '高台县', '3030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3036', '620725', '山丹县', '3030', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3037', '620800', '平凉市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3038', '620802', '崆峒区', '3037', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3039', '620821', '泾川县', '3037', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3040', '620822', '灵台县', '3037', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3041', '620823', '崇信县', '3037', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3042', '620825', '庄浪县', '3037', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3043', '620826', '静宁县', '3037', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3044', '620881', '华亭市', '3037', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3045', '620900', '酒泉市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3046', '620902', '肃州区', '3045', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3047', '620921', '金塔县', '3045', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3048', '620922', '瓜州县', '3045', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3049', '620923', '肃北蒙古族自治县', '3045', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3050', '620924', '阿克塞哈萨克族自治县', '3045', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3051', '620981', '玉门市', '3045', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3052', '620982', '敦煌市', '3045', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3053', '621000', '庆阳市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3054', '621002', '西峰区', '3053', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3055', '621021', '庆城县', '3053', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3056', '621022', '环县', '3053', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3057', '621023', '华池县', '3053', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3058', '621024', '合水县', '3053', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3059', '621025', '正宁县', '3053', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3060', '621026', '宁县', '3053', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3061', '621027', '镇原县', '3053', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3062', '621100', '定西市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3063', '621102', '安定区', '3062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3064', '621121', '通渭县', '3062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3065', '621122', '陇西县', '3062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3066', '621123', '渭源县', '3062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3067', '621124', '临洮县', '3062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3068', '621125', '漳县', '3062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3069', '621126', '岷县', '3062', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3070', '621200', '陇南市', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3071', '621202', '武都区', '3070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3072', '621221', '成县', '3070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3073', '621222', '文县', '3070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3074', '621223', '宕昌县', '3070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3075', '621224', '康县', '3070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3076', '621225', '西和县', '3070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3077', '621226', '礼县', '3070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3078', '621227', '徽县', '3070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3079', '621228', '两当县', '3070', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3080', '622900', '临夏回族自治州', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3081', '622901', '临夏市', '3080', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3082', '622921', '临夏县', '3080', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3083', '622922', '康乐县', '3080', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3084', '622923', '永靖县', '3080', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3085', '622924', '广河县', '3080', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3086', '622925', '和政县', '3080', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3087', '622926', '东乡族自治县', '3080', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3088', '622927', '积石山县', '3080', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3089', '623000', '甘南藏族自治州', '2996', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3090', '623001', '合作市', '3089', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3091', '623021', '临潭县', '3089', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3092', '623022', '卓尼县', '3089', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3093', '623023', '舟曲县', '3089', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3094', '623024', '迭部县', '3089', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3095', '623025', '玛曲县', '3089', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3096', '623026', '碌曲县', '3089', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3097', '623027', '夏河县', '3089', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3098', '630000', '青海省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('3099', '630100', '西宁市', '3098', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3100', '630102', '城东区', '3099', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3101', '630103', '城中区', '3099', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3102', '630104', '城西区', '3099', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3103', '630105', '城北区', '3099', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3104', '630106', '湟中区', '3099', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3105', '630121', '大通回族土族自治县', '3099', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3106', '630123', '湟源县', '3099', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3107', '630200', '海东市', '3098', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3108', '630202', '乐都区', '3107', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3109', '630203', '平安区', '3107', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3110', '630222', '民和回族土族自治县', '3107', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3111', '630223', '互助土族自治县', '3107', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3112', '630224', '化隆回族自治县', '3107', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3113', '630225', '循化撒拉族自治县', '3107', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3114', '632200', '海北藏族自治州', '3098', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3115', '632221', '门源回族自治县', '3114', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3116', '632222', '祁连县', '3114', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3117', '632223', '海晏县', '3114', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3118', '632224', '刚察县', '3114', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3119', '632300', '黄南藏族自治州', '3098', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3120', '632301', '同仁市', '3119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3121', '632322', '尖扎县', '3119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3122', '632323', '泽库县', '3119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3123', '632324', '河南蒙古族自治县', '3119', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3124', '632500', '海南藏族自治州', '3098', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3125', '632521', '共和县', '3124', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3126', '632522', '同德县', '3124', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3127', '632523', '贵德县', '3124', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3128', '632524', '兴海县', '3124', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3129', '632525', '贵南县', '3124', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3130', '632600', '果洛藏族自治州', '3098', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3131', '632621', '玛沁县', '3130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3132', '632622', '班玛县', '3130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3133', '632623', '甘德县', '3130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3134', '632624', '达日县', '3130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3135', '632625', '久治县', '3130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3136', '632626', '玛多县', '3130', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3137', '632700', '玉树藏族自治州', '3098', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3138', '632701', '玉树市', '3137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3139', '632722', '杂多县', '3137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3140', '632723', '称多县', '3137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3141', '632724', '治多县', '3137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3142', '632725', '囊谦县', '3137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3143', '632726', '曲麻莱县', '3137', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3144', '632800', '海西蒙古族藏族自治州', '3098', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3145', '632801', '格尔木市', '3144', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3146', '632802', '德令哈市', '3144', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3147', '632803', '茫崖市', '3144', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3148', '632821', '乌兰县', '3144', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3149', '632822', '都兰县', '3144', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3150', '632823', '天峻县', '3144', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3151', '632825', '大柴旦行政委员会', '3144', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3152', '640000', '宁夏回族自治区', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('3153', '640100', '银川市', '3152', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3154', '640104', '兴庆区', '3153', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3155', '640105', '西夏区', '3153', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3156', '640106', '金凤区', '3153', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3157', '640121', '永宁县', '3153', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3158', '640122', '贺兰县', '3153', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3159', '640181', '灵武市', '3153', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3160', '640200', '石嘴山市', '3152', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3161', '640202', '大武口区', '3160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3162', '640205', '惠农区', '3160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3163', '640221', '平罗县', '3160', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3164', '640300', '吴忠市', '3152', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3165', '640302', '利通区', '3164', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3166', '640303', '红寺堡区', '3164', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3167', '640323', '盐池县', '3164', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3168', '640324', '同心县', '3164', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3169', '640381', '青铜峡市', '3164', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3170', '640400', '固原市', '3152', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3171', '640402', '原州区', '3170', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3172', '640422', '西吉县', '3170', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3173', '640423', '隆德县', '3170', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3174', '640424', '泾源县', '3170', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3175', '640425', '彭阳县', '3170', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3176', '640500', '中卫市', '3152', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3177', '640502', '沙坡头区', '3176', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3178', '640521', '中宁县', '3176', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3179', '640522', '海原县', '3176', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3180', '650000', '新疆维吾尔自治区', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('3181', '650100', '乌鲁木齐市', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3182', '650102', '天山区', '3181', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3183', '650103', '沙依巴克区', '3181', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3184', '650104', '新市区', '3181', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3185', '650105', '水磨沟区', '3181', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3186', '650106', '头屯河区', '3181', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3187', '650107', '达坂城区', '3181', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3188', '650109', '米东区', '3181', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3189', '650121', '乌鲁木齐县', '3181', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3190', '650200', '克拉玛依市', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3191', '650202', '独山子区', '3190', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3192', '650203', '克拉玛依区', '3190', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3193', '650204', '白碱滩区', '3190', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3194', '650205', '乌尔禾区', '3190', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3195', '650400', '吐鲁番市', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3196', '650402', '高昌区', '3195', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3197', '650421', '鄯善县', '3195', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3198', '650422', '托克逊县', '3195', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3199', '650500', '哈密市', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3200', '650502', '伊州区', '3199', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3201', '650521', '巴里坤哈萨克自治县', '3199', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3202', '650522', '伊吾县', '3199', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3203', '652300', '昌吉回族自治州', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3204', '652301', '昌吉市', '3203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3205', '652302', '阜康市', '3203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3206', '652323', '呼图壁县', '3203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3207', '652324', '玛纳斯县', '3203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3208', '652325', '奇台县', '3203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3209', '652327', '吉木萨尔县', '3203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3210', '652328', '木垒哈萨克自治县', '3203', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3211', '652700', '博尔塔拉蒙古自治州', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3212', '652701', '博乐市', '3211', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3213', '652702', '阿拉山口市', '3211', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3214', '652722', '精河县', '3211', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3215', '652723', '温泉县', '3211', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3216', '652800', '巴音郭楞蒙古自治州', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3217', '652801', '库尔勒市', '3216', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3218', '652822', '轮台县', '3216', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3219', '652823', '尉犁县', '3216', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3220', '652824', '若羌县', '3216', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3221', '652825', '且末县', '3216', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3222', '652826', '焉耆回族自治县', '3216', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3223', '652827', '和静县', '3216', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3224', '652828', '和硕县', '3216', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3225', '652829', '博湖县', '3216', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3226', '652900', '阿克苏地区', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3227', '652901', '阿克苏市', '3226', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3228', '652902', '库车市', '3226', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3229', '652922', '温宿县', '3226', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3230', '652924', '沙雅县', '3226', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3231', '652925', '新和县', '3226', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3232', '652926', '拜城县', '3226', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3233', '652927', '乌什县', '3226', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3234', '652928', '阿瓦提县', '3226', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3235', '652929', '柯坪县', '3226', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3236', '653000', '克孜勒苏柯尔克孜自治州', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3237', '653001', '阿图什市', '3236', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3238', '653022', '阿克陶县', '3236', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3239', '653023', '阿合奇县', '3236', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3240', '653024', '乌恰县', '3236', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3241', '653100', '喀什地区', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3242', '653101', '喀什市', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3243', '653121', '疏附县', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3244', '653122', '疏勒县', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3245', '653123', '英吉沙县', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3246', '653124', '泽普县', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3247', '653125', '莎车县', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3248', '653126', '叶城县', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3249', '653127', '麦盖提县', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3250', '653128', '岳普湖县', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3251', '653129', '伽师县', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3252', '653130', '巴楚县', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3253', '653131', '塔什库尔干塔吉克自治县', '3241', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3254', '653200', '和田地区', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3255', '653201', '和田市', '3254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3256', '653221', '和田县', '3254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3257', '653222', '墨玉县', '3254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3258', '653223', '皮山县', '3254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3259', '653224', '洛浦县', '3254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3260', '653225', '策勒县', '3254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3261', '653226', '于田县', '3254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3262', '653227', '民丰县', '3254', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3263', '654000', '伊犁哈萨克自治州', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3264', '654002', '伊宁市', '3263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3265', '654003', '奎屯市', '3263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3266', '654004', '霍尔果斯市', '3263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3267', '654021', '伊宁县', '3263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3268', '654022', '察布查尔锡伯自治县', '3263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3269', '654023', '霍城县', '3263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3270', '654024', '巩留县', '3263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3271', '654025', '新源县', '3263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3272', '654026', '昭苏县', '3263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3273', '654027', '特克斯县', '3263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3274', '654028', '尼勒克县', '3263', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3275', '654200', '塔城地区', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3276', '654201', '塔城市', '3275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3277', '654202', '乌苏市', '3275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3278', '654221', '额敏县', '3275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3279', '654223', '沙湾县', '3275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3280', '654224', '托里县', '3275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3281', '654225', '裕民县', '3275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3282', '654226', '和布克赛尔蒙古自治县', '3275', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3283', '654300', '阿勒泰地区', '3180', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3284', '654301', '阿勒泰市', '3283', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3285', '654321', '布尔津县', '3283', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3286', '654322', '富蕴县', '3283', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3287', '654323', '福海县', '3283', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3288', '654324', '哈巴河县', '3283', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3289', '654325', '青河县', '3283', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3290', '654326', '吉木乃县', '3283', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3291', '710000', '台湾省', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('3292', '710100', '台北市', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3293', '710101', '中正区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3294', '710102', '大同区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3295', '710103', '中山区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3296', '710104', '松山区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3297', '710105', '大安区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3298', '710106', '万华区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3299', '710107', '信义区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3300', '710108', '士林区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3301', '710109', '北投区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3302', '710110', '内湖区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3303', '710111', '南港区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3304', '710112', '文山区', '3292', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3305', '710200', '高雄市', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3306', '710201', '新兴区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3307', '710202', '前金区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3308', '710203', '苓雅区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3309', '710204', '盐埕区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3310', '710205', '鼓山区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3311', '710206', '旗津区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3312', '710207', '前镇区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3313', '710208', '三民区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3314', '710209', '左营区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3315', '710210', '楠梓区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3316', '710211', '小港区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3317', '710242', '仁武区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3318', '710243', '大社区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3319', '710244', '冈山区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3320', '710245', '路竹区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3321', '710246', '阿莲区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3322', '710247', '田寮区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3323', '710248', '燕巢区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3324', '710249', '桥头区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3325', '710250', '梓官区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3326', '710251', '弥陀区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3327', '710252', '永安区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3328', '710253', '湖内区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3329', '710254', '凤山区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3330', '710255', '大寮区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3331', '710256', '林园区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3332', '710257', '鸟松区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3333', '710258', '大树区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3334', '710259', '旗山区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3335', '710260', '美浓区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3336', '710261', '六龟区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3337', '710262', '内门区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3338', '710263', '杉林区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3339', '710264', '甲仙区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3340', '710265', '桃源区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3341', '710266', '那玛夏区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3342', '710267', '茂林区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3343', '710268', '茄萣区', '3305', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3344', '710300', '台南市', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3345', '710301', '中西区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3346', '710302', '东区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3347', '710303', '南区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3348', '710304', '北区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3349', '710305', '安平区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3350', '710306', '安南区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3351', '710339', '永康区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3352', '710340', '归仁区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3353', '710341', '新化区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3354', '710342', '左镇区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3355', '710343', '玉井区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3356', '710344', '楠西区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3357', '710345', '南化区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3358', '710346', '仁德区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3359', '710347', '关庙区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3360', '710348', '龙崎区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3361', '710349', '官田区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3362', '710350', '麻豆区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3363', '710351', '佳里区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3364', '710352', '西港区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3365', '710353', '七股区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3366', '710354', '将军区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3367', '710355', '学甲区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3368', '710356', '北门区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3369', '710357', '新营区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3370', '710358', '后壁区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3371', '710359', '白河区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3372', '710360', '东山区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3373', '710361', '六甲区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3374', '710362', '下营区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3375', '710363', '柳营区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3376', '710364', '盐水区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3377', '710365', '善化区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3378', '710366', '大内区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3379', '710367', '山上区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3380', '710368', '新市区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3381', '710369', '安定区', '3344', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3382', '710400', '台中市', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3383', '710401', '中区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3384', '710402', '东区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3385', '710403', '南区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3386', '710404', '西区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3387', '710405', '北区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3388', '710406', '北屯区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3389', '710407', '西屯区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3390', '710408', '南屯区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3391', '710431', '太平区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3392', '710432', '大里区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3393', '710433', '雾峰区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3394', '710434', '乌日区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3395', '710435', '丰原区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3396', '710436', '后里区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3397', '710437', '石冈区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3398', '710438', '东势区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3399', '710439', '和平区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3400', '710440', '新社区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3401', '710441', '潭子区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3402', '710442', '大雅区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3403', '710443', '神冈区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3404', '710444', '大肚区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3405', '710445', '沙鹿区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3406', '710446', '龙井区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3407', '710447', '梧栖区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3408', '710448', '清水区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3409', '710449', '大甲区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3410', '710450', '外埔区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3411', '710451', '大安区', '3382', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3412', '710600', '南投县', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3413', '710614', '南投市', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3414', '710615', '中寮乡', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3415', '710616', '草屯镇', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3416', '710617', '国姓乡', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3417', '710618', '埔里镇', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3418', '710619', '仁爱乡', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3419', '710620', '名间乡', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3420', '710621', '集集镇', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3421', '710622', '水里乡', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3422', '710623', '鱼池乡', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3423', '710624', '信义乡', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3424', '710625', '竹山镇', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3425', '710626', '鹿谷乡', '3412', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3426', '710700', '基隆市', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3427', '710701', '仁爱区', '3426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3428', '710702', '信义区', '3426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3429', '710703', '中正区', '3426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3430', '710704', '中山区', '3426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3431', '710705', '安乐区', '3426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3432', '710706', '暖暖区', '3426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3433', '710707', '七堵区', '3426', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3434', '710800', '新竹市', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3435', '710801', '东区', '3434', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3436', '710802', '北区', '3434', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3437', '710803', '香山区', '3434', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3438', '710900', '嘉义市', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3439', '710901', '东区', '3438', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3440', '710902', '西区', '3438', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3441', '711100', '新北市', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3442', '711130', '万里区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3443', '711131', '金山区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3444', '711132', '板桥区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3445', '711133', '汐止区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3446', '711134', '深坑区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3447', '711135', '石碇区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3448', '711136', '瑞芳区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3449', '711137', '平溪区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3450', '711138', '双溪区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3451', '711139', '贡寮区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3452', '711140', '新店区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3453', '711141', '坪林区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3454', '711142', '乌来区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3455', '711143', '永和区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3456', '711144', '中和区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3457', '711145', '土城区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3458', '711146', '三峡区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3459', '711147', '树林区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3460', '711148', '莺歌区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3461', '711149', '三重区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3462', '711150', '新庄区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3463', '711151', '泰山区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3464', '711152', '林口区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3465', '711153', '芦洲区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3466', '711154', '五股区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3467', '711155', '八里区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3468', '711156', '淡水区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3469', '711157', '三芝区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3470', '711158', '石门区', '3441', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3471', '711200', '宜兰县', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3472', '711214', '宜兰市', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3473', '711215', '头城镇', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3474', '711216', '礁溪乡', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3475', '711217', '壮围乡', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3476', '711218', '员山乡', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3477', '711219', '罗东镇', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3478', '711220', '三星乡', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3479', '711221', '大同乡', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3480', '711222', '五结乡', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3481', '711223', '冬山乡', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3482', '711224', '苏澳镇', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3483', '711225', '南澳乡', '3471', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3484', '711300', '新竹县', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3485', '711314', '竹北市', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3486', '711315', '湖口乡', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3487', '711316', '新丰乡', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3488', '711317', '新埔镇', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3489', '711318', '关西镇', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3490', '711319', '芎林乡', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3491', '711320', '宝山乡', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3492', '711321', '竹东镇', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3493', '711322', '五峰乡', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3494', '711323', '横山乡', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3495', '711324', '尖石乡', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3496', '711325', '北埔乡', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3497', '711326', '峨眉乡', '3484', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3498', '711400', '桃园市', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3499', '711414', '中坜区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3500', '711415', '平镇区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3501', '711416', '龙潭区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3502', '711417', '杨梅区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3503', '711418', '新屋区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3504', '711419', '观音区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3505', '711420', '桃园区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3506', '711421', '龟山区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3507', '711422', '八德区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3508', '711423', '大溪区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3509', '711424', '复兴区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3510', '711425', '大园区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3511', '711426', '芦竹区', '3498', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3512', '711500', '苗栗县', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3513', '711519', '竹南镇', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3514', '711520', '头份市', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3515', '711521', '三湾乡', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3516', '711522', '南庄乡', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3517', '711523', '狮潭乡', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3518', '711524', '后龙镇', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3519', '711525', '通霄镇', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3520', '711526', '苑里镇', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3521', '711527', '苗栗市', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3522', '711528', '造桥乡', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3523', '711529', '头屋乡', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3524', '711530', '公馆乡', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3525', '711531', '大湖乡', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3526', '711532', '泰安乡', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3527', '711533', '铜锣乡', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3528', '711534', '三义乡', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3529', '711535', '西湖乡', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3530', '711536', '卓兰镇', '3512', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3531', '711700', '彰化县', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3532', '711727', '彰化市', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3533', '711728', '芬园乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3534', '711729', '花坛乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3535', '711730', '秀水乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3536', '711731', '鹿港镇', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3537', '711732', '福兴乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3538', '711733', '线西乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3539', '711734', '和美镇', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3540', '711735', '伸港乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3541', '711736', '员林市', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3542', '711737', '社头乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3543', '711738', '永靖乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3544', '711739', '埔心乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3545', '711740', '溪湖镇', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3546', '711741', '大村乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3547', '711742', '埔盐乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3548', '711743', '田中镇', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3549', '711744', '北斗镇', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3550', '711745', '田尾乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3551', '711746', '埤头乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3552', '711747', '溪州乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3553', '711748', '竹塘乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3554', '711749', '二林镇', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3555', '711750', '大城乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3556', '711751', '芳苑乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3557', '711752', '二水乡', '3531', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3558', '711900', '嘉义县', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3559', '711919', '番路乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3560', '711920', '梅山乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3561', '711921', '竹崎乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3562', '711922', '阿里山乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3563', '711923', '中埔乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3564', '711924', '大埔乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3565', '711925', '水上乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3566', '711926', '鹿草乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3567', '711927', '太保市', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3568', '711928', '朴子市', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3569', '711929', '东石乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3570', '711930', '六脚乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3571', '711931', '新港乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3572', '711932', '民雄乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3573', '711933', '大林镇', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3574', '711934', '溪口乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3575', '711935', '义竹乡', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3576', '711936', '布袋镇', '3558', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3577', '712100', '云林县', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3578', '712121', '斗南镇', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3579', '712122', '大埤乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3580', '712123', '虎尾镇', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3581', '712124', '土库镇', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3582', '712125', '褒忠乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3583', '712126', '东势乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3584', '712127', '台西乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3585', '712128', '仑背乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3586', '712129', '麦寮乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3587', '712130', '斗六市', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3588', '712131', '林内乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3589', '712132', '古坑乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3590', '712133', '莿桐乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3591', '712134', '西螺镇', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3592', '712135', '二仑乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3593', '712136', '北港镇', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3594', '712137', '水林乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3595', '712138', '口湖乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3596', '712139', '四湖乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3597', '712140', '元长乡', '3577', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3598', '712400', '屏东县', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3599', '712434', '屏东市', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3600', '712435', '三地门乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3601', '712436', '雾台乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3602', '712437', '玛家乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3603', '712438', '九如乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3604', '712439', '里港乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3605', '712440', '高树乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3606', '712441', '盐埔乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3607', '712442', '长治乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3608', '712443', '麟洛乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3609', '712444', '竹田乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3610', '712445', '内埔乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3611', '712446', '万丹乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3612', '712447', '潮州镇', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3613', '712448', '泰武乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3614', '712449', '来义乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3615', '712450', '万峦乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3616', '712451', '崁顶乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3617', '712452', '新埤乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3618', '712453', '南州乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3619', '712454', '林边乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3620', '712455', '东港镇', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3621', '712456', '琉球乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3622', '712457', '佳冬乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3623', '712458', '新园乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3624', '712459', '枋寮乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3625', '712460', '枋山乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3626', '712461', '春日乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3627', '712462', '狮子乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3628', '712463', '车城乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3629', '712464', '牡丹乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3630', '712465', '恒春镇', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3631', '712466', '满州乡', '3598', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3632', '712500', '台东县', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3633', '712517', '台东市', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3634', '712518', '绿岛乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3635', '712519', '兰屿乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3636', '712520', '延平乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3637', '712521', '卑南乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3638', '712522', '鹿野乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3639', '712523', '关山镇', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3640', '712524', '海端乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3641', '712525', '池上乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3642', '712526', '东河乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3643', '712527', '成功镇', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3644', '712528', '长滨乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3645', '712529', '金峰乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3646', '712530', '大武乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3647', '712531', '达仁乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3648', '712532', '太麻里乡', '3632', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3649', '712600', '花莲县', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3650', '712615', '花莲市', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3651', '712616', '新城乡', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3652', '712618', '秀林乡', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3653', '712619', '吉安乡', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3654', '712620', '寿丰乡', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3655', '712621', '凤林镇', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3656', '712622', '光复乡', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3657', '712623', '丰滨乡', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3658', '712624', '瑞穗乡', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3659', '712625', '万荣乡', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3660', '712626', '玉里镇', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3661', '712627', '卓溪乡', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3662', '712628', '富里乡', '3649', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3663', '712700', '澎湖县', '3291', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3664', '712707', '马公市', '3663', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3665', '712708', '西屿乡', '3663', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3666', '712709', '望安乡', '3663', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3667', '712710', '七美乡', '3663', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3668', '712711', '白沙乡', '3663', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3669', '712712', '湖西乡', '3663', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3670', '810000', '香港特别行政区', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('3671', '810100', '香港特别行政区', '3670', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3672', '810101', '中西区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3673', '810102', '东区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3674', '810103', '九龙城区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3675', '810104', '观塘区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3676', '810105', '南区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3677', '810106', '深水埗区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3678', '810107', '湾仔区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3679', '810108', '黄大仙区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3680', '810109', '油尖旺区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3681', '810110', '离岛区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3682', '810111', '葵青区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3683', '810112', '北区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3684', '810113', '西贡区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3685', '810114', '沙田区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3686', '810115', '屯门区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3687', '810116', '大埔区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3688', '810117', '荃湾区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3689', '810118', '元朗区', '3671', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3690', '820000', '澳门特别行政区', NULL, 0, '1', 0, '1', '0', NULL, NULL, '26');
+INSERT INTO afc_dict_entry_template VALUES ('3691', '820100', '澳门特别行政区', '3690', 0, '1', 0, '1', '0', NULL, NULL, '27');
+INSERT INTO afc_dict_entry_template VALUES ('3692', '820101', '澳门半岛', '3691', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3693', '820102', '凼仔', '3691', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3694', '820103', '路凼城', '3691', 0, '1', 0, '1', '0', NULL, NULL, '28');
+INSERT INTO afc_dict_entry_template VALUES ('3695', '820104', '路环', '3691', 0, '1', 0, '1', '0', NULL, NULL, '28');
+
+-- 2022-12-09 增加数据分层资源、菜单、功能码
+INSERT INTO afc_res_group_template (ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('43', '数据层管理', 'dataLevelManager', NULL, NULL, NULL, '501', NULL, NULL, 47, '2');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('950', '修改数据层别名', 'afc-f-data-warehouse-level-edit', 'function', '501', '43', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('951', '查询数据层定义', 'afc-f-data-warehouse-level-query', 'function', '501', '43', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('952', '同步数据源元数据', 'afc-f-metadata-sync', 'function', '501', '39', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('953', '查询元数据信息', 'afc-f-metadata-query', 'function', '501', '39', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('954', '编辑元数据', 'afc-f-metadata-update', 'function', '501', '39', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('955', '查询元数据同步日志', 'afc-f-datasource-metadata-log', 'function', '501', '39', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager,afc-role-system-admin-manager');
+
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('pub-res-956', '数据层管理', 'dataLayerManage', 'url', '501', '43', NULL, NULL, NULL, '{"openType":"afcenter","mark":null,"url":null,"params":null,"afcenterPath":"afcenter/pubresource/dataLayerManage/index.vue"}', NULL, '2',NULL);
+
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('310', '数据层管理', 'datalayer_manager', 'pub-res-956', NULL, 1, '1', NULL, NULL, '303', NULL, NULL, 'shuffling-banner', '2');
+
+INSERT INTO afc_dw_data_level_template VALUES ('1', 'ADS', '应用数据层', '3', 'sys_tenant', '2022-12-09 14:01:58', '2022-12-09 14:01:58', 'admin', 'admin',  'ADS层用于存放数据产品个性化的统计指标数据，输出各种报表。');
+INSERT INTO afc_dw_data_level_template VALUES ('2', 'DWS', '汇总数据层', '2',  'sys_tenant', '2022-12-09 14:01:58', '2022-12-09 14:01:58', 'admin', 'admin', 'DWS层通过分析的主题对象构建数据模型。基于上层的应用和产品的指标需求，构建公共粒度的汇总指标事实表。');
+INSERT INTO afc_dw_data_level_template VALUES ('3', 'DWD', '明细数据层', '1',  'sys_tenant', '2022-12-09 14:01:58', '2022-12-09 14:01:58', 'admin', 'admin', 'DWD层通过企业的业务活动时间构建数据模型。基于具体业务事件的特点，构建最细粒度的明细数据表。');
+INSERT INTO afc_dw_data_level_template VALUES ('4', 'ODS', '数据引入层', '0',  'sys_tenant', '2022-12-09 14:01:58', '2022-12-09 14:01:58', 'admin', 'admin', 'ODS层用于接收并处理需要存储至数据仓库系统的原始数据，其数据表的结构与原始数据所在的数据系统中的表结构一致，是数据仓库的数据准备区。');
+
+-- 2022 12 9 增加业务字典类型和字典项:devops云资源和类型
+INSERT INTO afc_dict_type_template VALUES ('29', 'devops_resource_types', '云资源类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_entry_template VALUES ('3696', 'devops_resource_os', '主机系统资源', NULL, 1, '1', 0, '1', '0', NULL, NULL, '29');
+INSERT INTO afc_dict_entry_template VALUES ('3697', 'devops_resource_db', '数据库资源', NULL, 2, '1', 0, '1', '0', NULL, NULL, '29');
+
+-- 2022 12 13 增加业务字典类型和字典项:主机操作系统类型以及devops集成相关系统变量
+INSERT INTO afc_dict_type_template VALUES ('30', 'sys_resource_os_type', '系统资源主机类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_entry_template VALUES ('3698', 'centos', 'centos系统', NULL, 1, '1', 0, '1', '0', NULL, NULL, '30');
+
+INSERT INTO afc_dict_type_template VALUES ('31', 'sys_app_deploy_types', '应用部署状态', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_entry_template VALUES ('3699', 'start_executing', '启动中', NULL, 1, '1', 0, '1', '0', NULL, NULL, '31');
+INSERT INTO afc_dict_entry_template VALUES ('3700', 'stop_executing', '停止中', NULL, 2, '1', 0, '1', '0', NULL, NULL, '31');
+INSERT INTO afc_dict_entry_template VALUES ('3701', 'deploy_executing', '部署中', NULL, 3, '1', 0, '1', '0', NULL, NULL, '31');
+INSERT INTO afc_dict_entry_template VALUES ('3702', 'delete_executing', '删除中', NULL, 4, '1', 0, '1', '0', NULL, NULL, '31');
+INSERT INTO afc_dict_entry_template VALUES ('3703', 'deploy_failure', '部署失败', NULL, 5, '1', 0, '1', '0', NULL, NULL, '31');
+INSERT INTO afc_dict_entry_template VALUES ('3704', 'delete_failure', '删除失败', NULL, 6, '1', 0, '1', '0', NULL, NULL, '31');
+INSERT INTO afc_dict_entry_template VALUES ('3705', 'runing', '运行中', NULL, 7, '1', 0, '1', '0', NULL, NULL, '31');
+INSERT INTO afc_dict_entry_template VALUES ('3706', 'stopped', '已停止', NULL, 8, '1', 0, '1', '0', NULL, NULL, '31');
+
+INSERT INTO afc_sys_variable_template VALUES ('131', 'DEVOPS_DEFAULT_USERNAME', 'DEVOPS_DEFAULT_USERNAME', 'sysadmin', '950', '0', NULL, NULL, 'platform', NULL);
+INSERT INTO afc_sys_variable_template VALUES ('132', 'DEVOPS_DEFAULT_PASSWORD', 'DEVOPS_DEFAULT_PASSWORD', '000000', '950', '0', NULL, NULL, 'platform', NULL);
+INSERT INTO afc_sys_variable_template VALUES ('139', 'DEVOPS_DEFAULT_APP_MEMORY', 'DEVOPS_DEFAULT_APP_MEMORY', '2', '950', '0', '应用默认占用内存大小，单位是：G', NULL, 'platform', NULL);
+INSERT INTO afc_sys_variable_template VALUES ('140', 'DEVOPS_DEFAULT_APP_PORTS', 'DEVOPS_DEFAULT_APP_PORTS', '13080,13081,13082,13083,13084,13085,13086,13087,13088,13089,13090', '950', '0', '应用默认可选端口列表', NULL, 'platform', NULL);
+INSERT INTO afc_sys_variable_template VALUES ('141', 'DEVOPS_BASE_PATH', 'DEVOPS_BASE_PATH', NULL, '950', '0', NULL, NULL, 'platform', NULL);
+
+-- 2022-12-19 workspace流程管理相关菜单迁移
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, MENU_ICON, OPEN_TYPE, IS_PLATFORM, MENU_TYPE, BUSINESS_OBJ_ID, ROLE_TPL_CODE, IS_NEW_WINDOW_OPEN) VALUES ('410', '参与者日历', 'bfp_participant_calendar', '980', null, 4, '1', null, null, '307', null, 'cyzrl', null, '2', null, null, null, null);
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, MENU_ICON, OPEN_TYPE, IS_PLATFORM, MENU_TYPE, BUSINESS_OBJ_ID, ROLE_TPL_CODE, IS_NEW_WINDOW_OPEN) VALUES ('411', '工作日历', 'bfp_work_calendar', '981', null, 4, '1', null, null, '307', null, 'gzrl', null, '2', null, null, null, null);
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, MENU_ICON, OPEN_TYPE, IS_PLATFORM, MENU_TYPE, BUSINESS_OBJ_ID, ROLE_TPL_CODE, IS_NEW_WINDOW_OPEN) VALUES ('412', '代理管理', 'bfp_proxy_manage', '982', null, 4, '1', null, null, '307', null, 'dlgl', null, '2', null, null, null, null);
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, MENU_ICON, OPEN_TYPE, IS_PLATFORM, MENU_TYPE, BUSINESS_OBJ_ID, ROLE_TPL_CODE, IS_NEW_WINDOW_OPEN) VALUES ('413', '代办管理', 'bfp_delegate_manage', '983', null, 4, '1', null, null, '307', null, 'dbgl', null, '2', null, null, null, null);
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, MENU_ICON, OPEN_TYPE, IS_PLATFORM, MENU_TYPE, BUSINESS_OBJ_ID, ROLE_TPL_CODE, IS_NEW_WINDOW_OPEN) VALUES ('414', '流程实例管理', 'bfp_process_inst_manage', '984', null, 4, '1', null, null, '307', null, 'lcslgl', null, '2', null, null, null, null);
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('980', '参与者日历', 'bfp_participant_calendar', 'url', '501', '81', '流程参与者日历', null, '{"openType":"microApp","mark":"bfp_participant_calendar","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"bfpInner","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}', null, 'afc-role-tenant-manager', null, '2');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('981', '工作日历', 'bfp_work_calendar', 'url', '501', '81', 'bps工作日历', null, '{"openType":"microApp","mark":"bfp_work_calendar","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"bfpInner","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}', null, 'afc-role-tenant-manager', null, '2');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('982', '代理管理', 'bfp_proxy_manage', 'url', '501', '81', null, null, '{"openType":"microApp","mark":"bfp_proxy_manage","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"bfpInner","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}',  null, 'afc-role-tenant-manager', null, '2');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('983', '代办管理', 'bfp_delegate_manage', 'url', '501', '81', null, null, '{"openType":"microApp","mark":"bfp_delegate_manage","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"bfpInner","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}', null, 'afc-role-tenant-manager', null, '2');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('984', '流程实例管理', 'bfp_process_inst_manage', 'url', '501', '81', null, null, '{"openType":"microApp","mark":"bfp_process_inst_manage","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"bfpInner","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}', null, 'afc-role-tenant-manager', null, '2');
+
+-- 2022-12-26 增加开发中心应用权限、低开应用模板功能资源
+INSERT INTO afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('44', '开发中心', 'devCenterManager', NULL, NULL, NULL, '501', NULL, NULL, 48, '2');
+INSERT INTO afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('45', '低开应用模板', 'lcAppTemplate', NULL, NULL, NULL, '501', NULL, NULL, 49, '2');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('985', '创建应用', 'afc-f-dev-center-app-add', 'function', '501', '44', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('986', '修改应用基本信息', 'afc-f-dev-center-app-rename', 'function', '501', '44', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('987', '重新部署应用(支持修改应用端口、资源等)', 'afc-f-dev-center-app-redeploy-edit', 'function', '501', '44', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('988', '启用应用', 'afc-f-dev-center-app-start', 'function', '501', '44', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('989', '停止应用', 'afc-f-dev-center-app-stop', 'function', '501', '44', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('990', '删除应用', 'afc-f-dev-center-app-del', 'function', '501', '44', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('991', '分页查询运行资源列表', 'afc-f-dev-center-sys-resource-query', 'function', '501', '44', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('992', '添加资源', 'afc-f-dev-center-sys-resource-add', 'function', '501', '44', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('993', '修改资源信息', 'afc-f-dev-center-sys-resource-edit', 'function', '501', '44', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('994', '删除资源信息', 'afc-f-dev-center-sys-resource-del', 'function', '501', '44', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('995', '创建应用模板', 'afc-f-app-template-add', 'function', '501', '45', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('996', '重命名应用模板', 'afc-f-app-template-rename', 'function', '501', '45', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('997', '删除应用模板', 'afc-f-app-template-del', 'function', '501', '45', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('998', '禁用应用模板', 'afc-f-app-template-disabled', 'function', '501', '45', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('999', '启用应用模板', 'afc-f-app-template-startup', 'function', '501', '45', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('1000', '查询应用模板', 'afc-f-app-template-query', 'function', '501', '45', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('1001', '导入应用模板', 'afc-f-app-template-import', 'function', '501', '45', NULL, NULL, NULL, null, NULL,'2','afc-role-tenant-manager');
+
+INSERT INTO afc_dict_type_template VALUES ('32', 't_db_type', '系统数据库类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_entry_template VALUES ('3707', 'mysql', 'mysql', NULL, 1, '1', 0, '1', '0', NULL, NULL, '32');
+INSERT INTO afc_dict_entry_template VALUES ('3708', 'oracle', 'oracle', NULL, 2, '1', 0, '1', '0', NULL, NULL, '32');
+
+-- 2023-1-11 修改流程管理菜单为资源管理菜单
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID,IS_FIXED, MENU_ICON, OPEN_TYPE, IS_PLATFORM, MENU_TYPE, BUSINESS_OBJ_ID, ROLE_TPL_CODE, IS_NEW_WINDOW_OPEN) VALUES ('415', '资源管理', 'bfp_process_resource_manage', '1002', null, 4, '1', null, null, '307', null, 'guanli', null, '2', null, null, null, null);
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('1002', '资源管理', 'bfp_process_resource_manage', 'url', '501', '81', null, null, '{"openType":"microApp","mark":"process_manage","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"bfpInner","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}', null, 'afc-role-tenant-manager', null, '2');
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID,IS_FIXED, MENU_ICON, OPEN_TYPE, IS_PLATFORM, MENU_TYPE, BUSINESS_OBJ_ID, ROLE_TPL_CODE, IS_NEW_WINDOW_OPEN) VALUES ('416', '消息模板', 'bfp_msg_template', '1003', null, 10, '1', null, null, '195', null, 'pic', null, '2', null, null, null, null);
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('1003', '消息模板', 'bfp_msg_template', 'url', '501', '81', null, null, '{"openType":"microApp","mark":"bfp_msg_template","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"bfpInner","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}', null, 'afc-role-tenant-manager', null, '2');
+
+
+INSERT INTO afc_dict_type_template VALUES ('33', 'messsage_type', '模板类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_entry_template VALUES ('3709', 'email', '邮件', NULL, 1, '1', 0, '1', '0', NULL, NULL, '33');
+INSERT INTO afc_dict_entry_template VALUES ('3710', 'wecom', '企业微信', NULL, 2, '1', 0, '1', '0', NULL, NULL, '33');
+INSERT INTO afc_dict_entry_template VALUES ('3711', 'ding', '钉钉', NULL, 3, '1', 0, '1', '0', NULL, NULL, '33');
+
+-- 2023-1-12 添加移动端菜单页面资源
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('1004', '移动端菜单', 'mobile-menu', 'url', '501', '28', NULL, NULL, NULL, '{"openType":"afcenter","mark":null,"url":null,"params":null,"afcenterPath":"afcenter/menu/mobile-menu.vue"}',  NULL, '2','afc-role-tenant-manager,afc-role-system-admin-manager,app-role-application-manager','application');
+
+-- 2023-1-12 添加平台菜单、移动端菜单初始化数据
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('417', 'PC端菜单', 'pc-menu', '665', NULL, 1, '1', NULL, NULL, '206',NULL, NULL, NULL, '2');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('418', '移动端菜单', 'mobile-menu', '1004', NULL, 2, '1', NULL, NULL, '206',NULL, NULL, NULL, '2');
+
+-- 2023-1-29 添加系统变量资源分组
+INSERT INTO afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM, REUSE_TYPES) VALUES ('46', '系统变量', 'sys_variable', NULL, NULL, NULL, '501', NULL, NULL, 50, '2','application');
+
+-- 2023-2-03 添加应用模板管理菜单初始化数据
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('1005', '应用模板管理', 'app_template', 'url', '501', '45', NULL, NULL, NULL, '{"openType":"afcenter","mark":null,"url":null,"params":null,"microUrl":null,"microMark":null,"isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCENTER","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null,"afcenterPath":"afcenter/app-template/list.vue"}', NULL, '2','afc-role-tenant-manager');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('419', '应用模板', 'app_emplate', '1005', NULL, 4, '1', NULL, NULL, '213', NULL, NULL, NULL, '2');
+
+-- 2023-2-10 添加字典项字典类型国际化初始化数据
+INSERT INTO afc_dict_type_template VALUES ('34', 'sys_i18n_locale', '系统国际化语言', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_entry_template VALUES ('3712', 'zh_CN', '中文(中国)', NULL, 1, '1', 0, '1', '0', NULL, NULL, '34');
+INSERT INTO afc_dict_entry_template VALUES ('3713', 'en_US', '英语(美国)', NULL, 2, '1', 0, '1', '0', NULL, NULL, '34');
+
+-- 2023-2-17 增加workspace迁移菜单
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, MENU_ICON, OPEN_TYPE, IS_PLATFORM, MENU_TYPE, BUSINESS_OBJ_ID, ROLE_TPL_CODE, IS_NEW_WINDOW_OPEN) VALUES ('420', '异常活动监控', 'bfp_abnormal_monitor', '1006', null, 4, '1', null, null, '307', null, 'jiankong', null, '2', null, null, null, null);
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, MENU_ICON, OPEN_TYPE, IS_PLATFORM, MENU_TYPE, BUSINESS_OBJ_ID, ROLE_TPL_CODE, IS_NEW_WINDOW_OPEN) VALUES ('421', '审计日志', 'bfp_audit_log', '1007', null, 4, '1', null, null, '307', null, 'zhi', null, '2', null, null, null, null);
+INSERT INTO afc_menu_template (ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, MENU_ICON, OPEN_TYPE, IS_PLATFORM, MENU_TYPE, BUSINESS_OBJ_ID, ROLE_TPL_CODE, IS_NEW_WINDOW_OPEN) VALUES ('422', '交接管理', 'bfp_handover_manage', '1008', null, 4, '1', null, null, '307', null, 'jiaoji', null, '2', null, null, null, null);
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('1006', '异常活动监控', 'bfp_abnormal_monitor', 'url', '501', '81', '异常活动监控', null, '{"openType":"microApp","mark":"bfp_abnormal_monitor","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCENTER","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}', null, 'afc-role-tenant-manager', null, '2');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('1007', '审计日志', 'bfp_audit_log', 'url', '501', '81', '审计日志', null, '{"openType":"microApp","mark":"bfp_audit_log","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCENTER","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}', null, 'afc-role-tenant-manager', null, '2');
+INSERT INTO afc_resource_template (ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, ROLE_TPL_CODE, SUB_TYPE, IS_PLATFORM) VALUES ('1008', '交接管理', 'bfp_handover_manage', 'url', '501', '81', '交接管理', null, '{"openType":"microApp","mark":"bfp_handover_manage","url":null,"params":null,"microUrl":null,"microMark":"bfp","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCENTER","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}',  null, 'afc-role-tenant-manager', null, '2');
+
+-- 2023-2-21 添加字典项字典类型门户初始化数据
+INSERT INTO afc_dict_type_template VALUES ('35', 'sys_portal_types', '门户类型', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_entry_template VALUES ('3714', 'platform', '平台', NULL, 1, '1', 0, '1', '0', NULL, NULL, '35');
+INSERT INTO afc_dict_entry_template VALUES ('3715', 'app', '应用', NULL, 2, '1', 0, '1', '0', NULL, NULL, '35');
+
+-- 2023-3-06 添加素材库菜单初始化数据
+INSERT INTO afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM) VALUES ('47', '素材库管理', 'source_store', NULL, NULL, NULL, '501', NULL, NULL, 51, '2');
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('1009', '素材库管理', 'source_store', 'url', '501', '47', NULL, NULL, NULL, '{"openType":"afcenter","mark":null,"url":null,"params":null,"microUrl":null,"microMark":null,"isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCENTER","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null,"afcenterPath":"afcenter/source-store/index.vue"}', NULL, '2','afc-role-tenant-manager');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM) VALUES ('423', '素材库管理', 'source_store', '1009', NULL, 3, '1', NULL, NULL, '213', NULL, NULL, NULL, '2');
+
+-- 2023-3-06 添加素材库业务字典初始化数据
+INSERT INTO afc_dict_type_template VALUES ('36', 'source_material_type', '素材分类', NULL, NULL, '1', 0, '1', '1', NULL);
+INSERT INTO afc_dict_entry_template VALUES ('3716', 'icon', '图标', NULL, 1, '1', 0, '1', '0', NULL, NULL, '36');
+INSERT INTO afc_dict_entry_template VALUES ('3717', 'image', '图片', NULL, 2, '1', 0, '1', '0', NULL, NULL, '36');
+INSERT INTO afc_dict_entry_template VALUES ('3718', 'attachment', '附件', NULL, 3, '1', 0, '1', '0', NULL, NULL, '36');
+
+-- 2023-3-06 添加素材库系统变量
+INSERT INTO afc_sys_variable_template (ID, CODE, NAME, VALUE, RES_GROUP_TPL_ID, IS_ENCRYPT, DESCRIPTION, SOURCE, TYPES, APP_TPL_ID) VALUES('142', 'MATERIAL_UPLOAD_MAX_SIZE', 'MATERIAL_UPLOAD_MAX_SIZE', '10M', '950', '0', '素材附件上传大小，修改时必须带单位M', NULL, 'platform', null);
+
+-- 2023-03-08 添加应用详情菜单
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('1010', '应用detail', 'app_detail', 'url', '501', '4', NULL, NULL, NULL, '{"openType":"afcenter","mark":null,"url":null,"params":null,"microUrl":null,"microMark":null,"isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCENTER","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null,"afcenterPath":"afcenter/app/express-index"}', NULL, '2','app-role-application-manager','application');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('424', '资源管理', 'app_detail', '1010', NULL, 1, '1', NULL, NULL, '426', NULL, NULL, 'fenlei', '2', 'pc', '501');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('425', '菜单管理', 'app_menu_mag', NULL, NULL, 3, '0', NULL, NULL, '426', NULL, NULL, 'fenlei_3', '2', 'pc', '501');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('426', '应用管理', 'app_mag', NULL, NULL, 1, '0', NULL, NULL, 'appRoot', NULL, NULL, 'zhi', '2', 'pc', '501');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('427', '系统变量', 'app_sys', '730', NULL, 5, '1', NULL, NULL, '426', NULL, NULL, 'xiangji_2', '2', 'pc', '501');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('428', '角色管理', 'app_role_mag', '661', NULL, 2, '1', NULL, NULL, '426', NULL, NULL, 'shixian', '2', 'pc', '501');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('429', 'pc端菜单', 'app_pc', '665', NULL, 1, '1', NULL, NULL, '425', NULL, NULL, NULL, '2', 'pc', '501');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('430', '移动端菜单', 'app_mobile', '1004', NULL, 2, '1', NULL, NULL, '425', NULL, NULL, NULL, '2', 'pc', '501');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('431', '工作流程', 'app_menu_process', NULL, NULL, 2, '0', NULL, NULL, 'appRoot', NULL, NULL, 'falvsusong', '2', 'pc', '501');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('432', '流程发起', 'app_bfp_process_apply', '5031', NULL, 2, '1', NULL, NULL, '431', NULL, NULL, 'fabu', '2', 'pc', '501');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('433', '我的任务', 'app_bfp_my_task', '5032', NULL, 1, '1', NULL, NULL, '431', NULL, NULL, 'geren', '2', 'pc', '501');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('434', '业务配置', 'app_bfp_biz_config', '5035', NULL, 3, '1', NULL, NULL, '431', NULL, NULL, 'yaoqingren', '2', 'pc', '501');
+
+-- 2023-03-09 添加应用角色
+INSERT INTO AFC_ROLE_TEMPLATE(ID, CODE, NAME, DESCRIPTION, TYPES, BUSINESS_OBJ_ID, IS_FIXED) VALUES ('14', 'app-role-application-manager', '应用管理员', '应用管理员角色', '501', NULL, '1');
+
+-- 2023-03-13 门户管理添加
+INSERT INTO afc_res_group_template(ID, NAME, CODE, TYPES, RES_TPL_TYPE, DESCRIPTION, APP_TPL_ID, BUSINESS_OBJ_ID, IS_FIXED, SORT_NO, IS_PLATFORM, REUSE_TYPES) VALUES ('48', '门户管理', 'portal_management', NULL, NULL, NULL, '501', NULL, NULL, 52, '2','application');
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE) VALUES ('1011', 'portal管理', 'portal_public', 'url', '501', '48', NULL, NULL, NULL, '{"openType":"microApp","mark":"index","url":null,"params":null,"microUrl":null,"microMark":"portal","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCENTER","query":"type=public","processDefName":null,"biId":null,"biType":null,"bicode":null}', NULL, '2','afc-role-tenant-manager');
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('1012', 'widget管理', 'widget-manager', 'url', '501', '48', NULL, NULL, NULL, '{"openType":"afcenter","mark":null,"url":null,"params":null,"microUrl":null,"microMark":null,"isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCENTER","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null,"afcenterPath":"afcenter/widget-manager/list"}', NULL, '2','afc-role-tenant-manager,app-role-application-manager','application');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('435', '门户管理', 'portal_management', NULL, NULL, 6, '0', NULL, NULL, '187', NULL, NULL, 'kapianxingshi', '2', 'pc', NULL);
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('436', '系统门户', 'portal_public', '1011', NULL, 1, '1', NULL, NULL, '435', NULL, NULL, NULL, '2', 'pc', NULL);
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('437', 'widget管理', 'widget', '1012', NULL, 2, '1', NULL, NULL, '435', NULL, NULL, NULL, '2', 'pc', NULL);
+
+-- 2023-03-13 应用内门户管理添加
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('438', '门户管理', 'app_portal_management', NULL, NULL, 4, '0', NULL, NULL, '426', NULL, NULL, 'kapianxingshi', '2', 'pc', '501');
+INSERT INTO afc_menu_template(ID, NAME, CODE, RES_TPL_ID, DESCRIPTION, SORT_NO, IS_LEAF, TREE_LEVEL, SEQ, PARENT_ID, IS_FIXED, OPEN_TYPE, MENU_ICON, IS_PLATFORM, MENU_TYPE, APP_ID) VALUES ('439', 'widget管理', 'app_widget', '1012', NULL, 2, '1', NULL, NULL, '438', NULL, NULL, NULL, '2', 'pc', '501');
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('1015', '我的信息', 'userInfor', 'url', '501', '48', NULL, NULL, NULL, '{"openType":"microApp","mark":"userInfor","url":null,"params":null,"microUrl":null,"microMark":"widget","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCENTER","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}', NULL, '2','afc-role-tenant-manager,app-role-application-manager','application');
+
+-- 2023-03-14 添加应用内初始化widget资源
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('1013', 'widget-applist', 'widget-applist', 'url', '501', '48', NULL, NULL, NULL, '{"openType":"microApp","mark":"applist","url":null,"params":null,"microUrl":null,"microMark":"widget","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCENTER","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}', NULL, '2','afc-role-tenant-manager,app-role-application-manager','application');
+INSERT INTO afc_resource_template(ID, NAME, CODE, TYPES, APP_TPL_ID, RES_GROUP_TPL_ID, SUB_TYPE, DESCRIPTION, BUSINESS_OBJ_ID, CONTENT, IS_FIXED, IS_PLATFORM, ROLE_TPL_CODE, REUSE_TYPES) VALUES ('1014', '快捷方式', 'shortcut', 'url', '501', '48', NULL, NULL, NULL, '{"openType":"microApp","mark":"shortcut","url":null,"params":null,"microUrl":null,"microMark":"widget","isLowOrHigh":"high","resourceCode":null,"formStatus":null,"resourceType":null,"viewType":null,"appCode":"AFCENTER","query":null,"processDefName":null,"biId":null,"biType":null,"bicode":null}', NULL, '2','afc-role-tenant-manager,app-role-application-manager','application');
+
+-- 2023-03-15 添加widget模板初始化数据
+INSERT INTO AFC_WIDGET_TEMPLATE(ID, NAME, CODE, SCOPE, TYPES, APP_TPL_ID, RES_TPL_ID, CONTENT, MD5) VALUES ('1','我的应用','applist','public','platform',NULL,'1013',NULL,NULL);
+INSERT INTO AFC_WIDGET_TEMPLATE(ID, NAME, CODE, SCOPE, TYPES, APP_TPL_ID, RES_TPL_ID, CONTENT, MD5) VALUES ('2','常用功能','shortcut','public','platform',NULL,'1014',NULL,NULL);
+INSERT INTO AFC_WIDGET_TEMPLATE(ID, NAME, CODE, SCOPE, TYPES, APP_TPL_ID, RES_TPL_ID, CONTENT, MD5) VALUES ('3','我的任务','my_task','public','platform',NULL,'5032',NULL,NULL);
+INSERT INTO AFC_WIDGET_TEMPLATE(ID, NAME, CODE, SCOPE, TYPES, APP_TPL_ID, RES_TPL_ID, CONTENT, MD5) VALUES ('4','我的信息','userInfor','public','platform',NULL,'1015',NULL,NULL);
+
+-- 2023-03-15 添加系统门户模板初始化数据
+INSERT INTO AFC_PORTAL_TEMPLATE(ID, NAME, CODE, SCOPE, TYPES, SORT_NO, APP_TPL_ID, USER_TPL_ID, CONTENT, MD5) VALUES ( '1', '系统门户', 'sys_portal', 'public', 'platform', 1, NULL, NULL, '[{"x":0,"y":8,"w":8,"h":9,"i":"0.13585243424913696","name":"highcode","title":"我的任务","props":{"url":"/app/我的任务/module/bfp/page/bfp_my_task","code":"bfp_my_task","acceptTabs":["todo","done","apply","draft","toread","readed"],"tableProps":["processInstName","previousUserName","activityLink","startTime","currentActParticipantName","currentState","createTime","processChName","updateTime","currentActName"],"self":[{"label":"显示设置","eventCode":"openMyTaskSetting","icon":"el-icon-setting","component":"bfpTaskSetting"}]},"widgetIcon":"","scope":"public","moved":false},{"x":8,"y":8,"w":4,"h":9,"i":"0.5375345640525606","name":"highcode","title":"常用功能","props":{"url":"/app/常用功能/module/widget/page/shortcut","code":"shortcut","shortList":[],"showStyle":"list","global":{"label":"布局","eventCode":"add","icon":"el-icon-plus"},"self":[{"label":"新增快捷方式","eventCode":"add","icon":"el-icon-plus","component":"shortcutList"}],"listDialogVisible":true},"widgetIcon":"","scope":"public","moved":false},{"x":4,"y":0,"w":8,"h":8,"i":"0.2766594512260958","name":"highcode","title":"我的应用","props":{"url":"/app/我的应用/module/widget/page/applist","code":"资源code","global":{},"self":[{"label":"新增","eventCode":"add","icon":"el-icon-plus"},{"label":"布局格式","eventCode":"gridType"}]},"widgetIcon":"","scope":"public","moved":false},{"x":0,"y":0,"w":4,"h":8,"i":"0.17403081866266912","name":"highcode","title":"我的信息","props":{"url":"/app/我的信息/module/widget/page/userInfor","code":"userInfor"},"widgetIcon":"","scope":"public","moved":false}]', '44E7660364B5B72AE9C45565893A21BF');
+

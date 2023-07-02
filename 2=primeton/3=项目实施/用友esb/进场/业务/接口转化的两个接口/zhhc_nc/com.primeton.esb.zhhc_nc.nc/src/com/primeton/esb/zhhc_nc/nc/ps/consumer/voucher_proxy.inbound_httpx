@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<httpProxyService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.primeton.com/schema/tip/inboundhttp" xsi:schemaLocation="http://www.primeton.com/schema/tip/httpproxy ../xsd/inbound-http.xsd" desc="" displayName="voucher_proxy" errorChannel="" id="com.primeton.esb.zhhc_nc.nc.ps.consumer.voucher_proxy" tranport="com.primeton.esb.zhhc.common.transport.transport_http" urlPattern="/consumer.ncService.voucher.add">
+  <httpInbound desc="" displayName="http_inbound" httpInboundReplyTaskExecutorFileRef="voucher_proxy/voucher_proxy_reply.inbound_http_tpx" httpInboundRequestTaskExecutorFileRef="voucher_proxy/voucher_proxy_request.inbound_http_tpx" id="com.primeton.esb.zhhc_nc.nc.ps.consumer.voucher_proxy.default">
+    <formatConversion conversionClass="com.primeton.esb.model.DefaultMessagePacker" conversionType="default"/>
+    <refService serviceName="com.primeton.esb.zhhc_nc.nc.bs.consumer.voucher_biz.default" type="businessService"/>
+  </httpInbound>
+</httpProxyService>

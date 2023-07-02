@@ -1,0 +1,3 @@
+service = IRecvCtArWS
+port = IRecvCtArWSSOAP11port_http
+wsdlName = IRecvCtArWS.wsdl

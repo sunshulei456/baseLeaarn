@@ -1,0 +1,6 @@
+补丁说明
+1.将MessageConversion.class复制到server根目录下\server\EOS\_srv\work\system\com.primeton.esb.online.restaurant\com\primeton\esb\online\restaurant\data中覆盖原文件
+2.重新启动server
+
+服务注册说明：
+在接口注册中的请求或响应报文转换里添加新的字段不填写字段名称，填写新的字段名称和字段赋值，字段赋值中填写${UUID}标记

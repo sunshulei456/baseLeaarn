@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Require-Bundle: ,com.primeton.esb.zhhc_nc.nc_common
+Bundle-Vendor: primeton
+eos-webCtxPath: restaurant
+Bundle-Version: 1.0.0
+Contribution-Type: esb.business
+Bundle-Name: nc
+Bundle-Description: 
+Bundle-SymbolicName: com.primeton.esb.zhhc_nc.nc
+

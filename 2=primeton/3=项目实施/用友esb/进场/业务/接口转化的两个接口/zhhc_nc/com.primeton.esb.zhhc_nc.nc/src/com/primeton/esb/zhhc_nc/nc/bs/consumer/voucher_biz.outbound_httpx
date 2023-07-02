@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<httpBusinessService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.primeton.com/schema/tip/outboundhttp" xsi:schemaLocation="http://www.primeton.com/schema/tip/outboundhttp ../xsd/outbound-http.xsd" desc="" displayName="voucher_biz" endpoint="com.primeton.esb.zhhc_nc.nc_common.endpoint.endpoint_http" errorChannel="" id="com.primeton.esb.zhhc_nc.nc.bs.consumer.voucher_biz" uri="/service/XChangeServlet">
+  <httpOutbound desc="" displayName="http_outbound" httpOutboundReplyTaskExecutorFileRef="voucher_biz/voucher_biz_reply.outbound_http_tpx" httpOutboundRequestTaskExecutorFileRef="voucher_biz/voucher_biz_request.outbound_http_tpx" id="com.primeton.esb.zhhc_nc.nc.bs.consumer.voucher_biz.default">
+    <formatConversion conversionClass="com.primeton.esb.model.DefaultMessagePacker" conversionType="default"/>
+  </httpOutbound>
+</httpBusinessService>

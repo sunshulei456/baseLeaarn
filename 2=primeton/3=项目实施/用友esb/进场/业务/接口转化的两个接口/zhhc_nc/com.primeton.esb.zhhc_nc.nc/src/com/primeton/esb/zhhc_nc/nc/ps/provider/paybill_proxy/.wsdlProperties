@@ -1,0 +1,3 @@
+service = IQueryPayBillWS
+port = IQueryPayBillWSSOAP11port_http
+wsdlName = IQueryPayBillWS.wsdl

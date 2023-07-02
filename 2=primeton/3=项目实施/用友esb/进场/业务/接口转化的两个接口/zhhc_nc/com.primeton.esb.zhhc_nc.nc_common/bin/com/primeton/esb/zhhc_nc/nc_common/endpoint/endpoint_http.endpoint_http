@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.primeton.com/schema/esb">
+    <endpoint desc="" displayName="endpoint_http"
+        id="com.primeton.esb.zhhc_nc.nc_common.endpoint.endpoint_http"
+        protocol="http" type="">
+        <certificates/>
+        <parameter name="incomingRequestChannelConfigId" value="com.primeton.esb.zhhc_nc.nc_common.endpoint.endpoint_http_incoming_request_ref"/>
+        <parameter name="host" value="${nc_ip}"/>
+        <parameter name="port" value="${nc_port}"/>
+        <parameter name="connConfigId" value="com.primeton.esb.zhhc_nc.nc_common.endpoint.endpoint_http_conn_ref"/>
+        <parameter name="requiredVarConfigId" value="com.primeton.esb.zhhc_nc.nc_common"/>
+    </endpoint>
+</config>

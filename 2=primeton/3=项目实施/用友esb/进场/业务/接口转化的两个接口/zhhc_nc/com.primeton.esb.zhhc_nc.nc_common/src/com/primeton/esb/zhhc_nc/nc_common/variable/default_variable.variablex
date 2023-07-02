@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<variables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.primeton.com/schema/tip/variable" xsi:schemaLocation="http://www.primeton.com/schema/tip ../xsd/variable.xsd" name="com.primeton.esb.zhhc_nc.nc_common">
+  <variable desc="" name="nc_ip" type="string" value="10.0.0.104"/>
+  <variable desc="" name="nc_port" type="int" value="9084"/>
+</variables>

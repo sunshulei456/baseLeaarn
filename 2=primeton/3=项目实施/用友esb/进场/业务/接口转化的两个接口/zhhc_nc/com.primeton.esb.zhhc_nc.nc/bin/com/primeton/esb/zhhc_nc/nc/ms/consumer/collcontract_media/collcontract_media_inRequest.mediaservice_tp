@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.primeton.com/schema/esb">
+    <task-executor enable="false"
+        id="com.primeton.esb.zhhc_nc.nc.ms.consumer.collcontract_media_incoming_request_ref"
+        parentId="com.primeton.esb.zhhc_nc.nc.ms.consumer.collcontract_media" requiredVarConfigId="com.primeton.esb.zhhc_nc.nc">
+        <coreSize>30</coreSize>
+        <keepAliveSeconds>30</keepAliveSeconds>
+        <maxSize>60</maxSize>
+        <queueCapacity>1000</queueCapacity>
+        <rejectionPolicy>CALLER_RUNS</rejectionPolicy>
+    </task-executor>
+</config>

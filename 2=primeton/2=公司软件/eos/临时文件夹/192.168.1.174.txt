@@ -1,0 +1,172 @@
+
+
+=================通常替换
+
+ip替换
+%s/127.0.0.1/192.168.1.174
+安装文件夹替换
+%s/opt\/idc\/apps\/eos-8.2-app\/web/opt\/eos\/eos8.2ga\/EOS_Platform_8.2GA_Private_Medium_Application\/web	
+key替换
+%s/dc6baaed30e541d78bb91274803d9432/061eebea94e04940a6f6c3df9d7fdda8
+
+
+source /opt/eos/eos8.2ga/EOS_Platform_8.2GA_Private_Medium_Application/nacos/conf/nacos-mysql.sql
+
+
+include /opt/eos/eos8.2ga/EOS_Platform_8.2GA_Private_Medium_Application/web/conf/*.conf;
+
+
+mysql -h 127.0.0.1 -P 3306 -u root -p governor4eos82 < all.sql
+
+
+
+
+# cd server/governor/db-scripts/mysql
+# ls
+000-coframe-ddl.sql  001-coframe-data.sql  010-governor-ddl.sql  011-governor-data.sql  020-governor-ddl.sql  021-governor-data.sql  all.sql
+#  mysql -h 127.0.0.1 -P 3306 -u root -p governor4eos82 <all.sql
+# cd ..
+[root@localhost db-scripts]# cd ..
+[root@localhost governor]# cd app-db-scripts/group/bps/mysql/
+#  mysql -h 127.0.0.1 -P 3306 -u root -p governor4eos82 <all.sql
+# cd ..
+[root@localhost bps]# cd ..
+[root@localhost group]# cd eos/Mysql/
+#  mysql -h 127.0.0.1 -P 3306 -u root -p governor4eos82 <all.sql
+
+
+
+[root@localhost eos-8.2-app]# 
+[root@localhost mysql]# ls
+000-coframe-ddl.sql  001-coframe-data.sql  010-governor-ddl.sql  011-governor-data.sql  020-governor-ddl.sql  021-governor-data.sql  all.sql
+
+
+[root@localhost mysql]#  mysql -h 127.0.0.1 -P 3306 -u root -p governor4eos82 <all.sql
+
+[root@localhost mysql]# cd ..
+[root@localhost db-scripts]# cd ..
+
+
+[root@localhost governor]# 
+
+
+[root@localhost mysql]#  mysql -h 127.0.0.1 -P 3306 -u root -p governor4eos82 <all.sql
+
+
+[root@localhost mysql]# cd ..
+[root@localhost bps]# cd ..
+
+[root@localhost group]# cd 
+[root@localhost Mysql]#  
+
+
+==================
+
+mysql -h 127.0.0.1 -P 3306 -u root -pprimeton governor4eos82 < all.sql
+
+cd server/governor/db-scripts/mysql
+
+cd app-db-scripts/group/bps/mysql/
+
+cd app-db-scripts/group/eos/Mysql/
+
+
+=================
+=========nginx 路径替换
+/opt/idc/apps/eos-8.2-app/web/conf/*.conf;
+
+%s/opt\/idc\/apps\/eos-8.2-app\/web/opt\/eos\/eos8.2ga\/EOS_Platform_8.2GA_Private_Medium_Application\/web
+
+include /opt/eos/eos8.2ga/EOS_Platform_8.2GA_Private_Medium_Application/web/conf/*.conf;
+
+========
+
+/opt/eos/eos8.2ga/EOS_Platform_8.2GA_Private_Medium_Application/web/governor
+
+===系统编码
+061eebea94e04940a6f6c3df9d7fdda8
+
+%s/dc6baaed30e541d78bb91274803d9432/061eebea94e04940a6f6c3df9d7fdda8
+
+
+===afcenter
+# 这里是根据默认安装路径,先手动创建afcenter4eos82数据库
+[root@localhost eos-8.2-app]# cd server/afcenter/db-scripts/afcenter/Mysql/
+[root@localhost Mysql]#  mysql -h 127.0.0.1 -P 3306 -u root -p afcenter4eos82 <all.sql
+[root@localhost Mysql]# cd ..
+[root@localhost afcenter]# cd ..
+[root@localhost db-scripts]# cd bfp/Mysql/
+[root@localhost Mysql]#  mysql -h 127.0.0.1 -P 3306 -u root -p afcenter4eos82 <all.sql
+[root@localhost Mysql]# cd ..
+[root@localhost bfp]# cd ..
+[root@localhost db-scripts]# cd eos/Mysql/
+[root@localhost Mysql]#  mysql -h 127.0.0.1 -P 3306 -u root -p afcenter4eos82 <all.sql
+[root@localhost Mysql]# cd ..
+[root@localhost eos]# cd ..
+[root@localhost db-scripts]# cd lowcode/Mysql/
+[root@localhost Mysql]#  mysql -h 127.0.0.1 -P 3306 -u root -p afcenter4eos82 <all.sql
+
+
+mysql -h 127.0.0.1 -P 3306 -u root -pprimeton afcenter4eos82 < all.sql
+
+server/afcenter/db-scripts
+		/afcenter/Mysql/
+		bfp/Mysql/
+		eos/Mysql/
+		lowcode/Mysql/
+
+
+============================================
+
+===微服务版本
+mysql -h 127.0.0.1 -P 3306 -u root -pprimeton afcenter4eos82 < 1-esb-afc-data.sql	
+
+ 
+
+mysql -h 127.0.0.1 -P 3306 -u root -pprimeton esb86msa < eos/Mysql/eos_all.sql
+mysql -h 127.0.0.1 -P 3306 -u root -pprimeton esb86msa < esb/Mysql/2-schema-esb-mysql.sql	
+mysql -h 127.0.0.1 -P 3306 -u root -pprimeton esb86msa < esb/Mysql/3-data-esb-mysql.sql
+
+
+
+     location /api/esb {# esb配置
+         proxy_pass  /api/esb/;# 修改为esb-governor后端IP和端口
+     }
+    
+         # esb配置
+         location /api/esb {
+             proxy_pass  http://192.168.1.174:8082/api/esb/;# 修改为esb-governor后端IP和端口
+         }
+
+
+
+     curl -X GET "http://192.168.1.174:8082"
+
+
+====
+#EOS afcenter by gateway
+server {
+    listen 8088;
+    client_max_body_size 200m;
+}     
+
+
+nginx 端口统计
+{
+	==== nginx.conf
+	nginx 主页： 8085
+	
+	=== afcenter
+	afcenter : 8086 -- 
+	eos-gateway: 8086 -- 9090
+	eos-afcenter: 8086 -- 28083
+	
+	esb:  8087 -- 8082
+	
+	=== governor
+	governor : 31998 -- 29898
+	
+	=== workspace
+	workspace: 31199 -- 28080
+}
+

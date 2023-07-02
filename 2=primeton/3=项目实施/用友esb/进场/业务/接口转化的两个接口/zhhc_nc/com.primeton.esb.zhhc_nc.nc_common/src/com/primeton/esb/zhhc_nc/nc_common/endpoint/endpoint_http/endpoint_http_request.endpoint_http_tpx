@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<httpEndpointTaskExecutorProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.primeton.com/schema/tip/endpointhttp" xsi:schemaLocation="http://www.primeton.com/schema/tip ../xsd/endpoint-http.xsd" enable="false" requiredVarConfigId="com.primeton.esb.zhhc_nc.nc_common">
+  <rejectionPolicy>CALLER_RUNS</rejectionPolicy>
+  <maxSize>60</maxSize>
+  <queueCapacity>1000</queueCapacity>
+  <keepAliveSeconds>60</keepAliveSeconds>
+  <coreSize>30</coreSize>
+</httpEndpointTaskExecutorProperties>

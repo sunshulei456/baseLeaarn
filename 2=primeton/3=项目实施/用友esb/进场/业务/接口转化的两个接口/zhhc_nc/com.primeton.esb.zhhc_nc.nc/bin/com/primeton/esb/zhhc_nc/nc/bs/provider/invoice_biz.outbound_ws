@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.primeton.com/schema/esb">
+    <businessService desc="" displayName="invoice_biz"
+        id="com.primeton.esb.zhhc_nc.nc.bs.provider.invoice_biz"
+        protocol="SOAP" type="">
+        <outbound id="com.primeton.esb.zhhc_nc.nc.bs.provider.invoice_biz.queryInvoice">
+            <parameter name="incomingRequestChannelConfigId" value="com.primeton.esb.zhhc_nc.nc.bs.provider.invoice_biz.queryInvoice_incoming_request_ref"/>
+            <parameter name="incomingReplyChannelConfigId" value="com.primeton.esb.zhhc_nc.nc.bs.provider.invoice_biz.queryInvoice_incoming_reply_ref"/>
+            <parameter name="incomingErrorChannelConfigId" value="com.primeton.esb.zhhc_nc.nc.bs.provider.invoice_biz.queryInvoice_incoming_error_ref"/>
+            <parameter name="operation" value="queryInvoice"/>
+            <parameter name="businessCheckClass" value=""/>
+            <parameter name="messagePacker" value="com.primeton.esb.model.DefaultMessagePacker"/>
+        </outbound>
+        <parameter name="endpoint" value="com.primeton.esb.zhhc_nc.nc_common.endpoint.endpoint_http"/>
+        <parameter name="uri" value="/uapws/service/QueryInvoiceWS"/>
+        <parameter name="sensitive" value="true"/>
+    </businessService>
+</config>

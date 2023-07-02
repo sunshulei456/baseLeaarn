@@ -1,0 +1,6 @@
+#
+#Wed May 27 16:35:32 CST 2020
+contribution.type=esb.business
+componentType=com.primeton.component.contribution
+componentVersion=6.3
+autoDeploy=true

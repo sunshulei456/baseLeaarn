@@ -1,0 +1,63 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+jdbc:mysql://localhost:3306/governor4eos82?characterEncoding=utf8&useSSL=false
+
+
+
+
+
+// source /tmp/ssl/batch.sql
+192.11168.56.102
+
+
+// governer
+source /opt/idc/apps/eos-8.2-app/server/governor/db-scripts/mysql/all.sql;
+source /opt/idc/apps/eos-8.2-app/server/governor/app-db-scripts/group/eos/Mysql/all.sql;
+source /opt/idc/apps/eos-8.2-app/server/governor/app-db-scripts/group/all/Mysql/all.sql;
+source /opt/idc/apps/eos-8.2-app/server/governor/app-db-scripts/group/bps/mysql/all.sql;
+
+
+
+// afcenter
+source /opt/idc/apps/eos-8.2-app/server/afcenter/db-scripts/bfp-framework/Mysql/all.sql
+source /opt/idc/apps/eos-8.2-app/server/afcenter/db-scripts/afcenter/Mysql/all.sql
+source /opt/idc/apps/eos-8.2-app/server/afcenter/db-scripts/bfp-message/Mysql/all.sql
+source /opt/idc/apps/eos-8.2-app/server/afcenter/db-scripts/bfp-task/Mysql/all.sql
+source /opt/idc/apps/eos-8.2-app/server/afcenter/db-scripts/eos/Mysql/all.sql
+source /opt/idc/apps/eos-8.2-app/server/afcenter/db-scripts/lowcode/Mysql/all.sql
+source /opt/idc/apps/eos-8.2-app/server/afcenter/db-scripts/all/Mysql/all.sql
+
+
+// bps
+source /opt/idc/apps/eos-8.2-app/server/bps/db-scripts/eos/Mysql/all.sql
+source /opt/idc/apps/eos-8.2-app/server/bps/db-scripts/all/Mysql/all.sql
+source /opt/idc/apps/eos-8.2-app/server/bps/db-scripts/bps/mysql/all.sql
+
+
+// workspace
+source /opt/idc/apps/eos-8.2-app/server/workspace/db-scripts/eos/Mysql/all.sql;
+source /opt/idc/apps/eos-8.2-app/server/workspace/db-scripts/coframe/Mysql/all.sql;
+source /opt/idc/apps/eos-8.2-app/server/workspace/db-scripts/all/Mysql/all.sql;
+
+
+
+// elk
+
+cd  ./elasticsearch/template
+curl -H "Content-Type:application/json" -XPUT 'http://192.168.56.102:9200/_template/eos-classic-log' -d @eos-classic-log-template.json
+curl -H "Content-Type:application/json" -XPUT 'http://192.168.56.102:9200/_template/eos-dap-app-log' -d @eos-dap-app-log-template.json
+curl -H "Content-Type:application/json" -XPUT 'http://192.168.56.102:9200/_template/eos-dap-trace-log' -d @eos-dap-trace-log-template.json
+curl -H "Content-Type:application/json" -XPUT 'http://192.168.56.102:9200/_template/eos-wf-log' -d @eos-wf-log-template.json

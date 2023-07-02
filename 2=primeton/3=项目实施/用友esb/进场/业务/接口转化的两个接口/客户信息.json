@@ -1,0 +1,209 @@
+
+===
+前面属性信息
+
+	InterfaceType", InterfaceType   == MDM0004
+	MessageId", UUID.randomUUID()   == 
+	CompanyCode", CompanyCode       == SHMK
+	AuthorizedCode",AuthorizedCode  == S09738Rs#99#
+	InterfaceUser",InterfaceUser   "TestUser
+		
+	
+====
+CustTable  <----   masterData
+$.CustTable        $.masterData
+
+
+====
+masterData 中的数组
+
+
+"AccountNum", bd_customer_code
+"NCCCustAccount", bd_customer_def2
+"CustName", bd_customer_name
+"TaxID", taxpayerid
+"SalesClassification", CustClassificationId
+==== "CustGroup", CustGroup
+==== "CustClassificationId", CustClassificationId
+==== "InvoiceAccount", InvoiceAccount
+"CustClassification", pk_custclass
+"Currency", pk_currtype_@currency_id
+==== "LanguageId", LanguageId
+"InclTax", pk_custtaxes
+"TaxGroup", CustomerTaxRate_name
+"enablestate", enablestate		
+==== "dr", dr
+
+----------------------------
+$.CustTable[*].
+$.CustTable[*].AccountNum  <----  $.CustTable[*].bd_customer_code
+$.CustTable[*].NCCCustAccount  <----  $.CustTable[*].bd_customer_def2
+$.CustTable[*].CustName  <----  $.CustTable[*].bd_customer_name
+$.CustTable[*].TaxID  <----  $.CustTable[*].taxpayerid
+$.CustTable[*].SalesClassification  <----  $.CustTable[*].CustClassificationId
+==== $.CustTable[*].CustGroup  <----  $.CustTable[*].CustGroup
+==== $.CustTable[*].CustClassificationId  <----  $.CustTable[*].CustClassificationId
+==== $.CustTable[*].InvoiceAccount  <----  $.CustTable[*].InvoiceAccount
+$.CustTable[*].CustClassification  <----  $.CustTable[*].pk_custclass
+$.CustTable[*].Currency  <----  $.CustTable[*].pk_currtype_@currency_id
+==== $.CustTable[*].LanguageId  <----  $.CustTable[*].LanguageId
+$.CustTable[*].InclTax  <----  $.CustTable[*].pk_custtaxes
+$.CustTable[*].TaxGroup  <----  $.CustTable[*].CustomerTaxRate_name
+$.CustTable[*].enablestate  <----  $.CustTable[*].enablestate		
+==== $.CustTable[*].dr  <----  $.CustTable[*].dr
+
+
+[2023-06-28日客户信息输入到此]
+=========================================================
+
+
+数组： 客户银行格式转换
+
+"BankName", bd_bankdoc_name
+"AccountNum", accnum
+"Currency", bd_currtype_name_@currency_id
+"dr", dr
+"MDMID", pk_mdm
+
+$.CustTable[*].sub_CustBankAccount    $.CustTable[*].sub_Cust_Bank
+$.CustTable[*].sub_CustBankAccount[*].
+
+	
+$.CustTable[*].sub_CustBankAccount[*].BankName  <----  $.CustTable[*].sub_CustBankAccount[*].bd_bankdoc_name
+$.CustTable[*].sub_CustBankAccount[*].AccountNum  <----  $.CustTable[*].sub_CustBankAccount[*].accnum
+$.CustTable[*].sub_CustBankAccount[*].Currency  <----  $.CustTable[*].sub_CustBankAccount[*].bd_currtype_name_@currency_id
+===== dr  <----  $.CustTable[*].sub_CustBankAccount[*].dr
+$.CustTable[*].sub_CustBankAccount[*].MDMID  <----  $.CustTable[*].sub_CustBankAccount[*].pk_mdm
+
+
+=========================================================
+
+数组： 客户地址格式转换
+
+
+==== "AddressType", AddressType
+==== "CountryRegionId", CountryRegionId
+==== "State", State
+==== "County", County
+==== "City", City
+==== "Street", Street
+==== "dr", dr1
+"MDMID", pk_mdm
+
+-------------------------
+$.CustTable[*].
+$.CustTable[*].sub_CustAddress			$.CustTable[*].sub_Cust_address
+$.CustTable[*].sub_CustAddress[*].
+
+$.CustTable[*].sub_CustAddress[*].MDMID  <----  $.CustTable[*].sub_CustAddress[*].pk_mdm
+
+
+
+=========================================================
+
+数组： 客户联系格式转换
+ 
+$.CustTable[*].sub_CustContact			$.CustTable[*].sub_cust_contact
+
+"Email", "5922@qq.com"
+"ContactPersonName", name
+"Title", bd_linkman_vjob
+"Phone", bd_linkman_phone
+"CellularPhone", bd_linkman_cell
+==== "dr", dr1
+"MDMID", pk_mdm
+
+-----------------------------------------------------------
+
+$.CustTable[*].
+$.CustTable[*].sub_CustContact			$.CustTable[*].sub_cust_contact
+$.CustTable[*].sub_CustContact[*].
+
+
+$.CustTable[*].sub_CustContact[*].Email    <----  5922@qq.com
+$.CustTable[*].sub_CustContact[*].ContactPersonName    <----  $.CustTable[*].sub_CustContact[*].name
+$.CustTable[*].sub_CustContact[*].Title    <----  $.CustTable[*].sub_CustContact[*].bd_linkman_vjob
+$.CustTable[*].sub_CustContact[*].Phone    <----  $.CustTable[*].sub_CustContact[*].bd_linkman_phone
+$.CustTable[*].sub_CustContact[*].CellularPhone    <----  $.CustTable[*].sub_CustContact[*].bd_linkman_cell
+==== $.CustTable[*].sub_CustContact[*].dr    <----  $.CustTable[*].sub_CustContact[*].dr1
+$.CustTable[*].sub_CustContact[*].MDMID    <----  $.CustTable[*].sub_CustContact[*].pk_mdm
+
+
+=========================================================
+
+
+
+{
+    "systemCode": "ERP-MDM-0001", 
+    "mdType": "Maincuster", 
+    "action": "distribute_manual", 
+    "distributeToken": "", 
+    "masterData": [
+        {
+            "pk_areacl": "CCTEG-DQFL003482", 
+            "enablestate": "2", 
+            "custprop_name": "（空）", 
+            "CustGroup": "01055", 
+            "modifier": "主数据系统管理员", 
+            "sub_cust_contact": [ ], 
+            "mdm_datastatus": 3, 
+            "sub_Cust_Bank": [ ], 
+            "dr": 0, 
+            "Salesclassification_name": "（空）", 
+            "bd_customer_def3_entity": {
+                "mdm_code": "GSLX00095", 
+                "name": "其他", 
+                "org": "中国煤炭科工集团", 
+                "code": "141"
+            }, 
+            "custprop": "99", 
+            "pk_currtype_name": "人民币", 
+            "pk_areacl_name": "YZ999", 
+            "id": "7563b5f0-91bd-4e48-8610-c042143968ef", 
+            "bd_customer_name": "山东鲁泰控股集团有限公司鹿洼煤矿", 
+            "pk_currtype_entity": {
+                "mdm_code": "bz00000006", 
+                "currency_name": "人民币", 
+                "currency_id": "CNY"
+            }, 
+            "pk_currtype_@currency_id": "CNY", 
+            "enablestate_name": "已启用", 
+            "legalbody": "（空）", 
+            "mdm_duplicate": 0, 
+            "pk_areacl_@name": "（空）", 
+            "pk_custclass_name": "其他", 
+            "pk_custclass": "05", 
+            "pk_custtaxes": "99", 
+            "bd_customer_def3_name": "其他", 
+            "modifytime": "2022-11-25 13:26:07", 
+            "pk_custtaxes_name": "（空）", 
+            "Salesclassification": "99", 
+            "sub_Cust_address": [ ], 
+            "pk_currtype": "bz00000006", 
+            "bd_customer_def3_@code": "141", 
+            "mdm_cleanstatus": "WAITING", 
+            "dr_mdm_code": "0", 
+            "respperson": "（空）", 
+            "pk_mdm": "f4bc8cb7-fd66-410c-b258-bfaece2be27b", 
+            "bd_customer_def3": "GSLX00095", 
+            "creator": "主数据系统管理员", 
+            "createtime": "2022-11-25 13:26:07", 
+            "mdm_code": "cust005934", 
+            "pk_areacl_entity": {
+                "mdm_code": "CCTEG-DQFL003482", 
+                "upname": "", 
+                "code": "YZ999", 
+                "org": "中国煤炭科工集团", 
+                "name": "（空）"
+            }, 
+            "InvoiceAccount": "Cust_001663", 
+            "RegisteredCapital": "（空）", 
+            "Stock_verification": "（空）3", 
+            "mdm_version": 1, 
+            "bd_customer_code": "Cust_001663", 
+            "taxpayerid": "（空）3", 
+            "ts": "2022-11-25 13:26:07.121"
+        }
+    ], 
+    "code": 0
+}
