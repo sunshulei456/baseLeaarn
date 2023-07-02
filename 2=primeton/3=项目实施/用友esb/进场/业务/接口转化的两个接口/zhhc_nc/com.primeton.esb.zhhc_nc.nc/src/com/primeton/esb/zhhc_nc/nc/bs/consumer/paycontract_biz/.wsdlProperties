@@ -1,3 +1,0 @@
-service = IRecvPayContractWS
-port = IRecvPayContractWSSOAP11port_http
-wsdlName = IRecvPayContractWS.wsdl

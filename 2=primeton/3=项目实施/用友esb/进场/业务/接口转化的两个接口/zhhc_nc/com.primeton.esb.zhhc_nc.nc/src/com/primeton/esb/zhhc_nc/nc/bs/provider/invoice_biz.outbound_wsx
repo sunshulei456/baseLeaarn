@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<httpWsBusinessService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.primeton.com/schema/tip/outboundws" xsi:schemaLocation="http://www.primeton.com/schema/tip/outboundws ../xsd/outbound-http-ws.xsd" desc="" displayName="invoice_biz" endpoint="com.primeton.esb.zhhc_nc.nc_common.endpoint.endpoint_http" errorChannel="" id="com.primeton.esb.zhhc_nc.nc.bs.provider.invoice_biz" sensitive="true" uri="/uapws/service/QueryInvoiceWS">
-  <httpWsOutbound displayName="queryInvoice" httpWsOutboundReplyTaskExecutorFileRef="invoice_biz/invoice_biz_queryInvoice_reply.outbound_ws_tpx" httpWsOutboundRequestTaskExecutorFileRef="invoice_biz/invoice_biz_queryInvoice_request.outbound_ws_tpx" id="com.primeton.esb.zhhc_nc.nc.bs.provider.invoice_biz.queryInvoice" soapAction="queryInvoice">
-    <formatConversion conversionClass="com.primeton.esb.model.DefaultMessagePacker" conversionType="default"/>
-  </httpWsOutbound>
-</httpWsBusinessService>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<httpWsBusinessService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.primeton.com/schema/tip/outboundws" xsi:schemaLocation="http://www.primeton.com/schema/tip/outboundws ../xsd/outbound-http-ws.xsd" desc="" displayName="paybill_biz" endpoint="com.primeton.esb.zhhc_nc.nc_common.endpoint.endpoint_http" errorChannel="" id="com.primeton.esb.zhhc_nc.nc.bs.provider.paybill_biz" sensitive="true" uri="/uapws/service/QueryPayBillWS">
-  <httpWsOutbound displayName="queryPayBill" httpWsOutboundReplyTaskExecutorFileRef="paybill_biz/paybill_biz_queryPayBill_reply.outbound_ws_tpx" httpWsOutboundRequestTaskExecutorFileRef="paybill_biz/paybill_biz_queryPayBill_request.outbound_ws_tpx" id="com.primeton.esb.zhhc_nc.nc.bs.provider.paybill_biz.queryPayBill" soapAction="queryPayBill">
-    <formatConversion conversionClass="com.primeton.esb.model.DefaultMessagePacker" conversionType="default"/>
-  </httpWsOutbound>
-</httpWsBusinessService>

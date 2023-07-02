@@ -1,3 +1,0 @@
-service = IQueryInvoiceWS
-port = IQueryInvoiceWSSOAP11port_http
-wsdlName = IQueryInvoiceWS.wsdl

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<httpWsProxyService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.primeton.com/schema/tip/inboundws" xsi:schemaLocation="http://www.primeton.com/schema/tip/inboundws ../xsd/inbound-http-ws.xsd" desc="" displayName="collcontract_proxy" errorChannel="" httpWsRequestTaskExecutorFileRef="collcontract_proxy/collcontract_proxy_request.inbound_ws_tpx" id="com.primeton.esb.zhhc_nc.nc.ps.consumer.collcontract_proxy" sensitive="true" tranport="com.primeton.esb.zhhc.common.transport.transport_http" urlPattern="/consumer.ncService.collcontract">
-  <httpWsInbound displayName="recvCtAr" httpWsInboundReplyTaskExecutorFileRef="collcontract_proxy/collcontract_proxy_recvCtAr_reply.inbound_ws_tpx" httpWsInboundRequestTaskExecutorFileRef="collcontract_proxy/collcontract_proxy_recvCtAr_request.inbound_ws_tpx" id="com.primeton.esb.zhhc_nc.nc.ps.consumer.collcontract_proxy.recvCtAr" soapAction="recvCtAr">
-    <formatConversion conversionClass="com.primeton.esb.model.DefaultMessagePacker" conversionType="default"/>
-    <refService serviceName="com.primeton.esb.zhhc_nc.nc.ms.consumer.collcontract_media" type="mediationService"/>
-  </httpWsInbound>
-</httpWsProxyService>

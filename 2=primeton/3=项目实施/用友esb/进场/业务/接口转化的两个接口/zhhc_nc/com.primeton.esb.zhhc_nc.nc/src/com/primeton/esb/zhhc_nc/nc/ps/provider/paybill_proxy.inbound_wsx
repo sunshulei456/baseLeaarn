@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<httpWsProxyService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.primeton.com/schema/tip/inboundws" xsi:schemaLocation="http://www.primeton.com/schema/tip/inboundws ../xsd/inbound-http-ws.xsd" desc="" displayName="paybill_proxy" errorChannel="" httpWsRequestTaskExecutorFileRef="paybill_proxy/paybill_proxy_request.inbound_ws_tpx" id="com.primeton.esb.zhhc_nc.nc.ps.provider.paybill_proxy" sensitive="true" tranport="com.primeton.esb.zhhc.common.transport.transport_http" urlPattern="/provider.paybill.info">
-  <httpWsInbound displayName="queryPayBill" httpWsInboundReplyTaskExecutorFileRef="paybill_proxy/paybill_proxy_queryPayBill_reply.inbound_ws_tpx" httpWsInboundRequestTaskExecutorFileRef="paybill_proxy/paybill_proxy_queryPayBill_request.inbound_ws_tpx" id="com.primeton.esb.zhhc_nc.nc.ps.provider.paybill_proxy.queryPayBill" soapAction="queryPayBill">
-    <formatConversion conversionClass="com.primeton.esb.model.DefaultMessagePacker" conversionType="default"/>
-    <refService serviceName="com.primeton.esb.zhhc_nc.nc.bs.provider.paybill_biz.queryPayBill" type="businessService"/>
-  </httpWsInbound>
-</httpWsProxyService>

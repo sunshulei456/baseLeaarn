@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<variables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.primeton.com/schema/tip/variable" xsi:schemaLocation="http://www.primeton.com/schema/tip ../xsd/variable.xsd" name="com.primeton.esb.zhhc_nc.nc">
-  <variable desc="" name="getNCUser_url" type="string" value="http://oa.cnechc.com:8011/seeyon/rest/zhongh/getNCLoginName"/>
-</variables>
