@@ -60,9 +60,27 @@
 
 
 
+# 关联测试
 
+* 就是几个接口同时测试
 
+  ```
+  1, 创建测试集【test suite】
+  2， 在 test stepd 中添加要测试的各个接口
+  	对已经添加的接口进行右键，添加到测试集合
+  	【测试】
+  3. 接口联调的参数传递【在 test stepd 右键，添加 property transfer】
+  	这个界面中有一个界面中，
+  		source: 选择 path language 就是使用什么语法从 source 中获取值 
+  		target: 将 source 中选择的值赋值给 propeties [没有的话， 需要在 test suite 中创建一个 properties]
+  	数据流向： source(接口1， path语法获取值) ---》 target[properties(存放获取到的变量值)] --》 接口2(${} 语法在使用的地方进行引用 properties 中的变量值)
+  ```
 
+  
+
+# 测试用例管理
+
+* 创建 test suite ，然后创建 test case, 在 同一个链接多克隆几个，克隆到这个创建的case的step中，这样就可以测试不同的测试用例了
 
 
 

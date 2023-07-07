@@ -1,0 +1,126 @@
+## https 抓取配置
+
+* 对于中途跳出来的选择框，统一选择同意【如果还是出现图片中黄色的，点击提醒，然后选择确认即可】
+* 可以不用手动安装 https 证书， 所以 export root ... 就没必要了
+
+![image-20230706220409015](image-20230706220409015.png)
+
+
+
+## 手机代理配置
+
+* 设置完代理后，需要手动安装上面导出的证书
+
+### android
+
+### ios
+
+
+
+## filter 过滤器
+
+![image-20230706222000220](image-20230706222000220.png)
+
+* 生效
+
+  ![image-20230706222121731](image-20230706222121731.png)
+
+* hosts
+
+* client process
+
+* request 
+
+  * request headers
+
+* breadk pointes
+
+* response
+
+  * response status code
+  * response type and size
+  * response headers
+
+## inspectors 报文信息
+
+* 报文，有的地方又叫会话，如fiddler，我们常说的抓包，其实就是抓取报文的数据。
+
+![image-20230706222809043](image-20230706222809043.png)
+
+### 界面解析
+
+![img](0d8bbe6b0b7446c4afbdf82cedb14141noop.image_iz=58558&from=article.pc_detail&x-expires=1689258502&x-signature=qdd%2BlazmLYsFO%2F6yViFZcdVKWCY%3D)
+
+### 请求响应体
+
+```
+Raw : 能查看到原始报文
+	webView: 很多情况下，返回的数据都是页面, 看类似在浏览器的效果
+	TextView(显示文本),
+	JSON,
+	xml,
+	WebForms(显示表单和查询字符串)。
+	SyntaxView: 如返回JS文件或HTML文件, 会进行语法着色
+HexView : 能查看到16进制方式的报文
+
+
+```
+
+# Composer -- 接口测试
+
+* 没必要用，用jmeter 不好吗，，，，
+
+![img](v2-6f0cbd0f73bf4bb371be08f8d5e82f27_720w.webp)
+
+- Parsed:解析后的报文.它是已经格式化后的，在这里你只需要按照区域展示把相应的数据填写后就可以发送HTTP请求了。
+- Raw:原始报文 ，在此选项框中输入的请求必须按照HTTP请求格式输入，否则会报错。输入的HTTP请求也可以发送。
+- Scratchpad:可以保存多条原始报文，发送的时候，选中其中一条发送就可以了 。
+- Option:
+  - Inspector Session：使用同一个 Session 进行连接（同一个域名或者主机的情况下）
+  - Fix Content-Length Header： 当你发送 Post,Put 请求时，自动加上或者修正 Header 中的 Content-Length.
+  - Follow Redirect：自动跟踪 HTTP 状态码为 3xx 返回带 Location 的请求。
+  - Automatically Authenticate：自动进行身份验证。
+  - Tear Off：将 Composer 变成一个浮动窗口。
+
+
+
+
+
+# Statistics  性能测试
+
+# AutoResponder mock测试
+
+![image-20230706225010990](image-20230706225010990.png)
+
+# Breakpoints 断点
+
+# QuickExec 快捷搜索
+
+![image-20230706225116334](image-20230706225116334.png)
+
+
+
+# FiddlerScript 自定义脚本
+
+![image-20230706225211174](image-20230706225211174.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
